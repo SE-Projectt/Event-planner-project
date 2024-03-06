@@ -9,7 +9,7 @@ import io.cucumber.java.en.When;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-public class PaymentPageValidationTest{
+public class PaymentPageValidationTest {
     PayPageMyApp Pay;
     PayInformation PayI=new PayInformation();
     public PaymentPageValidationTest(){
@@ -153,5 +153,6 @@ public class PaymentPageValidationTest{
     public void theyShouldSeeAMessageIndicatingThatTheCVCShouldBeADigitNumber(Integer int1) {
         // Write code here that turns the phrase above into concrete actions
 
-    }
+
+}
 }

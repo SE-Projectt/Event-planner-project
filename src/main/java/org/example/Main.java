@@ -138,7 +138,7 @@ public class Main {
                                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(HallPrice)) {
                                                                             System.out.print("HallPrice field is required ! \n");
                                                                             continue;
-                                                                        } else if ( !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(HallPrice) ) {
+                                                                        } else if ( !  payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(HallPrice) ) {
                                                                             System.out.print("Enter a Valid Hall Price ! \n");
                                                                             continue;
                                                                         }

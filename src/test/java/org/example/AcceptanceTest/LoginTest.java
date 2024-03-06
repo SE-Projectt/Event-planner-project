@@ -19,12 +19,12 @@ public class LoginTest {
     @Given("the system has registered user with username {string} and password {string}")
     public void theSystemHasRegisteredUserWithUsernameAndPassword(String username, String password) {
         username="rema";password="rema123";
-        assertTrue(login.isUserRegiste(username,password));
+        assertTrue(login.theSystemHasRegisteredUserWithUsernameAndPassword(username,password));
     }
     @When("I enter valid username {string} and password {string} has already registered")
     public void iEnterValidUsernameAndPasswordHasAlreadyRegistered(String username, String password) {
         username="rema";password="rema123";
-        assertTrue(login.isUserRegiste(username,password));
+        assertTrue(login.theSystemHasRegisteredUserWithUsernameAndPassword(username,password));
 
     }
 
@@ -37,14 +37,14 @@ public class LoginTest {
     @Given("the system has no registered user with username {string} and password {string}")
     public void theSystemHasNoRegisteredUserWithUsernameAndPassword(String username, String password) {
         username="rrrr";password="0000";
-        assertFalse(login.isUserRegiste(username,password));
+        assertFalse(login.theSystemHasRegisteredUserWithUsernameAndPassword(username,password));
     }
 
 
     @When("I enter non-existing username {string} and password {string}")
     public void iEnterNonExistingUsernameAndPassword(String username, String password) {
         username="rrrr";password="0000";
-        assertFalse(login.isUserRegiste(username,password));
+        assertFalse(login.theSystemHasRegisteredUserWithUsernameAndPassword(username,password));
     }
 
     @Then("I should not be logged in")
@@ -56,7 +56,7 @@ public class LoginTest {
     @When("I enter valid username {string} and incorrect password {string}")
     public void iEnterValidUsernameAndIncorrectPassword(String username, String password) {
         username="rema";password="0000";
-        assertTrue(login.isUserCredentialsValid(username,password));
+        assertTrue(login.iEnterValidUsernameAndIncorrectPassword(username,password));
 
     }
 
