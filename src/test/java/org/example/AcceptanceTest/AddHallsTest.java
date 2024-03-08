@@ -1,6 +1,7 @@
 package org.example.AcceptanceTest;
 
 import MyApp.PayPageMyApp;
+import MyApp.SignUpMyApp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -9,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 public class AddHallsTest {
 
     PayPageMyApp payPageMyApp;
+    SignUpMyApp signup=new SignUpMyApp();
     public AddHallsTest ()
     {
 
@@ -114,5 +116,22 @@ public class AddHallsTest {
     public void anErrorShouldBeDisplayedIndicatingThatTheLocationIsRequired() {
 
     }
+
+    @Given("the system has an existing Hall with Hallname {string}")
+    public void theSystemHasAnExistingHallWithHallname(String string) {
+
+    }
+    @When("I try to assert with Hallname {string} in file {string}")
+    public void iTryToAssertWithHallnameInFile(String Hallname, String FileName) {
+        Hallname="alameer";
+        FileName="Halls.txt";
+        assertFalse(signup.thereIsNoDuplicatedUserOnTheFile(Hallname,FileName));
+
+    }
+    @Then("there is no duplicated Hall {string} on the {string} file")
+    public void thereIsNoDuplicatedHallOnTheFile(String string, String string2) {
+
+ }
+
 
 }

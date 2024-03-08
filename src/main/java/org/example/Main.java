@@ -5,6 +5,7 @@ import MyApp.PayPageMyApp;
 import MyApp.SignUpMyApp;
 import MyApp.SwitchAccountToProviderMyApp;
 
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
@@ -14,10 +15,11 @@ public class Main {
         PayPageMyApp payPageMyApp=new PayPageMyApp();
         PayInformation payInformation =new PayInformation();
         LoginMyApp loginMyApp = new LoginMyApp();
+        SignUpMyApp signup=new SignUpMyApp();
         Scanner scanner = new Scanner(System.in);
         String username, password, option1, useroption,Paypage, HallName,HallCapacity,HallPrice,HallLocation;
         boolean b =false;
-
+String HallnameP,HPriceP,CapacityP,HLocationP,DjnameP,DjPriceP,FlowernameP,FlowerPriceP,DessertnameP,studionameP,StudioPriceP,MainCnameP,MaincPriceP,DessertP;
         outerWhile1:
         while (true) {
             System.out.println("Choose: \n 1. Sign up \n 2. Login \n ");
@@ -99,7 +101,7 @@ public class Main {
                                         System.out.println("Welcome To Provider Page");
 
                                         while (true) {
-                                            System.out.println("Choose: \n 1. Switch account to User account \n 2. Add Halls Wedding \n 3. Delete Halls Wedding \n 4. Select package  ");
+                                            System.out.println("Choose: \n 1. Switch account to User account \n 2. Add Halls Wedding \n 3. Delete Halls Wedding \n 4. Add package  ");
                                             useroption = scanner.nextLine();
                                             switch (useroption) {
                                                 case "1":System.out.println("Going back to the main menu");
@@ -115,6 +117,10 @@ public class Main {
                                                             System.out.print("Hall Name field is required ! \n");
                                                             continue ;
                                                         }
+                                                        else if (!signup.thereIsNoDuplicatedUserOnTheFile(HallName,"Halls.txt")) {
+                                                            System.out.print("This Hall already Exist ! \n");
+                                                            continue;
+                                                        }
 
                                                         else {
                                                             while (true) {
@@ -123,14 +129,15 @@ public class Main {
                                                                 if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(HallCapacity)) {
                                                                     System.out.print("Hall capacity field is required ! \n");
                                                                     continue;
-                                                                } else if (! payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(HallCapacity)) {
+                                                                } else if (! payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(HallCapacity)) {
                                                                     System.out.print("Enter a Valid Capacity ! \n");
                                                                     continue;
                                                                 }
-                                                                else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(HallCapacity)) {
+                                                                else if (!payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(HallCapacity)) {
                                                                     System.out.print("Enter a Valid Capacity ! \n");
                                                                     continue;
                                                                 }
+
                                                                 else {
                                                                     while (true) {
                                                                         System.out.println("Enter Hall Price : ");
@@ -138,11 +145,11 @@ public class Main {
                                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(HallPrice)) {
                                                                             System.out.print("HallPrice field is required ! \n");
                                                                             continue;
-                                                                        } else if ( !  payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(HallPrice) ) {
+                                                                        } else if ( !payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(HallPrice) ) {
                                                                             System.out.print("Enter a Valid Hall Price ! \n");
                                                                             continue;
                                                                         }
-                                                                        else if ( !payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(HallPrice) ) {
+                                                                        else if ( !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(HallPrice) ) {
                                                                             System.out.print("Enter a Valid Hall Price ! \n");
                                                                             continue;
                                                                         }
@@ -154,15 +161,24 @@ public class Main {
                                                                                     System.out.print("Hall Location field is required ! \n");
                                                                                     continue;
                                                                                 }
-                                                                                else {System.out.print("Adding Hall successful ! \n");
+                                                                                else {
+                                                                                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("Halls.txt", true))) {
+                                                                                        // Append hall details to the file
+                                                                                        writer.write(HallName + "," + HallCapacity + "," + HallPrice + "," + HallLocation);
+                                                                                        writer.newLine();
 
-                                                                                     break ; }
+                                                                                    } catch (IOException e) {
+                                                                                        System.err.println("Error writing to the file: " + e.getMessage());
+                                                                                    }
+                                                                                    System.out.print("Adding Hall successful ! \n");//
+
+                                                                                    break ; }
                                                                             }
 
                                                                             break ;   }
-                                                                       // else {System.out.print("Payment was successful ! \n");
-                                                                          //  b=switchAccountToProviderMyApp.storeProviderData(username,password);
-                                                                           // break ; }
+                                                                        // else {System.out.print("Payment was successful ! \n");
+                                                                        //  b=switchAccountToProviderMyApp.storeProviderData(username,password);
+                                                                        // break ; }
                                                                     }
 
                                                                     break ; }
@@ -174,9 +190,300 @@ public class Main {
                                                     //////////////////
                                                     break ;
                                                 case "3":
+                                                    System.out.print("Enter  Hall Name : \n");
+                                                    HallName = scanner.nextLine();
+                                                    try {
+                                                        File file = new File("Halls.txt");
+                                                        RandomAccessFile raf = new RandomAccessFile(file, "rw");
+
+                                                        long currentPosition = 0;
+                                                        String line;
+
+                                                        while ((line = raf.readLine()) != null) {
+                                                            // Check if the line contains the hall name to delete
+                                                            if (line.contains(HallName)) {
+                                                                // Move the file pointer to the beginning of the line to be deleted
+                                                                raf.seek(currentPosition);
+
+                                                                // Overwrite the line with spaces to effectively delete it
+                                                                for (int i = 0; i < line.length(); i++) {
+                                                                    raf.writeByte(' ');
+                                                                }
+
+                                                                // Move the file pointer back to the end of the file
+                                                                raf.seek(currentPosition);
+
+                                                                System.out.println("Hall '" + HallName + "' deleted from " );
+                                                                raf.close();
+                                                                return;
+                                                            }
+
+                                                            // Move the file pointer to the beginning of the next line
+                                                            currentPosition = raf.getFilePointer();
+                                                        }
+
+                                                        System.out.println("Hall '" + HallName + "' not found in " + "Halls.txt");
+                                                        raf.close();
+                                                    } catch (IOException e) {
+                                                        System.err.println("Error reading/writing to the file: " + e.getMessage());
+                                                    }
                                                     break ;
+                                                 //////////////////////////
                                                 case"4":
+                                                    while (true){
+                                                        System.out.println("Enter Hall Name : ");
+                                                        HallnameP = scanner.nextLine();
+
+                                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName( HallnameP) ) {
+                                                            System.out.print("Hall Name field is required ! \n");
+                                                            continue ;
+                                                        }
+                                                        else if (!signup.thereIsNoDuplicatedUserOnTheFile( HallnameP,"Package.txt")) {
+                                                            System.out.print("This Hall already Exist ! \n");
+                                                            continue;
+                                                        }
+
+                                                        else {
+                                                            while (true) {
+                                                                System.out.println("Enter Hall Capacity : ");
+                                                               CapacityP = scanner.nextLine();
+                                                                if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(CapacityP)) {
+                                                                    System.out.print("Hall capacity field is required ! \n");
+                                                                    continue;
+                                                                } else if (! payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(CapacityP)) {
+                                                                    System.out.print("Enter a Valid Capacity ! \n");
+                                                                    continue;
+                                                                }
+                                                                else if (!payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(CapacityP)) {
+                                                                    System.out.print("Enter a Valid Capacity ! \n");
+                                                                    continue;
+                                                                }
+
+                                                                else {//
+                                                                    while (true) {
+                                                                        System.out.println("Enter Hall Price : ");
+                                                                        HPriceP = scanner.nextLine();
+                                                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(HPriceP)) {
+                                                                            System.out.print("HallPrice field is required ! \n");
+                                                                            continue;
+                                                                        } else if ( !payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(HPriceP) ) {
+                                                                            System.out.print("Enter a Valid Hall Price ! \n");
+                                                                            continue;
+                                                                        }
+                                                                        else if ( !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(HPriceP) ) {
+                                                                            System.out.print("Enter a Valid Hall Price ! \n");
+                                                                            continue;
+                                                                        }///
+                                                                        else{
+                                                                            while (true) {
+                                                                                System.out.println("Enter Hall Location : ");
+                                                                               HLocationP = scanner.nextLine();
+                                                                                if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName( HLocationP)) {
+                                                                                    System.out.print("Hall Location field is required ! \n");
+                                                                                    continue;
+                                                                                }
+                                                                                else {
+                                                                                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
+                                                                                        // Append hall details to the file
+                                                                                        writer.write( HallnameP + "," + CapacityP + "," + HPriceP + "," + HLocationP);
+
+
+                                                                                    } catch (IOException e) {
+                                                                                        System.err.println("Error writing to the file: " + e.getMessage());
+                                                                                    }
+
+
+                                                                                    break ; }
+                                                                            }
+
+                                                                            break ;   }
+                                                                        // else {System.out.print("Payment was successful ! \n");
+                                                                        //  b=switchAccountToProviderMyApp.storeProviderData(username,password);
+                                                                        // break ; }
+                                                                    }
+
+                                                                    break ; }///********
+
+                                                            }
+                                                            break ; }
+
+                                                    }/////end hall
+
+                                                    while (true){
+                                                        System.out.println("Enter Dj Name : ");
+                                                        DjnameP = scanner.nextLine();
+
+                                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(  DjnameP) ) {
+                                                            System.out.print("Dj Name field is required ! \n");
+                                                            continue ;
+                                                        }
+                                                        else if (!signup.thereIsNoDuplicatedUserOnTheFile(  DjnameP,"Package.txt")) {
+                                                            System.out.print("This Dj already Exist ! \n");
+                                                            continue;
+                                                        }
+
+                                                        else {
+
+                                                                            try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
+                                                                                // Append hall details to the file
+                                                                                writer.write(  "," + DjnameP );
+
+                                                                            } catch (IOException e) {
+                                                                                System.err.println("Error writing to the file: " + e.getMessage());
+                                                                            }
+
+
+                                                                            break ;
+
+
+
+
+                                                        }
+                                                    }/////////end DJ
+
+                                                    while (true){
+                                                        System.out.println("Enter Studio Name : ");
+                                                        studionameP = scanner.nextLine();
+
+                                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(   studionameP ) ) {
+                                                            System.out.print("Studio field is required ! \n");
+                                                            continue ;
+                                                        }
+                                                        else if (!signup.thereIsNoDuplicatedUserOnTheFile(  studionameP ,"Package.txt")) {
+                                                            System.out.print("This Studio already Exist ! \n");
+                                                            continue;
+                                                        }
+
+                                                        else {
+
+                                                                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
+                                                                        // Append hall details to the file
+                                                                        writer.write(  "," + studionameP  );
+
+                                                                    } catch (IOException e) {
+                                                                        System.err.println("Error writing to the file: " + e.getMessage());
+                                                                    }
+
+
+                                                                    break ;
+                                                        }
+                                                    }   //////////// endStudio
+
+                                                    while (true){
+                                                        System.out.println("Enter dessert Name : ");
+                                                       DessertnameP = scanner.nextLine();
+
+                                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(  DessertnameP ) ) {
+                                                            System.out.print("dessert field is required ! \n");
+                                                            continue ;
+                                                        }
+                                                        else if (!signup.thereIsNoDuplicatedUserOnTheFile(  DessertnameP ,"Package.txt")) {
+                                                            System.out.print("This dessert already Exist ! \n");
+                                                            continue;
+                                                        }
+
+                                                        else {
+                                                                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
+                                                                        // Append hall details to the file
+                                                                        writer.write(  "," +  DessertnameP  );
+
+                                                                    } catch (IOException e) {
+                                                                        System.err.println("Error writing to the file: " + e.getMessage());
+                                                                    }
+
+
+                                                                    break ;
+
+                                                        }
+                                                    }   //////////// end dessert
+                                                    while (true){
+                                                        System.out.println("Enter Main Course Name : ");
+                                                        MainCnameP = scanner.nextLine();
+
+                                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(  MainCnameP ) ) {
+                                                            System.out.print("Main Course field is required ! \n");
+                                                            continue ;
+                                                        }
+                                                        else if (!signup.thereIsNoDuplicatedUserOnTheFile(  MainCnameP ,"Package.txt")) {
+                                                            System.out.print("This Main Course already Exist ! \n");
+                                                            continue;
+                                                        }
+
+                                                        else {
+
+                                                                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
+                                                                        // Append hall details to the file
+                                                                        writer.write(  "," +  MainCnameP  );
+
+                                                                    } catch (IOException e) {
+                                                                        System.err.println("Error writing to the file: " + e.getMessage());
+                                                                    }
+
+
+
+                                                            break ;
+                                                        }
+                                                    }
+                                                    //////////// end Main Course
+                                                    while (true){
+                                                        System.out.println("Enter Flower Name : ");
+                                                       FlowernameP = scanner.nextLine();
+
+                                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName( FlowernameP ) ) {
+                                                            System.out.print("Flower field is required ! \n");
+                                                            continue ;
+                                                        }
+                                                        else if (!signup.thereIsNoDuplicatedUserOnTheFile(  FlowernameP ,"Package.txt")) {
+                                                            System.out.print("This Flower already Exist ! \n");
+                                                            continue;
+                                                        }
+
+                                                        else {
+                                                            while (true) {
+
+
+                                                                System.out.println("Enter Package Price : ");
+                                                                FlowerPriceP  = scanner.nextLine();
+                                                                if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(   FlowerPriceP)) {
+                                                                    System.out.print("PackagePrice field is required ! \n");
+                                                                    continue;
+                                                                } else if ( !payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(   FlowerPriceP) ) {
+                                                                    System.out.print("Enter a Valid Package Price ! \n");
+                                                                    continue;
+                                                                }
+                                                                else if ( !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(   FlowerPriceP) ) {
+                                                                    System.out.print("Enter a Valid Package Price ! \n");
+                                                                    continue;
+                                                                }
+                                                                else {
+                                                                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
+                                                                        // Append hall details to the file
+                                                                        writer.write(  "," +   FlowerPriceP + ","  + FlowernameP);
+
+                                                                    } catch (IOException e) {
+                                                                        System.err.println("Error writing to the file: " + e.getMessage());
+                                                                    }
+                                                                    System.out.print("Adding Package successful ! \n");//
+
+                                                                    break ;
+
+                                                                }
+
+
+
+                                                            }
+                                                            break ;
+                                                        }
+                                                    }   //////////// end Flower
+
+
+
                                                     break ;
+
+
+
+                                                    /////////////////////
+
 
                                             }
 
@@ -284,6 +591,6 @@ public class Main {
                     }
                 }
             }
-        }
-    }
+ }
+ }
 }

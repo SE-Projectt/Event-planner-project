@@ -40,3 +40,7 @@ Feature: Add Halls for Weddings
     When the provider enters an empty location "location" for the hall
     Then an error should be displayed indicating that the location is required
 
+  Scenario:user try to assert an existing Hall name
+    Given the system has an existing Hall with Hallname "Hallname"
+    When I try to assert with Hallname "Hallname" in file "Halls.txt"
+    Then there is no duplicated Hall "Hallname" on the "Halls.txt" file
