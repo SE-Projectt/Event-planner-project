@@ -53,7 +53,7 @@ public class SwitchAccountToProvider {
     }
     @Then("I should be redirected to the provider page")
     public void iShouldBeRedirectedToTheProviderPage() {
-        // Write code here that turns the phrase above into concrete actions
+
 
     }
 

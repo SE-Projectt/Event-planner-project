@@ -1,112 +1,95 @@
 package org.example.AcceptanceTest;
 
+import MyApp.AdminMyApp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.io.IOException;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+
 public class AdminTest {
-    @Given("Admin is logged in to the admin page")
-    public void adminIsLoggedInToTheAdminPage() {
-        System.out.println("Welcom");
-
-    }
-    @When("Admin can see the list of users requesting to be providers")
-    public void adminCanSeeTheListOfUsersRequestingToBeProviders() {
-
-    }
-
-    @Then("Admin views user information requesting to be a provider")
-    public void adminViewsUserInformationRequestingToBeAProvider() {
-
-    }
-  /////
-    @When("Admin accepts a user request to be a provider")
-    public void adminAcceptsAUserRequestToBeAProvider() {
-
-    }
-    @Then("The user becomes a provider and is notified")
-    public void theUserBecomesAProviderAndIsNotified() {
-
-    }
-
-    @When("Admin rejects a user request to be a provider")
-    public void adminRejectsAUserRequestToBeAProvider() {
-
-    }
-    @Then("The user's request is rejected and the user is notified")
-    public void theUserSRequestIsRejectedAndTheUserIsNotified() {
-
-    }
-
-
-    @When("Admin searches for provider information by providername {string} from file {string}")
-    public void adminSearchesForProviderInformationByProvidernameFromFile(String string, String string2) {
-
-    }
-    @Then("The provider's information is displayed")
-    public void theProviderSInformationIsDisplayed() {
-
-    }
-
-
-    @Given("Admin views the provider list")
-    public void adminViewsTheProviderList() {
-
-    }
-    @When("Admin deletes a provider from the provider file")
-    public void adminDeletesAProviderFromTheProviderFile() {
-
-    }
-    @Then("The provider is removed from the provider file")
-    public void theProviderIsRemovedFromTheProviderFile() {
-
-    }
+AdminMyApp adminMyApp ;
+public AdminTest ()
+{
+  adminMyApp = new AdminMyApp() ;
+}
 
 
 
-    @When("Admin views his profit from providers subscriptions")
-    public void adminViewsHisProfitFromProvidersSubscriptions() {
+  @Given("the admin has access to the provider_data.txt file")
+  public void theAdminHasAccessToTheProviderDataTxtFile() {
 
-    }
-    @Then("The total profit from providers' subscriptions is displayed")
-    public void theTotalProfitFromProvidersSubscriptionsIsDisplayed() {
+  }
+  @When("the admin views the provider count")
+  public void theAdminViewsTheProviderCount() {
 
-    }
-
-
-
-    @When("Admin searches for user information by username {string} from file {string}")
-    public void adminSearchesForUserInformationByUsernameFromFile(String string, String string2) {
-
-    }
-    @Then("The user's information is displayed")
-    public void theUserSInformationIsDisplayed() {
-
-    }
+  }
+  @Then("the admin should see the total count of providers from file {string}")
+  public void theAdminShouldSeeTheTotalCountOfProvidersFromFile(String fileprovider) {
+  fileprovider="provider.txt";
 
 
-    @When("Admin views user information and users count")
-    public void adminViewsUserInformationAndUsersCount() {
-
-    }
-    @Then("User information \\(username, password) and the number of users are displayed")
-    public void userInformationUsernamePasswordAndTheNumberOfUsersAreDisplayed() {
-
-    }
+  }
 
 
-    @Given("Admin views user information and user count")
-    public void adminViewsUserInformationAndUserCount() {
 
-    }
-    @When("Admin deletes a user from the user file")
-    public void adminDeletesAUserFromTheUserFile() {
 
-    }
-    @Then("The user is removed from the user file")
-    public void theUserIsRemovedFromTheUserFile() {
+  @Given("the admin has access to the user_data.txt file")
+  public void theAdminHasAccessToTheUserDataTxtFile() {
 
-    }
+  }
+  @When("the admin views the user count")
+  public void theAdminViewsTheUserCount() {
+
+  }
+  @Then("the admin should see the total count of users from file {string}")
+  public void theAdminShouldSeeTheTotalCountOfUsersFromFile(String string) {
+
+  }
+
+
+
+  @When("the admin deletes a provider")
+  public void theAdminDeletesAProvider() {
+
+  }
+  @Then("the provider {string} should be removed from the file {string}")
+  public void theProviderShouldBeRemovedFromTheFile(String filename, String username) throws IOException {
+  filename ="provider_data.txt";
+  username = "noor";
+  adminMyApp.deleteLine(filename,username);
+assertTrue(adminMyApp.isUsernameExists(filename,username));
+
+  }
+
+
+
+
+  @When("the admin deletes a user")
+  public void theAdminDeletesAUser() {
+
+  }
+  @Then("the user {string} should be removed from the file {string}")
+  public void theUserShouldBeRemovedFromTheFile(String filename, String username) throws IOException {
+    filename ="user_data.txt";
+    username = "rema";
+    adminMyApp.deleteLine(filename,username);
+    assertTrue(adminMyApp.isUsernameExists(filename,username));
+  }
+
+  @When("the admin views the count of provider")
+  public void theAdminViewsTheCountOfProvider() {
+
+  }
+  @Then("the admin should calculate the total profit")
+  public void theAdminShouldCalculateTheTotalProfit() {
+
+  }
+
 
 
 
