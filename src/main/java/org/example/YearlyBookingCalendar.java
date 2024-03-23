@@ -7,23 +7,18 @@ import java.io.*;
 import java.nio.file.*;
 import java.text.*;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class YearlyBookingCalendar extends JFrame {
     private static final String BOOKINGS_FILE = "bookingHall.txt";
-
-
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private final Map<String, Set<String>> bookedDatesPerHall = new HashMap<>();
     private final String currentHall;
     private final JLabel monthLabel = new JLabel("", SwingConstants.CENTER);
     private Calendar calendar = new GregorianCalendar(2024, Calendar.JANUARY, 1);
     private JPanel monthPanel;
-    //boolean calendarClosed = false;
 
     public YearlyBookingCalendar(String hallName) {
         this.currentHall = hallName;
-        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(500, 400);
         setLocationRelativeTo(null);
@@ -31,9 +26,6 @@ public class YearlyBookingCalendar extends JFrame {
 
         loadBookings();
         initUI();
-        //////
-
-        //////////////////
     }
 
     private void initUI() {
@@ -75,13 +67,15 @@ public class YearlyBookingCalendar extends JFrame {
             monthPanel.add(new JLabel(""));
         }
 
+        Set<String> bookedDates = bookedDatesPerHall.getOrDefault(currentHall, new HashSet<>());
         for (int day = 1; day <= daysInMonth; day++) {
             String dayString = DATE_FORMAT.format(monthStart.getTime());
             JButton dayButton = new JButton(Integer.toString(day));
-            String bookingKey = currentHall + "," + dayString;
-            dayButton.addActionListener(e -> bookDate(bookingKey));
-            if (bookedDatesPerHall.getOrDefault(currentHall, new HashSet<>()).contains(dayString)) {
+            if (bookedDates.contains(dayString)) {
+                dayButton.setEnabled(false);
                 dayButton.setBackground(Color.RED);
+            } else {
+                dayButton.addActionListener(e -> bookDate(dayString));
             }
             monthPanel.add(dayButton);
             monthStart.add(Calendar.DAY_OF_MONTH, 1);
@@ -91,11 +85,12 @@ public class YearlyBookingCalendar extends JFrame {
         monthPanel.repaint();
     }
 
-    private void bookDate(String bookingKey) {
-        String[] parts = bookingKey.split(",");
-        if (!bookedDatesPerHall.computeIfAbsent(parts[0], k -> new HashSet<>()).add(parts[1])) return;
+    private void bookDate(String date) {
+        String bookingKey = currentHall + "," + date;
+        if (!bookedDatesPerHall.computeIfAbsent(currentHall, k -> new HashSet<>()).add(date)) return;
         saveBooking(bookingKey);
-        updateMonthView();
+        JOptionPane.showMessageDialog(this, "Date booked successfully for " + currentHall + " on " + date);
+        dispose(); // Close the window after booking
     }
 
     private void loadBookings() {
@@ -110,7 +105,6 @@ public class YearlyBookingCalendar extends JFrame {
         }
     }
 
-
     private void saveBooking(String bookingKey) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(BOOKINGS_FILE, true))) {
             writer.write(bookingKey);
@@ -119,6 +113,9 @@ public class YearlyBookingCalendar extends JFrame {
             System.err.println("Failed to save booking: " + e.getMessage());
         }
     }
-////////////////////
 
+
+    public String getCurrentHall() {
+        return currentHall;
+    }
 }

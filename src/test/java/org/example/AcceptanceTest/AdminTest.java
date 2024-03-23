@@ -12,11 +12,11 @@ import static org.junit.Assert.assertTrue;
 
 
 public class AdminTest {
-AdminMyApp adminMyApp ;
-public AdminTest ()
-{
-  adminMyApp = new AdminMyApp() ;
-}
+  AdminMyApp adminMyApp ;
+  public AdminTest ()
+  {
+    adminMyApp = new AdminMyApp() ;
+  }
 
 
 
@@ -30,7 +30,7 @@ public AdminTest ()
   }
   @Then("the admin should see the total count of providers from file {string}")
   public void theAdminShouldSeeTheTotalCountOfProvidersFromFile(String fileprovider) {
-  fileprovider="provider.txt";
+    fileprovider="provider.txt";
 
 
   }
@@ -59,10 +59,10 @@ public AdminTest ()
   }
   @Then("the provider {string} should be removed from the file {string}")
   public void theProviderShouldBeRemovedFromTheFile(String filename, String username) throws IOException {
-  filename ="provider_data.txt";
-  username = "noor";
-  adminMyApp.deleteLine(filename,username);
-assertTrue(adminMyApp.isUsernameExists(filename,username));
+    filename ="provider_data.txt";
+    username = "noor";
+    adminMyApp.deleteLine(filename,username);
+    assertTrue(adminMyApp.isUsernameExists(filename,username));
 
   }
 

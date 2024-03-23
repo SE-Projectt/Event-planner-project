@@ -35,7 +35,7 @@ public class SwitchAccountToProviderMyApp {
             // Append the username and password to the file
             printWriter.println(  username + "," + password );
 
-            System.out.println("Provider data stored successfully!");
+           // System.out.println("Provider data stored successfully!");
             return true;
         } catch (IOException e) {
             System.err.println("Error writing to the file: " + e.getMessage());
