@@ -24,11 +24,11 @@ public class UserMyApp {
                 System.out.println(line);
             }
 
-            // Close the file
+         
             bufferedReader.close();
         } catch (IOException e) {
-            // Handle any IO exception
-            e.printStackTrace();
+            
+        
         }
     }
 
@@ -36,25 +36,25 @@ public class UserMyApp {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                // Split the line by ":" to separate type event and event name
+               
                 String[] parts = line.split(":");
                 if (parts.length == 2) {
-                    // Trim to remove leading/trailing spaces
+                 
                     String currentTypeEvent = parts[0].trim();
                     String currentEventName = parts[1].trim();
-                    // Check if the current type event matches the given type event
+                  
                     if (currentTypeEvent.equals(typeEvent)) {
-                        // If the type event matches, check if the event name matches
+                      
                         if (currentEventName.equals(eventName)) {
-                            return true; // Type event and event name match
+                            return true; 
                         }
                     }
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+          
         }
-        return false; // Type event or event name not found
+        return false; 
     }
 
     public static boolean checkHallandDate(String fileName, String date, String eventName) {
@@ -70,7 +70,7 @@ public class UserMyApp {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+         
         }
         return false;
     }
@@ -92,24 +92,24 @@ public class UserMyApp {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                // Split the line by comma to get the first word
+            
                 String[] parts = line.split(",");
-                // Trim to remove leading/trailing spaces and compare with the given word
+               
                 if (parts.length > 0 && parts[0].trim().equals(word)) {
-                    return true; // Word exists at the beginning of a line in the file
+                    return true; 
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+        
         }
-        return false; // Word not found at the beginning of any line in the file
+        return false;
     }
 
     public static void addPackageToFile(String packageName, String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
-            // Append the package name to the file
+          
             writer.write(packageName);
-            writer.newLine(); // Add a newline for readability or to separate entries
+            writer.newLine();
             System.out.println("Package '" + packageName + "' added to file '" + filename + "'");
         } catch (IOException e) {
             System.err.println("Error occurred while writing to file: " + e.getMessage());
@@ -120,16 +120,16 @@ public class UserMyApp {
     public static int getColumnValueForHall(String filePath, String hallName, int columnIndex) throws IOException {
         Path path = Paths.get(filePath);
         try (BufferedReader br = new BufferedReader(new FileReader(path.toFile()))) {
-            String line; // سطر الملف
+            String line; 
 
-            // قراءة الصفوف في الملف
+           
             while ((line = br.readLine()) != null) {
-                String[] columns = line.split(","); // تقسيم الصف إلى أعمدة
+                String[] columns = line.split(",");
 
-                // التحقق مما إذا كان اسم القاعة يطابق في أي من الأعمدة
+               
                 for (String column : columns) {
                     if (column.trim().equals(hallName)) {
-                        // التحقق مما إذا كان هناك مؤشر صحيح لعمود الذي تم تحديده
+                      
                         if (columnIndex < columns.length) {
                             return Integer.parseInt(columns[columnIndex].trim()); // استرجاع قيمة العمود المطلوبة ك integer
                         } else {
@@ -150,8 +150,7 @@ public class UserMyApp {
         int counter = 0;
 
         while ((line = reader.readLine()) != null) {
-            String[] parts = line.split(","); // Assuming CSV format, change delimiter as needed
-
+            String[] parts = line.split(",");
             if (parts.length > columnIndex) {
                 int columnValue = Integer.parseInt(parts[columnIndex].trim());
                 if (columnValue <= value) {
@@ -177,7 +176,7 @@ public class UserMyApp {
             boolean deleted = false;
 
             while ((currentLine = reader.readLine()) != null) {
-                // If the line contains the specified name, skip writing it to temp file (delete)
+              
                 if (currentLine.contains(name)) {
                     deleted = true;
                     continue;
@@ -213,11 +212,11 @@ public class UserMyApp {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(","); // افتراض فصل الأعمدة بفاصلة
-                String valueToSearch = parts[parts.length - 1]; // القيمة في آخر عمود
+                String[] parts = line.split(","); 
+                String valueToSearch = parts[parts.length - 1];
                 if (valueToSearch.equals(searchValue)) {
                     System.out.println(line);
-                    // هنا يمكنك إضافة المزيد من العمليات إذا كنت ترغب
+                   
                 }
             }
             reader.close();
