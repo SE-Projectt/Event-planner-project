@@ -48,7 +48,7 @@ public class LoginMyApp {
     }
     public static boolean iEnterUsernameAndPassword(String adminname, String password)
     {
-        if (adminname.equals(admin.getAdminname()) && password.equals(admin.getAdminPassword()))
+        if (adminname.equals(admin.getA()) && password.equals(admin.getP()))
             return true ;
         else return false ;
     }
