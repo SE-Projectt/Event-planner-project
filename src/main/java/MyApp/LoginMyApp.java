@@ -14,17 +14,17 @@ public class LoginMyApp {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                // Assuming each line in the file represents a user with the format "username,password"
+               
                 String[] parts = line.split(",");
                 if (parts.length >= 2 && parts[0].equals(username) && !(parts[1].equals(password))) {
                     return true; // Username and password combination found in the file
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            
         }
 
-        return false; // Username and password combination not found in the file
+        return false; 
     }
 
 
@@ -34,14 +34,14 @@ public class LoginMyApp {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                // Assuming each line in the file represents a user with the format "username,password"
+              
                 String[] parts = line.split(",");
                 if (parts.length >= 2 && parts[0].equals(username) && (parts[1].equals(password))) {
-                    return true; // Username and password combination found in the file
+                    return true; 
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+           
         }
 
         return false;
