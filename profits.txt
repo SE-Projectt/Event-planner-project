@@ -1,2 +1,3 @@
-Hiba,4500
-ahmad,11700
+Hiba,18000
+sameer,2345
+ahmad,53400
