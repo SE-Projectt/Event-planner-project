@@ -76,7 +76,7 @@ public class AdminMyApp {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+          
         }
         // Username not found, return true
         return true;
