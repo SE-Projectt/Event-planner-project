@@ -11,9 +11,10 @@ import static DB.UserDataBase.readUsersFromFile;
 
 public class SignUpMyApp {
     int flag=0 ;
+String FN="user_data.txt";
     public boolean iiEnterValidUsernamePassword(String username, String password){
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter("user_data.txt", true))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FN, true))) {
             // Append the new user's data to the file
             writer.println(username + "," + password);
             System.out.println("You have signed up successfully!");
@@ -23,7 +24,7 @@ public class SignUpMyApp {
 
 
     public static boolean  theSystemHasAnExistingUserWithUsername(String username) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("user_data.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FN))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
@@ -49,7 +50,7 @@ public class SignUpMyApp {
     public Integer noNewUserAccountShouldBeCreated(ArrayList<User> A) {
 
         UserDataBase DB=new UserDataBase(A);
-        DB.readUsersFromFile("user_data.txt");
+        DB.readUsersFromFile(FN);
 
 
 
@@ -103,7 +104,7 @@ public class SignUpMyApp {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception based on your needs
+          
         }
 
         return true; // No duplicate username found
