@@ -1,14 +1,14 @@
 package Entity;
 
 public class Admin {
-    final private String my_a = "Zaid" ;
-    final private String my_pp ="123456";
+    final private String myA = "Zaid" ;
+    final private String myPP ="123456";
 
-    public String getmy_a() {
-        return my_a;
+    public String getmyA() {
+        return myA;
     }
 
-    public String getmy_pp() {
-        return my_pp;
+    public String getmyPP() {
+        return myPP;
     }
 }
