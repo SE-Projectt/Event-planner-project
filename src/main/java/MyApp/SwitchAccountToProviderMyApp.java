@@ -21,7 +21,7 @@ public class SwitchAccountToProviderMyApp {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+           
         }
 
         return found;
