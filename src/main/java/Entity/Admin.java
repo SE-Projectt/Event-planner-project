@@ -1,14 +1,14 @@
 package Entity;
 
 public class Admin {
-    final private String adminname = "Zaid" ;
-    final private String adminPassword="123456";
+    final private String A = "Zaid" ;
+    final private String P ="123456";
 
-    public String getAdminname() {
-        return adminname;
+    public String getA() {
+        return A;
     }
 
-    public String getAdminPassword() {
-        return adminPassword;
+    public String getP() {
+        return P;
     }
 }
