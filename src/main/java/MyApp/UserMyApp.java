@@ -3,29 +3,24 @@ package MyApp;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.swing.*;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserMyApp {
     private static final Logger logger = LogManager.getLogger(UserMyApp.class);
+    private static final String ERROR_READING_FILE = "Error reading the file: {}";
 
     public static void displayFileContents(String filePath) {
         BufferedReader bufferedReader = null;
         try {
             bufferedReader = new BufferedReader(new FileReader(filePath));
             String line;
-
             while ((line = bufferedReader.readLine()) != null) {
                 logger.info(line);
             }
         } catch (IOException e) {
-            logger.error("Error reading the file: {}", e.getMessage());
+            logger.error(ERROR_READING_FILE, e.getMessage());
         } finally {
             if (bufferedReader != null) {
                 try {
@@ -43,7 +38,6 @@ public class UserMyApp {
             reader = new BufferedReader(new FileReader(filename));
             String line;
             while ((line = reader.readLine()) != null) {
-
                 String[] parts = line.split(":");
                 if (parts.length == 2) {
                     String currentTypeEvent = parts[0].trim();
@@ -54,7 +48,7 @@ public class UserMyApp {
                 }
             }
         } catch (IOException e) {
-            logger.error("Error reading the file: {}", e.getMessage());
+            logger.error(ERROR_READING_FILE, e.getMessage());
         } finally {
             if (reader != null) {
                 try {
@@ -66,7 +60,6 @@ public class UserMyApp {
         }
         return false;
     }
-
 
     public static boolean checkHallandDate(String fileName, String date, String eventName) {
         BufferedReader br = null;
@@ -83,7 +76,7 @@ public class UserMyApp {
                 }
             }
         } catch (IOException e) {
-            logger.error("Error reading the file: {}", e.getMessage());
+            logger.error(ERROR_READING_FILE, e.getMessage());
         } finally {
             if (br != null) {
                 try {
@@ -127,7 +120,7 @@ public class UserMyApp {
                 }
             }
         } catch (IOException e) {
-            logger.error("Error reading the file: {}", e.getMessage());
+            logger.error(ERROR_READING_FILE, e.getMessage());
         } finally {
             if (reader != null) {
                 try {
@@ -161,12 +154,10 @@ public class UserMyApp {
     }
 
     public static int getColumnValueForHall(String filePath, String hallName, int columnIndex) throws IOException {
-        Path path = Paths.get(filePath);
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader(path.toFile()));
+            br = new BufferedReader(new FileReader(filePath));
             String line;
-
             while ((line = br.readLine()) != null) {
                 String[] columns = line.split(",");
                 for (String column : columns) {
@@ -179,7 +170,6 @@ public class UserMyApp {
                     }
                 }
             }
-
             throw new IllegalArgumentException("Hall " + hallName + " not found in file");
         } finally {
             if (br != null) {
@@ -194,7 +184,6 @@ public class UserMyApp {
         try {
             reader = new BufferedReader(new FileReader(filename));
             String line;
-
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length > columnIndex) {
@@ -219,13 +208,10 @@ public class UserMyApp {
         File inputFile = new File(filename);
         File tempFile = new File("temp.txt");
         boolean deleted = false;
-
         try {
             reader = new BufferedReader(new FileReader(inputFile));
             writer = new BufferedWriter(new FileWriter(tempFile));
-
             String currentLine;
-
             while ((currentLine = reader.readLine()) != null) {
                 if (currentLine.contains(name)) {
                     deleted = true;
@@ -248,20 +234,17 @@ public class UserMyApp {
                 logger.error("Error closing file streams: {}", e.getMessage());
             }
         }
-
         if (deleted) {
             if (!inputFile.delete()) {
                 logger.error("Could not delete the original file.");
                 return false;
             }
-
             if (!tempFile.renameTo(inputFile)) {
                 logger.error("Could not rename the temp file.");
                 return false;
             }
             logger.info("Line containing '{}' deleted from file '{}'", name, filename);
         }
-
         return deleted;
     }
 
@@ -278,7 +261,7 @@ public class UserMyApp {
                 }
             }
         } catch (IOException e) {
-            logger.error("Error reading the file: {}", e.getMessage());
+            logger.error(ERROR_READING_FILE, e.getMessage());
         } finally {
             if (reader != null) {
                 try {
