@@ -7,6 +7,7 @@ import java.nio.file.*;
 import java.text.*;
 import java.util.logging.*;
 import java.util.*;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 public class YearlyBookingCalendarDj extends JFrame {
     private static final String BOOKINGS_FILE = "BookingDj.txt";
@@ -21,13 +22,14 @@ public class YearlyBookingCalendarDj extends JFrame {
     public YearlyBookingCalendarDj(String djName) {
         this.currentDj = djName;
         this.DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(500, 400);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         loadBookings();
         initUI();
     }
+
 
     private void initUI() {
         JPanel topPanel = new JPanel(new BorderLayout());
