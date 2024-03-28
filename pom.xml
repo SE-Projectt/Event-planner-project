@@ -83,11 +83,17 @@
         <plugins>
             <!-- Other plugins -->
 
-            <!-- JaCoCo Plugin -->
+            <!-- JaCoCo Plugin with exclusion -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.7</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/UserDataBase.class</exclude>
+                        <!-- Add other classes to exclude if needed -->
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -109,3 +115,4 @@
         </plugins>
     </build>
 </project>
+
