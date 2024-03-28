@@ -8,18 +8,18 @@ import java.text.*;
 import java.util.*;
 import java.util.logging.*;
 
-public class YearlyBookingCalendarPachage extends JFrame {
+public class YearlyBookingCalendarPackage extends JFrame {
     private static final String BOOKINGS_FILE = "bookingPackage.txt";
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     private final Map<String, Set<String>> bookedDatesPerHall = new HashMap<>();
     private final String currentHall;
     private final JLabel monthLabel = new JLabel("", SwingConstants.CENTER);
     private Calendar calendar = new GregorianCalendar(2024, Calendar.JANUARY, 1);
     private JPanel monthPanel;
-    private static final Logger LOGGER = Logger.getLogger(YearlyBookingCalendarPachage.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(YearlyBookingCalendarPackage.class.getName());
 
-    public YearlyBookingCalendarPachage(String hallName) {
+    public YearlyBookingCalendarPackage(String hallName) {
         this.currentHall = hallName;
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC")); // Set time zone if needed
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -110,9 +110,5 @@ public class YearlyBookingCalendarPachage extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new YearlyBookingCalendarPachage("Example Hall");
-        });
-    }
+  
 }
