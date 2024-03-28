@@ -3,8 +3,12 @@ package org.example;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class PriceCalculator {
+
+    private static final Logger logger = Logger.getLogger(PriceCalculator.class.getName());
+
     public static double calculateTotalPrice(String file1, String file2, String username) {
         double totalPrice = 0.0;
 
@@ -12,7 +16,7 @@ public class PriceCalculator {
             totalPrice += getPriceFromFile(file1, username);
             totalPrice += getPriceFromFile(file2, username);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe("An error occurred while calculating total price: " + e.getMessage());
         }
 
         return totalPrice;
@@ -30,7 +34,7 @@ public class PriceCalculator {
                         try {
                             price += Double.parseDouble(parts[1].trim());
                         } catch (NumberFormatException e) {
-                            System.err.println("Invalid price format for username: " + username);
+                            logger.warning("Invalid price format for username: " + username);
                         }
                     }
                 }
