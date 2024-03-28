@@ -1,8 +1,6 @@
 package MyApp;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 public class AdminMyApp {
@@ -11,23 +9,16 @@ public class AdminMyApp {
 
     public static int Counts(String fileName) throws IOException {
         int lineCount = 0;
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader(fileName));
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (!line.trim().isEmpty()) {
                     lineCount++;
                 }
             }
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    LOGGER.severe(ERROR_CLOSE_BR + e.getMessage());
-                }
-            }
+        } catch (IOException e) {
+            LOGGER.severe("Error while reading file: " + e.getMessage());
+            throw e;
         }
         return lineCount;
     }
@@ -35,12 +26,9 @@ public class AdminMyApp {
     public static void deleteLine(String fileName, String username) throws IOException {
         File inputFile = new File(fileName);
         File tempFile = new File("temp.txt");
-        BufferedReader reader = null;
-        BufferedWriter writer = null;
         boolean deleted = false;
-        try {
-            reader = new BufferedReader(new FileReader(inputFile));
-            writer = new BufferedWriter(new FileWriter(tempFile));
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
             String currentLine;
             while ((currentLine = reader.readLine()) != null) {
                 String[] parts = currentLine.split(",");
@@ -50,41 +38,35 @@ public class AdminMyApp {
                     deleted = true;
                 }
             }
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException e) {
-                    LOGGER.severe("Error while closing BufferedWriter: " + e.getMessage());
-                }
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    LOGGER.severe(ERROR_CLOSE_BR + e.getMessage());
-                }
-            }
+        } catch (IOException e) {
+            LOGGER.severe("Error while reading or writing files: " + e.getMessage());
+            throw e;
         }
-        if (deleted) {
-            if (!inputFile.delete()) {
-                LOGGER.severe("Could not delete original file");
-                return;
+
+        // Close the BufferedWriter outside the try-with-resources block
+        try (BufferedReader reader = new BufferedReader(new FileReader(tempFile))) {
+            if (deleted) {
+                if (!inputFile.delete()) {
+                    LOGGER.severe("Could not delete original file");
+                    return;
+                }
+                if (!tempFile.renameTo(inputFile)) {
+                    LOGGER.severe("Could not rename temporary file");
+                    return;
+                }
+                LOGGER.info("Delete successful");
+            } else {
+                LOGGER.info("No lines were deleted");
             }
-            if (!tempFile.renameTo(inputFile)) {
-                LOGGER.severe("Could not rename temporary file");
-                return;
+        } finally {
+            if (tempFile.exists() && !tempFile.delete()) {
+                LOGGER.severe("Could not delete temporary file");
             }
-            LOGGER.info("Delete successful");
-        } else {
-            LOGGER.info("No lines were deleted");
         }
     }
 
     public static boolean isUsernameExists(String filename, String username) {
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(filename));
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
@@ -95,14 +77,6 @@ public class AdminMyApp {
             }
         } catch (IOException e) {
             LOGGER.severe("Error while reading file: " + e.getMessage());
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    LOGGER.severe(ERROR_CLOSE_BR + e.getMessage());
-                }
-            }
         }
         return false;
     }
