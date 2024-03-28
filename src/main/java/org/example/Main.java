@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.io.*;
 import java.util.Objects;
 import java.util.Scanner;
+
 import java.util.logging.Logger;
 
 
@@ -258,9 +259,9 @@ public class Main {
                                                     File inputFile1 = new File(fileName1);
                                                     File tempFile1 = new File("temp.txt");
                                                     BufferedReader reader1 = new BufferedReader(new FileReader(inputFile1));
-                                                         BufferedWriter writer1 = new BufferedWriter(new FileWriter(tempFile1)) ;
-                                                        String currentLine1;
-                                                        boolean deleted = false;
+                                                    BufferedWriter writer1 = new BufferedWriter(new FileWriter(tempFile1));
+                                                    String currentLine1;
+                                                    boolean deleted = false;
                                                     while ((currentLine1 = reader1.readLine()) != null) {
                                                         String[] parts = currentLine1.split(",");
                                                         if (!parts[0].trim().equals(wordToDelete1)) {
@@ -288,73 +289,67 @@ public class Main {
                                                     } else {
                                                         logger.info("No Halls were deleted");
                                                     }
-                                                        break secondWhile;
+                                                    break secondWhile;
 
 
 
-                                                //////////////////////////
-                                                case"4":
+                                                case "4":
                                                     while (true) {
-                                                        System.out.println("Enter Package Name : ");
+                                                        logger.info("Enter Package Name:");
                                                         PackgName = scanner.nextLine();
+
                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(PackgName)) {
-                                                            System.out.print(PACKAGE_NAME_REQ );
+                                                            logger.info(PACKAGE_NAME_REQ);
                                                             continue;
                                                         } else if (!signup.thereIsNoDuplicatedUserOnTheFile(PackgName, "Package.txt")) {
-                                                            System.out.print("This Package already Exist ! \n");
+                                                            logger.info("This Package already Exist !");
                                                             continue;
                                                         } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(PackgName)) {
-                                                            System.out.print("Enter a Valid Name ! \n");
+                                                            logger.info("Enter a Valid Name !");
                                                             continue;
                                                         }
-/////////////////////
+
                                                         while (true) {
-
-
-                                                            System.out.println("Enter Package Price : ");
+                                                            logger.info("Enter Package Price:");
                                                             FlowerPriceP = scanner.nextLine();
+
                                                             if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(FlowerPriceP)) {
-                                                                System.out.print("PackagePrice field is required ! \n");
+                                                                logger.info("PackagePrice field is required !");
                                                                 continue;
                                                             } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(FlowerPriceP)) {
-                                                                System.out.print("Enter a Valid Package Price ! \n");
+                                                                logger.info("Enter a Valid Package Price !");
                                                                 continue;
                                                             } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(FlowerPriceP)) {
-                                                                System.out.print("Enter a Valid Package Price ! \n");
+                                                                logger.info("Enter a Valid Package Price !");
                                                                 continue;
                                                             } else {
                                                                 try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
-                                                                    // Append hall details to the file
                                                                     writer.write(PackgName + "," + FlowerPriceP);
                                                                 } catch (IOException e) {
-                                                                    System.err.println(ERROR_WRITE_FILE_MSG + e.getMessage());
+                                                                    logger.severe(ERROR_WRITE_FILE_MSG + e.getMessage());
                                                                 }
-
-
                                                                 break;
-
                                                             }
-
-
                                                         }
 
-                                                        //////////////////////////
+
+
                                                         while (true){
-                                                            System.out.println("Enter Hall Name : ");
+                                                            logger.info("Enter Hall Name : ");
                                                             HallnameP = scanner.nextLine();
 
                                                             if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(HallnameP)) {
                                                                 System.out.print(HN_FAIL_MSG);
                                                                 continue;
                                                             } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(HallnameP)) {
-                                                                System.out.print("Enter a Valid Name ! \n");
+                                                                logger.info("Enter a Valid Name ! \n");
                                                                 continue;
                                                             } else {
                                                                 while (true) {
-                                                                    System.out.println("Enter Hall Capacity : ");
+                                                                    logger.info("Enter Hall Capacity : ");
                                                                     CapacityP = scanner.nextLine();
                                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(CapacityP)) {
-                                                                        System.out.print("Hall capacity field is required ! \n");
+                                                                        logger.info("Hall capacity field is required ! \n");
                                                                         continue;
                                                                     } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(CapacityP)) {
                                                                         System.out.print(ENTER_V_CAPACITY_MSG );
@@ -370,10 +365,10 @@ public class Main {
                                                                                 continue;
                                                                             } else {
                                                                                 while (true) {
-                                                                                    System.out.println("Enter Hall Location : ");
+                                                                                    logger.info("Enter Hall Location : ");
                                                                                     HLocationP = scanner.nextLine();
                                                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(HLocationP)) {
-                                                                                        System.out.print("Hall Location field is required ! \n");
+                                                                                        logger.info("Hall Location field is required ! \n");
                                                                                         continue;
                                                                                     } else {
                                                                                         try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
@@ -405,26 +400,26 @@ public class Main {
 
                                                         }
                                                         break ;
-                                                    }/////end hall
+                                                    }
                                                     Scanner scanner2 = new Scanner(System.in);
-                                                    System.out.print("Do U Want to Add Dj \n");
-                                                    System.out.print("Yes : 1 \n");
-                                                    System.out.print("NO : 0 \n");
+                                                    logger.info("Do U Want to Add Dj \n");
+                                                    logger.info("Yes : 1 \n");
+                                                    logger.info("NO : 0 \n");
                                                     s= scanner2.nextInt();
                                                     if(s==0)flag=false;else flag=true;
 
 
                                                     while (flag){
-                                                        System.out.println("Enter Dj Name : ");
+                                                        logger.info("Enter Dj Name : ");
                                                         DjnameP = scanner.nextLine();
 
                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(  DjnameP) ) {
-                                                            System.out.print("Dj Name field is required ! \n");
+                                                            logger.info("Dj Name field is required ! \n");
                                                             continue ;
                                                         }
 
                                                         else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField( DjnameP)) {
-                                                            System.out.print("Enter a Valid Name ! \n");
+                                                            logger.info("Enter a Valid Name ! \n");
                                                             continue;
                                                         }
 
@@ -445,23 +440,23 @@ public class Main {
 
 
                                                         }
-                                                    }/////////end DJ
-                                                    System.out.print("Do U Want to Add Studio \n");
-                                                    System.out.print("Yes : 1 \n");
-                                                    System.out.print("NO : 0 \n");
+                                                    }
+                                                    logger.info("Do U Want to Add Studio \n");
+                                                    logger.info("Yes : 1 \n");
+                                                    logger.info("NO : 0 \n");
                                                     s= scanner2.nextInt();
                                                     if(s==0)flag=false;else flag=true;
                                                     while (flag){
-                                                        System.out.println("Enter Studio Name : ");
+                                                        logger.info("Enter Studio Name : ");
                                                         studionameP = scanner.nextLine();
 
                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(   studionameP ) ) {
-                                                            System.out.print("Studio field is required ! \n");
+                                                            logger.info("Studio field is required ! \n");
                                                             continue ;
                                                         }
 
                                                         else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(  studionameP)) {
-                                                            System.out.print("Enter a Valid Name ! \n");
+                                                            logger.info("Enter a Valid Name ! \n");
                                                             continue;
                                                         }
 
@@ -478,25 +473,25 @@ public class Main {
 
                                                             break ;
                                                         }
-                                                    }   //////////// endStudio
+                                                    }
 
-                                                    System.out.print("Do U Want to Add Dessert \n");
-                                                    System.out.print("Yes : 1 \n");
-                                                    System.out.print("NO : 0 \n");
+                                                    logger.info("Do U Want to Add Dessert \n");
+                                                    logger.info("Yes : 1 \n");
+                                                    logger.info("NO : 0 \n");
                                                     s= scanner2.nextInt();
                                                     if(s==0)flag=false;else flag=true;
 
                                                     while (flag){
-                                                        System.out.println("Enter dessert Name : ");
+                                                        logger.info("Enter dessert Name : ");
                                                         DessertnameP = scanner.nextLine();
 
                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(  DessertnameP ) ) {
-                                                            System.out.print("dessert field is required ! \n");
+                                                            logger.info("dessert field is required ! \n");
                                                             continue ;
                                                         }
 
                                                         else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(  DessertnameP)) {
-                                                            System.out.print("Enter a Valid Name ! \n");
+                                                            logger.info("Enter a Valid Name ! \n");
                                                             continue;
                                                         }
 
@@ -514,32 +509,32 @@ public class Main {
                                                             break ;
 
                                                         }
-                                                    }   //////////// end dessert
+                                                    }
 
-                                                    System.out.print("Do U Want to Add Main Course \n");
-                                                    System.out.print("Yes : 1 \n");
-                                                    System.out.print("NO : 0 \n");
+                                                    logger.info("Do U Want to Add Main Course \n");
+                                                    logger.info("Yes : 1 \n");
+                                                    logger.info("NO : 0 \n");
                                                     s= scanner2.nextInt();
                                                     if(s==0)flag=false;else flag=true;
 
                                                     while (flag){
-                                                        System.out.println("Enter Main Course Name : ");
+                                                        logger.info("Enter Main Course Name : ");
                                                         MainCnameP = scanner.nextLine();
 
                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(  MainCnameP ) ) {
-                                                            System.out.print("Main Course field is required ! \n");
+                                                            logger.info("Main Course field is required ! \n");
                                                             continue ;
                                                         }
 
                                                         else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(  MainCnameP)) {
-                                                            System.out.print("Enter a Valid Name ! \n");
+                                                            logger.info("Enter a Valid Name ! \n");
                                                             continue;
                                                         }
 
                                                         else {
 
                                                             try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
-                                                                // Append hall details to the file
+
                                                                 writer.write(  "," + "Main_Course Name :" +MainCnameP  );
 
                                                             } catch (IOException e) {
@@ -551,28 +546,28 @@ public class Main {
                                                             break ;
                                                         }
                                                     }
-                                                    //////////// end Main Course
 
-                                                    System.out.print("Do U Want to Add Flowers \n");
-                                                    System.out.print("Yes : 1 \n");
-                                                    System.out.print("NO : 0 \n");
+
+                                                    logger.info("Do U Want to Add Flowers \n");
+                                                    logger.info("Yes : 1 \n");
+                                                    logger.info("NO : 0 \n");
                                                     s= scanner2.nextInt();
                                                     if(s==0)flag=false;else flag=true;
 
                                                     while (true){
                                                         if(flag) {
-                                                            System.out.println("Enter Flower Name : ");
+                                                            logger.info("Enter Flower Name : ");
                                                             FlowernameP = scanner.nextLine();
 
                                                             if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(FlowernameP)) {
-                                                                System.out.print("Flower field is required ! \n");
+                                                                logger.info("Flower field is required ! \n");
                                                                 continue;
                                                             } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(FlowernameP)) {
-                                                                System.out.print("Enter a Valid Name ! \n");
+                                                                logger.info("Enter a Valid Name ! \n");
                                                                 continue;
                                                             }
                                                             try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
-                                                                // Append hall details to the file
+
                                                                 writer.write("," + "Flower Name :" + FlowernameP);
 
                                                             } catch (IOException e) {
@@ -586,23 +581,23 @@ public class Main {
                                                         }
 
                                                         try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
-                                                            // Append hall details to the file
+
                                                             writer.write(","+username);
                                                             writer.newLine();
-                                                            System.out.print("Adding Package successful ! \n");//
+                                                            logger.info("Adding Package successful ! \n");//
                                                         } catch (IOException e) {
                                                             System.err.println(ERROR_WRITE_FILE_MSG + e.getMessage());
                                                         }
                                                         break secondWhile ;
 
-                                                    } //////////// end Flower
+                                                    }
 
 
-                                                    /////////////////////
+
                                                 case "5":
                                                     ///
                                                     userMyApp.searchValueInFile("Package.txt",username);
-                                                    System.out.println("Enter The Name Of Package To Delete It : ");
+                                                    logger.info("Enter The Name Of Package To Delete It : ");
                                                     String fileName = "Package.txt";
                                                     String wordToDelete = scanner.nextLine();
                                                     File inputFile = new File(fileName);
@@ -612,10 +607,10 @@ public class Main {
                                                     BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
 
                                                     String currentLine;
-                                                    boolean deleted1 = false; // Flag to track if the file is deleted
+                                                    boolean deleted1 = false;
 
                                                     while ((currentLine = reader.readLine()) != null) {
-                                                        // Split the current line by comma (assuming username and password are separated by comma)
+
                                                         String[] parts = currentLine.split(",");
                                                         if (!parts[0].trim().equals(wordToDelete)) {
                                                             writer.write(currentLine + System.getProperty("line.separator"));
@@ -628,35 +623,35 @@ public class Main {
 
                                                     // Delete the original file
                                                     if (!inputFile.delete()) {
-                                                        System.out.println("Could not delete original file");
+                                                        logger.info("Could not delete original file");
                                                         return;
                                                     }
 
-                                                    // Rename the temporary file to the original file name
+
                                                     if (!tempFile.renameTo(inputFile)) {
-                                                        System.out.println("Could not rename temporary file");
+                                                        logger.info("Could not rename temporary file");
                                                         return;
                                                     }
 
-                                                    // Print "Delete successful" if a line was deleted
+
                                                     if (deleted1) {
-                                                        System.out.println("Delete successful");
+                                                        logger.info("Delete successful");
                                                     } else {
-                                                        System.out.println("No lines were deleted");
+                                                        logger.info("No lines were deleted");
                                                     }
                                                     break secondWhile;
-////////////////////////////////////////////////////////////
+
                                                 case "6":
-                                                    System.out.println("Provider's Profit ="+PriceCalculator.calculateTotalPrice("profitsPackage.txt","profits.txt",username));
+                                                    logger.info("Provider's Profit ="+PriceCalculator.calculateTotalPrice("profitsPackage.txt","profits.txt",username));
                                                     break secondWhile;
 
 
                                                 case "7" :
-                                                    System.out.println(LOGOUT_MSG );
-                                                    // Add your logic for logging out
-                                                    break outerWhile1;  // Exit the outer while loop
+                                                    logger.info(LOGOUT_MSG );
+
+                                                    break outerWhile1;
                                                 default:
-                                                    System.out.println(UN_VALID_OPTION_MSG);
+                                                    logger.info(UN_VALID_OPTION_MSG);
                                             }
 
                                         }
@@ -666,47 +661,47 @@ public class Main {
 
                                     else {
                                         while (true){
-                                            System.out.println("The monthly subscription  is 30$");
-                                            System.out.println("if you want to subscribe to Fiesta app enter 1 else enter 0 ");
+                                            logger.info("The monthly subscription  is 30$");
+                                            logger.info("if you want to subscribe to Fiesta app enter 1 else enter 0 ");
                                             Enternumber=scanner.nextLine();
                                             if (Enternumber.equals("1")) {
 
                                                 while (true){
-                                                    System.out.println("Enter Card Number : ");
+                                                    logger.info("Enter Card Number : ");
                                                     Paypage = scanner.nextLine();
 
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage) ) {
-                                                        System.out.print("Card Number field is required ! \n");
+                                                        logger.info("Card Number field is required ! \n");
                                                         continue ;
                                                     }
                                                     else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(Paypage)) {
-                                                        System.out.print("Enter a Valid Number ! \n");
+                                                        logger.info("Enter a Valid Number ! \n");
                                                         continue ;
                                                     }
 
                                                     else {
                                                         while (true) {
-                                                            System.out.println("Enter Card Owner Name : ");
+                                                            logger.info("Enter Card Owner Name : ");
                                                             Paypage = scanner.nextLine();
                                                             if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Paypage)) {
-                                                                System.out.print("Card Owner Name field is required ! \n");
+                                                                logger.info("Card Owner Name field is required ! \n");
                                                                 continue;
                                                             } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(Paypage)) {
-                                                                System.out.print("Enter a Valid Name ! \n");
+                                                                logger.info("Enter a Valid Name ! \n");
                                                                 continue;
                                                             } else {
                                                                 while (true) {
-                                                                    System.out.println("Enter  CVC : ");
+                                                                    logger.info("Enter  CVC : ");
                                                                     Paypage = scanner.nextLine();
                                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage)) {
-                                                                        System.out.print("Card Number field is required ! \n");
+                                                                        logger.info("Card Number field is required ! \n");
                                                                         continue;
                                                                     } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(Paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(Paypage)) {
-                                                                        System.out.print("Enter a Valid CVC Number ! \n");
+                                                                        logger.info("Enter a Valid CVC Number ! \n");
                                                                         continue;
                                                                     } else {
-                                                                        System.out.print(" * Payment was successful * ! \n");
-                                                                        System.out.println("You have successfully subscribed :)");
+                                                                        logger.info(" * Payment was successful * ! \n");
+                                                                        logger.info("You have successfully subscribed :)");
                                                                         b = switchAccountToProviderMyApp.storeProviderData(username, password);
                                                                         break;
                                                                     }
@@ -724,10 +719,10 @@ public class Main {
                                         break;  }
 
                                 case "2":
-                                    System.out.println("Let's Go to wedding planning !");
+                                    logger.info("Let's Go to wedding planning !");
                                     innerWhile:
                                     while (true) {
-                                        System.out.println("Choose: \n 1. Wedding Halls  \n 2. Hire a DJ  \n 3. Photography Studio \n " +
+                                        logger.info("Choose: \n 1. Wedding Halls  \n 2. Hire a DJ  \n 3. Photography Studio \n " +
                                                 "4. Flowers \n 5. Main course \n 6. Dessert \n  7.Save \n 8. Back to the previous page  ");
                                         option1 = scanner.nextLine();
                                         planningloop:
@@ -737,7 +732,7 @@ public class Main {
                                                 // Add your logic for Wedding Halls
                                                 while (true) {
 
-                                                    System.out.println("Enter Hall Name:");//enter hallname
+                                                    logger.info("Enter Hall Name:");//enter hallname
                                                     hallName = scanner.nextLine();
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(hallName)) {
                                                         System.out.print(HN_FAIL_MSG);
@@ -762,15 +757,15 @@ public class Main {
                                                 userMyApp.displayFileContents("Dj.txt");
                                                 while (true) {
 
-                                                    System.out.println("Enter Dj Name:");
+                                                    logger.info("Enter Dj Name:");
                                                     djName = scanner.nextLine();
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(djName)) {
-                                                        System.out.print("Dj Name field is required ! \n");
+                                                        logger.info("Dj Name field is required ! \n");
                                                         continue;
                                                     } else if (!userMyApp.checkFile(djName, DjFile)) {
-                                                        System.out.println(SPACE_SEPARATOR);
-                                                        System.out.print(NAME_NOT_IN_LIST_MSG);
-                                                        System.out.println(SPACE_SEPARATOR);
+                                                        logger.info(SPACE_SEPARATOR);
+                                                        logger.info(NAME_NOT_IN_LIST_MSG);
+                                                        logger.info(SPACE_SEPARATOR);
                                                         continue;
                                                     } else {
                                                         if (djName != null && !djName.trim().isEmpty()) {
@@ -786,15 +781,15 @@ public class Main {
                                                 // Add your logic for Photography Studio
                                                 while (true) {
 
-                                                    System.out.println("Enter Studio Name:");
+                                                    logger.info("Enter Studio Name:");
                                                     StudioName = scanner.nextLine();
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(StudioName)) {
-                                                        System.out.print(" Studio Name field is required ! \n");
+                                                        logger.info(" Studio Name field is required ! \n");
                                                         continue;
                                                     } else if (!userMyApp.checkFile(StudioName, StudioFile)) {
-                                                        System.out.println(SPACE_SEPARATOR);
-                                                        System.out.print(NAME_NOT_IN_LIST_MSG);
-                                                        System.out.println(SPACE_SEPARATOR);
+                                                        logger.info(SPACE_SEPARATOR);
+                                                        logger.info(NAME_NOT_IN_LIST_MSG);
+                                                        logger.info(SPACE_SEPARATOR);
                                                         continue;
                                                     } else {
                                                         if (StudioName != null && !StudioName.trim().isEmpty()) {
@@ -811,15 +806,15 @@ public class Main {
                                                 // Add your logic for Flowers
                                                 while (true) {
 
-                                                    System.out.println("Enter Flower Type:");
+                                                    logger.info("Enter Flower Type:");
                                                     FlowerName = scanner.nextLine();
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(FlowerName)) {
                                                         System.out.print(" Flower Name field is required ! \n");
                                                         continue;
                                                     } else if (!userMyApp.checkFile(FlowerName, FlowerFile)) {
-                                                        System.out.println(SPACE_SEPARATOR);
-                                                        System.out.print(NAME_NOT_IN_LIST_MSG);
-                                                        System.out.println(SPACE_SEPARATOR);
+                                                        logger.info(SPACE_SEPARATOR);
+                                                        logger.info(NAME_NOT_IN_LIST_MSG);
+                                                        logger.info(SPACE_SEPARATOR);
                                                         continue;
                                                     }
 
@@ -830,15 +825,15 @@ public class Main {
                                                 // Add your logic for Main course
                                                 while (true) {
 
-                                                    System.out.println("Enter Maincourse Name:");
+                                                    logger.info("Enter Maincourse Name:");
                                                     Maincourse = scanner.nextLine();
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Maincourse)) {
-                                                        System.out.print("  Main course Name field is required ! \n");
+                                                        logger.info("  Main course Name field is required ! \n");
                                                         continue;
                                                     } else if (!userMyApp.checkFile(Maincourse, maincourseFile)) {
-                                                        System.out.println(SPACE_SEPARATOR);
-                                                        System.out.print(NAME_NOT_IN_LIST_MSG);
-                                                        System.out.println(SPACE_SEPARATOR);
+                                                        logger.info(SPACE_SEPARATOR);
+                                                        logger.info(NAME_NOT_IN_LIST_MSG);
+                                                        logger.info(SPACE_SEPARATOR);
                                                         continue;
                                                     }
 
@@ -849,15 +844,15 @@ public class Main {
                                                 while (true) {
                                                     // Add your logic for Dessert
 
-                                                    System.out.println("Enter Desert Name:");
+                                                    logger.info("Enter Desert Name:");
                                                     Desert = scanner.nextLine();
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Desert)) {
-                                                        System.out.print("  Dessert Name field is required ! \n");
+                                                        logger.info("  Dessert Name field is required ! \n");
                                                         continue;
                                                     } else if (!userMyApp.checkFile(Desert, DesertFile)) {
-                                                        System.out.println(SPACE_SEPARATOR);
-                                                        System.out.print(NAME_NOT_IN_LIST_MSG);
-                                                        System.out.println(SPACE_SEPARATOR);
+                                                        logger.info(SPACE_SEPARATOR);
+                                                        logger.info(NAME_NOT_IN_LIST_MSG);
+                                                        logger.info(SPACE_SEPARATOR);
                                                         continue;
                                                     }
 
@@ -899,52 +894,52 @@ public class Main {
 
                                                 //////////////////////////////
                                                 if (!Objects.equals(djName, null)) {
-                                                    System.out.println("The amount you should pay for Dj : " + UserProfitDj);
+                                                    logger.info("The amount you should pay for Dj : " + UserProfitDj);
                                                 }
 
                                                 if (!Objects.equals(StudioName, null)) {
-                                                    System.out.println("The amount you should pay for studio : " + UserProfitstudio);
+                                                    logger.info("The amount you should pay for studio : " + UserProfitstudio);
                                                 }
 
-                                                System.out.println("Total amount you should pay for Provider="+UserProfit);
-                                                System.out.println("To complete the order , please pay !");
+                                                logger.info("Total amount you should pay for Provider="+UserProfit);
+                                                logger.info("To complete the order , please pay !");
                                                 /////////////////////////////////
                                                 while (true){
-                                                    System.out.println("Enter Card Number : ");
+                                                    logger.info("Enter Card Number : ");
                                                     Paypage = scanner.nextLine();
 
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage) ) {
-                                                        System.out.print("Card Number field is required ! \n");
+                                                        logger.info("Card Number field is required ! \n");
                                                         continue ;
                                                     }
                                                     else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(Paypage)) {
-                                                        System.out.print("Enter a Valid Number ! \n");
+                                                        logger.info("Enter a Valid Number ! \n");
                                                         continue ;
                                                     }
 
                                                     else {
                                                         while (true) {
-                                                            System.out.println("Enter Card Owner Name : ");
+                                                            logger.info("Enter Card Owner Name : ");
                                                             Paypage = scanner.nextLine();
                                                             if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Paypage)) {
-                                                                System.out.print("Card Owner Name field is required ! \n");
+                                                                logger.info("Card Owner Name field is required ! \n");
                                                                 continue;
                                                             } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(Paypage)) {
-                                                                System.out.print("Enter a Valid Name ! \n");
+                                                                logger.info("Enter a Valid Name ! \n");
                                                                 continue;
                                                             } else {
                                                                 while (true) {
-                                                                    System.out.println("Enter  CVC : ");
+                                                                    logger.info("Enter  CVC : ");
                                                                     Paypage = scanner.nextLine();
                                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage)) {
-                                                                        System.out.print("Card Number field is required ! \n");
+                                                                        logger.info("Card Number field is required ! \n");
                                                                         continue;
                                                                     } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(Paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(Paypage)) {
-                                                                        System.out.print("Enter a Valid CVC Number ! \n");
+                                                                        logger.info("Enter a Valid CVC Number ! \n");
                                                                         continue;
                                                                     } else {
-                                                                        System.out.print(" * Payment was successful * ! \n");
-                                                                        System.out.println("Saved correctly");
+                                                                        logger.info(" * Payment was successful * ! \n");
+                                                                        logger.info("Saved correctly");
                                                                         b = switchAccountToProviderMyApp.storeProviderData(username, password);
                                                                         break;
                                                                     }
@@ -955,24 +950,23 @@ public class Main {
                                                         }
                                                         break ; }
                                                 }
-                                                /////////////////////////////////////
-                                                //  userMyApp.AddtoEvent("Total profit =",String.valueOf(UserProfit));
+
                                                 userMyApp.AddtoEvent(":::::::::::::::::",":::::::::::::::::");
                                                 break innerWhile;
 
                                             case "8":
-                                                System.out.println("Going back to the main menu");
+                                                logger.info("Going back to the main menu");
                                                 break innerWhile;
 
                                             default:
-                                                System.out.println(UN_VALID_OPTION_MSG);
+                                                logger.info(UN_VALID_OPTION_MSG);
                                         }
                                     } // end inner whil loopop
                                     break;
 
                                 case "3":
                                     caseLabel:
-                                    System.out.println("choose : \n 1. select the package and choose according to the price that suits you !\n "
+                                    logger.info("choose : \n 1. select the package and choose according to the price that suits you !\n "
                                             + " 2. Enter the price you have so we can show you prices that are closet to  the packages !");
 
                                     int x =scanner.nextInt();
@@ -980,17 +974,17 @@ public class Main {
                                         userMyApp.displayFileContents("Package.txt");
                                         while (true) {
                                             // Add your logic for Dessert
-                                            System.out.println("Enter Package name:");
+                                            logger.info("Enter Package name:");
                                             Scanner sc =new Scanner(System.in);
                                             Pname = sc.nextLine();
 
                                             if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Pname)) {
-                                                System.out.print("  Packge Name field is required ! \n");
+                                                logger.info("  Packge Name field is required ! \n");
                                                 continue;
                                             } else if (!userMyApp.checkFile(  Pname, "Package.txt")) {
-                                                System.out.println(SPACE_SEPARATOR);
-                                                System.out.print(NAME_NOT_IN_LIST_MSG);
-                                                System.out.println(SPACE_SEPARATOR);
+                                                logger.info(SPACE_SEPARATOR);
+                                                logger.info(NAME_NOT_IN_LIST_MSG);
+                                                logger.info(SPACE_SEPARATOR);
                                                 continue;
                                             }
                                             else {
@@ -999,45 +993,45 @@ public class Main {
                                                     String finalPackgName =  Pname;
                                                     SwingUtilities.invokeLater(() -> new YearlyBookingCalendarPachage( finalPackgName.trim()));
                                                 }
-                                                System.out.println("Total amount u should pay to provider =" + UserProfit);
-                                                System.out.println("To complete the order , please pay !");
+                                                logger.info("Total amount u should pay to provider =" + UserProfit);
+                                                logger.info("To complete the order , please pay !");
                                                 //////////////////
                                                 while (true){
-                                                    System.out.println("Enter Card Number : ");
+                                                    logger.info("Enter Card Number : ");
                                                     Paypage = scanner11.nextLine();
 
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage) ) {
-                                                        System.out.print("Card Number field is required ! \n");
+                                                        logger.info("Card Number field is required ! \n");
                                                         continue ;
                                                     }
                                                     else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(Paypage)) {
-                                                        System.out.print("Enter a Valid Number ! \n");
+                                                        logger.info("Enter a Valid Number ! \n");
                                                         continue ;
                                                     }
 
                                                     else {
                                                         while (true) {
-                                                            System.out.println("Enter Card Owner Name : ");
+                                                            logger.info("Enter Card Owner Name : ");
                                                             Paypage = scanner11.nextLine();
                                                             if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Paypage)) {
-                                                                System.out.print("Card Owner Name field is required ! \n");
+                                                                logger.info("Card Owner Name field is required ! \n");
                                                                 continue;
                                                             } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(Paypage)) {
-                                                                System.out.print("Enter a Valid Name ! \n");
+                                                                logger.info("Enter a Valid Name ! \n");
                                                                 continue;
                                                             } else {
                                                                 while (true) {
-                                                                    System.out.println("Enter  CVC : ");
+                                                                    logger.info("Enter  CVC : ");
                                                                     Paypage = scanner11.nextLine();
                                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage)) {
-                                                                        System.out.print("Card Number field is required ! \n");
+                                                                        logger.info("Card Number field is required ! \n");
                                                                         continue;
                                                                     } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(Paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(Paypage)) {
-                                                                        System.out.print("Enter a Valid CVC Number ! \n");
+                                                                        logger.info("Enter a Valid CVC Number ! \n");
                                                                         continue;
                                                                     } else {
-                                                                        System.out.print(" * Payment was successful * ! \n");
-                                                                        System.out.println("Saved correctly");
+                                                                        logger.info(" * Payment was successful * ! \n");
+                                                                        logger.info("Saved correctly");
                                                                         b = switchAccountToProviderMyApp.storeProviderData(username, password);
                                                                         break;
                                                                     }
@@ -1048,13 +1042,12 @@ public class Main {
                                                         }
                                                         break ; }
                                                 }
-                                                //////////////////
+
                                                 userMyApp.AddtoEvent("Package: ",Pname);
                                                 UserProfit = userMyApp.getColumnValueForHall("Package.txt", Pname, 1);//
-                                                //  userMyApp.AddtoEvent("Total profit =",String.valueOf(UserProfit));
                                                 userMyApp.AddtoEvent(":::::::::::::::::",":::::::::::::::::");
 
-                                                //   System.out.println("Added successfully ! ");
+
                                                 break outerWhile;
                                             }
 
@@ -1065,7 +1058,7 @@ public class Main {
 
                                     else {
 
-                                        System.out.println("Enter the budget that suits you : ");
+                                        logger.info("Enter the budget that suits you : ");
                                         Scanner scanner111 = new Scanner(System.in) ;
                                         int budget =scanner111.nextInt() ;
 
@@ -1073,20 +1066,20 @@ public class Main {
                                         while (true) {
                                             packgCount= UserMyApp.checkPrise("Package.txt",budget,1);
                                             if(packgCount==0){
-                                                System.out.println("Sorry, There is no suitable package.");
+                                                logger.info("Sorry, There is no suitable package.");
                                                 break outerWhile;//
                                             }
                                             else {
-                                                System.out.println("Choose the Package name :");
+                                                logger.info("Choose the Package name :");
                                                 Scanner scanner4 = new Scanner(System.in);
                                                 String name = scanner4.nextLine();
                                                 if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(name)) {
-                                                    System.out.print(PACKAGE_NAME_REQ );
+                                                    logger.info(PACKAGE_NAME_REQ );
                                                     continue;
                                                 } else if (!userMyApp.checkFile(name, "Package.txt ")) {
-                                                    System.out.println(SPACE_SEPARATOR);
-                                                    System.out.print(NAME_NOT_IN_LIST_MSG);
-                                                    System.out.println(SPACE_SEPARATOR);
+                                                    logger.info(SPACE_SEPARATOR);
+                                                    logger.info(NAME_NOT_IN_LIST_MSG);
+                                                    logger.info(SPACE_SEPARATOR);
                                                     continue;
                                                 } else {
 
@@ -1097,45 +1090,45 @@ public class Main {
                                                     }
 
                                                     UserProfit = UserMyApp.getColumnValueForHall("Package.txt",name,1);
-                                                    System.out.println("Total amount u should pay to provider =" + UserProfit);
-                                                    System.out.println("To complete the order , please pay !");
-                                                    //////////////////
+                                                    logger.info("Total amount u should pay to provider =" + UserProfit);
+                                                    logger.info("To complete the order , please pay !");
+
                                                     while (true){
-                                                        System.out.println("Enter Card Number : ");
+                                                        logger.info("Enter Card Number : ");
                                                         Paypage = scanner11.nextLine();
 
                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage) ) {
-                                                            System.out.print("Card Number field is required ! \n");
+                                                            logger.info("Card Number field is required ! \n");
                                                             continue ;
                                                         }
                                                         else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(Paypage)) {
-                                                            System.out.print("Enter a Valid Number ! \n");
+                                                            logger.info("Enter a Valid Number ! \n");
                                                             continue ;
                                                         }
 
                                                         else {
                                                             while (true) {
-                                                                System.out.println("Enter Card Owner Name : ");
+                                                                logger.info("Enter Card Owner Name : ");
                                                                 Paypage = scanner11.nextLine();
                                                                 if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Paypage)) {
-                                                                    System.out.print("Card Owner Name field is required ! \n");
+                                                                    logger.info("Card Owner Name field is required ! \n");
                                                                     continue;
                                                                 } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(Paypage)) {
-                                                                    System.out.print("Enter a Valid Name ! \n");
+                                                                    logger.info("Enter a Valid Name ! \n");
                                                                     continue;
                                                                 } else {
                                                                     while (true) {
-                                                                        System.out.println("Enter  CVC : ");
+                                                                        logger.info("Enter  CVC : ");
                                                                         Paypage = scanner11.nextLine();
                                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage)) {
-                                                                            System.out.print("Card Number field is required ! \n");
+                                                                            logger.info("Card Number field is required ! \n");
                                                                             continue;
                                                                         } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(Paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(Paypage)) {
-                                                                            System.out.print("Enter a Valid CVC Number ! \n");
+                                                                            logger.info("Enter a Valid CVC Number ! \n");
                                                                             continue;
                                                                         } else {
-                                                                            System.out.print(" * Payment was successful * ! \n");
-                                                                            System.out.println("Saved correctly");
+                                                                            logger.info(" * Payment was successful * ! \n");
+                                                                            logger.info("Saved correctly");
                                                                             b = switchAccountToProviderMyApp.storeProviderData(username, password);
                                                                             break;
                                                                         }
@@ -1149,7 +1142,7 @@ public class Main {
                                                     UserMyApp.AddtoEvent("Package Name ", name);
                                                     UserMyApp.AddtoEvent("Price =", String.valueOf(UserMyApp.getColumnValueForHall("Package.txt", name, 1)));
                                                     userMyApp.AddtoEvent(":::::::::::::::::", ":::::::::::::::::");
-                                                    //   System.out.println("Added successfully ! ");
+
                                                 }
                                                 break outerWhile;
                                             }//
@@ -1160,16 +1153,16 @@ public class Main {
 
 
                                 case "4":
-                                    System.out.println(LOGOUT_MSG );
-                                    // Add your logic for logging out
-                                    break outerWhile1;  // Exit the outer while loop
+                                    logger.info(LOGOUT_MSG );
+
+                                    break outerWhile1;
                                 default:
-                                    System.out.println(UN_VALID_OPTION_MSG);
+                                    logger.info(UN_VALID_OPTION_MSG);
                             }
-                        } // end outer while loop
+                        }
                     } else {
-                        System.out.println("Wrong username or password !");
-                        continue ;   // Break from the second while loop and go back to the main menu
+                        logger.info("Wrong username or password !");
+                        continue ;
                     }
                 }
             }
