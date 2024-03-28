@@ -1,16 +1,19 @@
 package DB;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Entity.User;
 
-
-
 public class UserDataBase {
 
-    private ArrayList <User> UserData;
+    private static final Logger logger = Logger.getLogger(UserDataBase.class.getName());
+    private ArrayList<User> UserData;
+
     public UserDataBase() {
         UserData = new ArrayList<User>();
     }
@@ -30,14 +33,12 @@ public class UserDataBase {
                     String password = parts[1].trim();
                     userList.add(new User(username, password));
                 } else {
-                    System.out.println("Invalid line format: " + line);
+                    logger.log(Level.WARNING, "Invalid line format: {0}", line);
                 }
             }
         } catch (IOException e) {
-            System.err.println("Error reading user data file: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error reading user data file: {0}", e.getMessage());
         }
         return userList;
     }
-
-
 }
