@@ -1,5 +1,5 @@
 
-        package org.example;
+package org.example;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,8 +7,11 @@ import java.io.*;
 import java.nio.file.*;
 import java.text.*;
 import java.util.*;
+import java.util.logging.*;
 
-public class YearlyBookingCalendarPachage extends JFrame {
+import javax.swing.WindowConstants;
+
+public class YearlyBookingCalendarPackage extends JFrame {
     private static final String BOOKINGS_FILE = "bookingPackage.txt";
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private final Map<String, Set<String>> bookedDatesPerHall = new HashMap<>();
@@ -16,14 +19,15 @@ public class YearlyBookingCalendarPachage extends JFrame {
     private final JLabel monthLabel = new JLabel("", SwingConstants.CENTER);
     private Calendar calendar = new GregorianCalendar(2024, Calendar.JANUARY, 1);
     private JPanel monthPanel;
+    private static final Logger LOGGER = Logger.getLogger(YearlyBookingCalendarPackage.class.getName());
 
-    public YearlyBookingCalendarPachage(String hallName) {
+    public YearlyBookingCalendarPackage(String hallName) {
         this.currentHall = hallName;
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(500, 400);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
-
+        // Uncovered code
         loadBookings();
         initUI();
     }
@@ -101,7 +105,7 @@ public class YearlyBookingCalendarPachage extends JFrame {
                 bookedDatesPerHall.computeIfAbsent(parts[0], k -> new HashSet<>()).add(parts[1]);
             }
         } catch (IOException e) {
-            System.err.println("Failed to load bookings from file: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Failed to load bookings from file: ", e);
         }
     }
 
@@ -110,9 +114,7 @@ public class YearlyBookingCalendarPachage extends JFrame {
             writer.write(bookingKey);
             writer.newLine();
         } catch (IOException e) {
-            System.err.println("Failed to save booking: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Failed to save booking: ", e);
         }
     }
-
-
 }
