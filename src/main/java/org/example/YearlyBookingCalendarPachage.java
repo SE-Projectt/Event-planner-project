@@ -8,7 +8,7 @@ import java.text.*;
 import java.util.*;
 import java.util.logging.*;
 
-public class YearlyBookingCalendarPackage extends JFrame {
+public class YearlyBookingCalendarPachage extends JFrame {
     private static final String BOOKINGS_FILE = "bookingPackage.txt";
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -17,9 +17,9 @@ public class YearlyBookingCalendarPackage extends JFrame {
     private final JLabel monthLabel = new JLabel("", SwingConstants.CENTER);
     private Calendar calendar = new GregorianCalendar(2024, Calendar.JANUARY, 1);
     private JPanel monthPanel;
-    private static final Logger LOGGER = Logger.getLogger(YearlyBookingCalendarPackage.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(YearlyBookingCalendarPachage.class.getName());
 
-    public YearlyBookingCalendarPackage(String hallName) {
+    public YearlyBookingCalendarPachage(String hallName) {
         this.currentHall = hallName;
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC")); // Set time zone if needed
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -109,10 +109,3 @@ public class YearlyBookingCalendarPackage extends JFrame {
             LOGGER.log(Level.SEVERE, "Failed to save booking: ", e);
         }
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new YearlyBookingCalendarPackage("Example Hall");
-        });
-    }
-}
