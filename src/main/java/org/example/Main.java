@@ -258,8 +258,35 @@ public class Main {
                                                     }
                                                     File inputFile1 = new File(fileName1);
                                                     File tempFile1 = new File("temp.txt");
-                                                    BufferedReader reader1 = new BufferedReader(new FileReader(inputFile1));
-                                                    BufferedWriter writer1 = new BufferedWriter(new FileWriter(tempFile1));
+                                                    BufferedReader reader1 = null;
+                                                    BufferedWriter writer1 = null;
+
+                                                    try {
+                                                        reader1 = new BufferedReader(new FileReader(inputFile1));
+                                                        writer1 = new BufferedWriter(new FileWriter(tempFile1));
+
+                                                        String currentLine1;
+                                                        while ((currentLine1 = reader1.readLine()) != null) {
+
+                                                            writer1.write(currentLine1 + System.getProperty("line.separator"));
+                                                        }
+                                                    } catch (IOException e) {
+
+                                                        e.printStackTrace();
+                                                    } finally {
+
+                                                        try {
+                                                            if (writer1 != null) {
+                                                                writer1.close();
+                                                            }
+                                                            if (reader1 != null) {
+                                                                reader1.close();
+                                                            }
+                                                        } catch (IOException e) {
+                                                            // Handle or log the IOException during closing
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
                                                     String currentLine1;
                                                     boolean deleted = false;
                                                     while ((currentLine1 = reader1.readLine()) != null) {
