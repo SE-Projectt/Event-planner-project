@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 public class UserMyApp {
     private static final Logger logger = LogManager.getLogger(UserMyApp.class);
     private static final String ERROR_READING_FILE = "Error reading the file: {}";
+    private static final String ERROR_CLOSING_READER = "Error closing the reader: {}";
 
     public static void displayFileContents(String filePath) {
         BufferedReader bufferedReader = null;
@@ -26,7 +27,7 @@ public class UserMyApp {
                 try {
                     bufferedReader.close();
                 } catch (IOException e) {
-                    logger.error("Error closing the reader: {}", e.getMessage());
+                    logger.error(ERROR_CLOSING_READER, e.getMessage());
                 }
             }
         }
@@ -54,7 +55,7 @@ public class UserMyApp {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    logger.error("Error closing the reader: {}", e.getMessage());
+                    logger.error(ERROR_CLOSING_READER, e.getMessage());
                 }
             }
         }
@@ -82,7 +83,7 @@ public class UserMyApp {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    logger.error("Error closing the reader: {}", e.getMessage());
+                    logger.error(ERROR_CLOSING_READER, e.getMessage());
                 }
             }
         }
@@ -102,7 +103,7 @@ public class UserMyApp {
                 try {
                     writer.close();
                 } catch (IOException e) {
-                    logger.error("Error closing the writer: {}", e.getMessage());
+                    logger.error(ERROR_CLOSING_READER, e.getMessage());
                 }
             }
         }
@@ -126,7 +127,7 @@ public class UserMyApp {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    logger.error("Error closing the reader: {}", e.getMessage());
+                    logger.error(ERROR_CLOSING_READER, e.getMessage());
                 }
             }
         }
@@ -147,7 +148,7 @@ public class UserMyApp {
                 try {
                     writer.close();
                 } catch (IOException e) {
-                    logger.error("Error closing the writer: {}", e.getMessage());
+                    logger.error(ERROR_CLOSING_READER, e.getMessage());
                 }
             }
         }
@@ -173,7 +174,11 @@ public class UserMyApp {
             throw new IllegalArgumentException("Hall " + hallName + " not found in file");
         } finally {
             if (br != null) {
-                br.close();
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    logger.error(ERROR_CLOSING_READER, e.getMessage());
+                }
             }
         }
     }
@@ -196,7 +201,11 @@ public class UserMyApp {
             }
         } finally {
             if (reader != null) {
-                reader.close();
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    logger.error(ERROR_CLOSING_READER, e.getMessage());
+                }
             }
         }
         return counter;
@@ -231,7 +240,7 @@ public class UserMyApp {
                     reader.close();
                 }
             } catch (IOException e) {
-                logger.error("Error closing file streams: {}", e.getMessage());
+                logger.error(ERROR_CLOSING_READER, e.getMessage());
             }
         }
         if (deleted) {
@@ -267,7 +276,7 @@ public class UserMyApp {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    logger.error("Error closing the reader: {}", e.getMessage());
+                    logger.error(ERROR_CLOSING_READER, e.getMessage());
                 }
             }
         }
