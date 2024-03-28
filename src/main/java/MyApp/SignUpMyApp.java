@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class SignUpMyApp {
     int flag = 0;
-    static String userFile = "user_data.txt";
+   private static final String userFile = "user_data.txt";
 
     public boolean iiEnterValidUsernamePassword(String username, String password) {
 
