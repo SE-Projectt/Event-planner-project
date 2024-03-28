@@ -109,3 +109,4 @@ public class YearlyBookingCalendarPachage extends JFrame {
             LOGGER.log(Level.SEVERE, "Failed to save booking: ", e);
         }
     }
+}
