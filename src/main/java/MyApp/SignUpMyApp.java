@@ -1,19 +1,22 @@
 package MyApp;
+
 import DB.UserDataBase;
 import Entity.User;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class SignUpMyApp {
     private static final String USER_FILE = "user_data.txt"; // constant declaration
+    private static final Logger logger = Logger.getLogger(SignUpMyApp.class.getName());
 
     public boolean iiEnterValidUsernamePassword(String username, String password) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(USER_FILE, true))) {
             writer.println(username + "," + password);
-            System.out.println("You have signed up successfully!");
+            logger.info("You have signed up successfully!");
         } catch (IOException e) {
-            System.err.println("Error writing to file: " + e.getMessage());
+            logger.severe("Error writing to file: " + e.getMessage());
         }
         return true;
     }
@@ -24,12 +27,12 @@ public class SignUpMyApp {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 2 && parts[0].trim().equals(username)) {
-                    System.out.println("This username exists\n");
+                    logger.info("This username exists\n");
                     return true; // Username found
                 }
             }
         } catch (IOException e) {
-            System.err.println("Error reading user data file: " + e.getMessage());
+            logger.severe("Error reading user data file: " + e.getMessage());
         }
         return false; // Username not found
     }
@@ -58,7 +61,7 @@ public class SignUpMyApp {
         File file = new File(fileName);
 
         if (!file.exists()) {
-            System.out.println("File does not exist.");
+            logger.warning("File does not exist.");
             return false;
         }
 
@@ -84,7 +87,7 @@ public class SignUpMyApp {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe(e.getMessage());
         }
         return true; // No duplicate username found
     }
