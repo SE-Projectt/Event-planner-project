@@ -38,6 +38,5 @@ public class YearlyBookingCalendarhallTest {
         // In a real scenario, you would likely instantiate YearlyBookingCalendar here
         // For the purpose of this test, we're just mocking the behavior
         YearlyBookingCalendar calendar = new YearlyBookingCalendar(hallName);
-    }
-
+    }
 }
