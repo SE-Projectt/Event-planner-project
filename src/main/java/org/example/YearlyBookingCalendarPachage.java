@@ -18,9 +18,9 @@ public class YearlyBookingCalendarPachage extends JFrame {
     private final JLabel monthLabel = new JLabel("", SwingConstants.CENTER);
     private Calendar calendar = new GregorianCalendar(2024, Calendar.JANUARY, 1);
     private JPanel monthPanel;
-    private static final Logger LOGGER = Logger.getLogger(YearlyBookingCalendarPackage.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(YearlyBookingCalendarPachage.class.getName());
 
-    public YearlyBookingCalendarPackage(String hallName) {
+    public YearlyBookingCalendarPachage(String hallName) {
         this.currentHall = hallName;
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(500, 400);
