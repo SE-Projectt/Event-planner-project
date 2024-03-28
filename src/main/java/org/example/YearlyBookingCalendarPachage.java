@@ -110,5 +110,9 @@ public class YearlyBookingCalendarPackage extends JFrame {
         }
     }
 
-  
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new YearlyBookingCalendarPackage("Example Hall");
+        });
+    }
 }
