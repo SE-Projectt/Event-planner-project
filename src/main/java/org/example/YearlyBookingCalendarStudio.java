@@ -105,6 +105,6 @@ public class YearlyBookingCalendarStudio extends JFrame {
             writer.newLine();
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to save booking: ", e);
-        }
-    }
+        }
+    }
 }
