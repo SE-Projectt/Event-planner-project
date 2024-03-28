@@ -3,6 +3,7 @@ package org.example;
 import java.util.HashMap;
 import java.util.Map;
 import java.io.*;
+import java.util.logging.*;
 
 public class HallProfitUpdaterPackage {
     private static final Logger logger = Logger.getLogger(HallProfitUpdaterPackage.class.getName());
@@ -21,9 +22,9 @@ public class HallProfitUpdaterPackage {
                 }
             }
         } catch (FileNotFoundException e) {
-            logger.info("Profits file not found. A new one will be created.");
+            logger.warning("Profits file not found. A new one will be created.");
         } catch (IOException e) {
-            logger.severe("An error occurred while reading the profits file.");
+            logger.severe("An error occurred while reading the profits file: " + e.getMessage());
         }
 
         try (BufferedReader hallReader = new BufferedReader(new FileReader(hallsFilePath))) {
@@ -37,13 +38,13 @@ public class HallProfitUpdaterPackage {
                 }
             }
         } catch (IOException e) {
-            logger.severe("An error occurred while reading the Halls file.");
+            logger.severe("An error occurred while reading the Halls file: " + e.getMessage());
         }
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(profitsFilePath))) {
             profitMap.forEach((key, value) -> writer.println(key + "," + value));
         } catch (IOException e) {
-            logger.severe("An error occurred while writing to the profits file.");
+            logger.severe("An error occurred while writing to the profits file: " + e.getMessage());
         }
     }
 }
