@@ -86,6 +86,6 @@ public class SignUpMyApp {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return true; // No duplicate username found
-    }
+        return true; // No duplicate username found
+    }
 }
