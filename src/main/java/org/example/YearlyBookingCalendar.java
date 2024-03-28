@@ -8,6 +8,7 @@ import java.nio.file.*;
 import java.text.*;
 import java.util.logging.*;
 import java.util.*;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 public class YearlyBookingCalendar extends JFrame {
     private static final String BOOKINGS_FILE = "bookingHall.txt";
@@ -19,16 +20,15 @@ public class YearlyBookingCalendar extends JFrame {
     private JPanel monthPanel;
     private static final Logger LOGGER = Logger.getLogger(YearlyBookingCalendar.class.getName());
 
-    public YearlyBookingCalendar(String hallName) {
-        this.currentHall = hallName;
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(500, 400);
-        setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
-        loadBookings();
-        initUI();
-    }
-
+public YearlyBookingCalendar(String hallName) {
+    this.currentHall = hallName;
+    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    setSize(500, 400);
+    setLocationRelativeTo(null);
+    setLayout(new BorderLayout());
+    loadBookings();
+    initUI();
+}
     private void initUI() {
         JPanel topPanel = new JPanel(new BorderLayout());
         JButton prevButton = new JButton("<");
