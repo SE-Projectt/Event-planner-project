@@ -6,7 +6,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.text.*;
 import java.util.*;
-
+import javax.swing.WindowConstants;
 public class YearlyBookingCalendarStudio extends JFrame {
     private static final String BOOKINGS_FILE = "bookingStudio.txt";
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
@@ -16,16 +16,18 @@ public class YearlyBookingCalendarStudio extends JFrame {
     private Calendar calendar = new GregorianCalendar(2024, Calendar.JANUARY, 1);
     private JPanel monthPanel;
 
-    public YearlyBookingCalendarStudio(String hallName) {
-        this.currentHall = hallName;
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(500, 400);
-        setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
 
-        loadBookings();
-        initUI();
-    }
+public YearlyBookingCalendarStudio(String hallName) {
+    this.currentHall = hallName;
+    setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+    setSize(500, 400);
+    setLocationRelativeTo(null);
+    setLayout(new BorderLayout());
+
+    loadBookings();
+    initUI();
+}
+
 
     private void initUI() {
         JPanel topPanel = new JPanel(new BorderLayout());
