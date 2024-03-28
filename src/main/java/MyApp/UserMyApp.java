@@ -17,12 +17,10 @@ public class UserMyApp {
             bufferedReader = new BufferedReader(new FileReader(filePath));
             String line;
 
-            
             while ((line = bufferedReader.readLine()) != null) {
                 System.out.println(line);
             }
         } catch (IOException e) {
-            
             e.printStackTrace();
         } finally {
             if (bufferedReader != null) {
@@ -41,13 +39,13 @@ public class UserMyApp {
             reader = new BufferedReader(new FileReader(filename));
             String line;
             while ((line = reader.readLine()) != null) {
-                
+
                 String[] parts = line.split(":");
                 if (parts.length == 2) {
                     String currentTypeEvent = parts[0].trim();
                     String currentEventName = parts[1].trim();
                     if (currentTypeEvent.equals(typeEvent) && currentEventName.equals(eventName)) {
-                        return true; 
+                        return true;
                     }
                 }
             }
@@ -62,7 +60,7 @@ public class UserMyApp {
                 }
             }
         }
-        return false; 
+        return false;
     }
 
 
@@ -123,7 +121,7 @@ public class UserMyApp {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length > 0 && parts[0].trim().equals(word)) {
-                    return true; 
+                    return true;
                 }
             }
         } catch (IOException e) {
@@ -137,7 +135,7 @@ public class UserMyApp {
                 }
             }
         }
-        return false; 
+        return false;
     }
 
 
@@ -192,7 +190,7 @@ public class UserMyApp {
     }
 
 
-  
+
     public static int checkPrise(String filename, int value, int columnIndex) throws IOException {
         BufferedReader reader = null;
         int counter = 0;
@@ -234,7 +232,7 @@ public class UserMyApp {
 
             while ((currentLine = reader.readLine()) != null) {
                 if (currentLine.contains(name)) {
-                    deleted = true; 
+                    deleted = true;
                     continue;
                 }
                 writer.write(currentLine + System.getProperty("line.separator"));
@@ -255,7 +253,7 @@ public class UserMyApp {
             }
         }
 
-       
+
         if (deleted) {
             if (!inputFile.delete()) {
                 System.out.println("Could not delete the original file.");
@@ -280,27 +278,24 @@ public class UserMyApp {
             reader = new BufferedReader(new FileReader(filePath));
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(","); 
-                String valueToSearch = parts[parts.length - 1]; 
+                String[] parts = line.split(",");
+                String valueToSearch = parts[parts.length - 1];
                 if (valueToSearch.equals(searchValue)) {
                     System.out.println(line);
-                   
+
                 }
             }
         } catch (IOException e) {
-            System.err.println("حدث خطأ أثناء قراءة الملف: " + e.getMessage());
+            System.err.println("Error reading the file: " + e.getMessage());
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    System.err.println("حدث خطأ أثناء إغلاق الملف: " + e.getMessage());
+                    System.err.println("Error closing the file: " + e.getMessage());
                 }
             }
-        }
-    }
-
-
-
+        }
+    }
 
 }
