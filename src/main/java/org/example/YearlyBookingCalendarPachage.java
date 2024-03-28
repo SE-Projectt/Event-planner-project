@@ -1,4 +1,3 @@
-
 package org.example;
 
 import javax.swing.*;
@@ -11,7 +10,7 @@ import java.util.logging.*;
 
 import javax.swing.WindowConstants;
 
-public class YearlyBookingCalendarPackage extends JFrame {
+public class YearlyBookingCalendarPachage extends JFrame {
     private static final String BOOKINGS_FILE = "bookingPackage.txt";
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private final Map<String, Set<String>> bookedDatesPerHall = new HashMap<>();
