@@ -256,66 +256,43 @@ public class Main {
                                                         logger.info(SPACE_SEPARATOR);
                                                         continue;
                                                     }
+
                                                     File inputFile1 = new File(fileName1);
                                                     File tempFile1 = new File("temp.txt");
-                                                    BufferedReader reader1 = null;
-                                                    BufferedWriter writer1 = null;
+                                                    boolean deleted = false;
 
-                                                    try {
-                                                        reader1 = new BufferedReader(new FileReader(inputFile1));
-                                                        writer1 = new BufferedWriter(new FileWriter(tempFile1));
-
+                                                    try (BufferedReader reader1 = new BufferedReader(new FileReader(inputFile1));
+                                                         BufferedWriter writer1 = new BufferedWriter(new FileWriter(tempFile1))) {
                                                         String currentLine1;
                                                         while ((currentLine1 = reader1.readLine()) != null) {
-
-                                                            writer1.write(currentLine1 + System.getProperty("line.separator"));
+                                                            String[] parts = currentLine1.split(",");
+                                                            if (!parts[0].trim().equals(wordToDelete1)) {
+                                                                writer1.write(currentLine1 + System.getProperty("line.separator"));
+                                                            } else {
+                                                                deleted = true;
+                                                            }
                                                         }
                                                     } catch (IOException e) {
-
                                                         e.printStackTrace();
-                                                    } finally {
-
-                                                        try {
-                                                            if (writer1 != null) {
-                                                                writer1.close();
-                                                            }
-                                                            if (reader1 != null) {
-                                                                reader1.close();
-                                                            }
-                                                        } catch (IOException e) {
-                                                            // Handle or log the IOException during closing
-                                                            e.printStackTrace();
-                                                        }
-                                                    }
-                                                    String currentLine1;
-                                                    boolean deleted = false;
-                                                    while ((currentLine1 = reader1.readLine()) != null) {
-                                                        String[] parts = currentLine1.split(",");
-                                                        if (!parts[0].trim().equals(wordToDelete1)) {
-                                                            writer1.write(currentLine1 + System.getProperty("line.separator"));
-                                                        } else {
-                                                            deleted = true;
-                                                        }
-                                                    }
-                                                    writer1.close();
-                                                    reader1.close();
-
-                                                    if (!inputFile1.delete()) {
-                                                        logger.warning("Could not delete original file");
-                                                        return;
                                                     }
 
-
-                                                    if (!tempFile1.renameTo(inputFile1)) {
-                                                        logger.warning("Could not rename temporary file");
-                                                        return;
-                                                    }
-
+                                                    // File operations should be outside the try-with-resources block to ensure they happen after the streams are closed
                                                     if (deleted) {
+                                                        if (!inputFile1.delete()) {
+                                                            logger.warning("Could not delete original file");
+                                                            return;
+                                                        }
+
+                                                        if (!tempFile1.renameTo(inputFile1)) {
+                                                            logger.warning("Could not rename temporary file");
+                                                            return;
+                                                        }
+
                                                         logger.info("Delete successful");
                                                     } else {
-                                                        logger.info("No Halls were deleted");
+                                                        logger.info("No lines were deleted");
                                                     }
+                                                
                                                     break secondWhile;
 
 
