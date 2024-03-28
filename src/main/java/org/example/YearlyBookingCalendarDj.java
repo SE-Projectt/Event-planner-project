@@ -5,24 +5,26 @@ import java.awt.*;
 import java.io.*;
 import java.nio.file.*;
 import java.text.*;
+import java.util.logging.*;
 import java.util.*;
 
 public class YearlyBookingCalendarDj extends JFrame {
     private static final String BOOKINGS_FILE = "BookingDj.txt";
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private final DateFormat DATE_FORMAT;
     private final Map<String, Set<String>> bookedDatesPerHall = new HashMap<>();
-    private final String  currentDj;
+    private final String currentDj;
     private final JLabel monthLabel = new JLabel("", SwingConstants.CENTER);
     private Calendar calendar = new GregorianCalendar(2024, Calendar.JANUARY, 1);
     private JPanel monthPanel;
-    String DjName;
-    public YearlyBookingCalendarDj( String DjName) {
-        this.currentDj = DjName;
+    private static final Logger logger = Logger.getLogger(YearlyBookingCalendarDj.class.getName());
+
+    public YearlyBookingCalendarDj(String djName) {
+        this.currentDj = djName;
+        this.DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(500, 400);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
-
         loadBookings();
         initUI();
     }
@@ -43,6 +45,7 @@ public class YearlyBookingCalendarDj extends JFrame {
 
         monthPanel = new JPanel();
         add(monthPanel, BorderLayout.CENTER);
+
         updateMonthView();
 
         setVisible(true);
@@ -57,8 +60,10 @@ public class YearlyBookingCalendarDj extends JFrame {
     private void updateMonthView() {
         monthPanel.removeAll();
         monthPanel.setLayout(new GridLayout(0, 7, 5, 5));
+
         Calendar monthStart = (Calendar) calendar.clone();
         monthStart.set(Calendar.DAY_OF_MONTH, 1);
+
         int firstDayOfWeek = monthStart.get(Calendar.DAY_OF_WEEK);
         int daysInMonth = monthStart.getActualMaximum(Calendar.DAY_OF_MONTH);
 
@@ -68,16 +73,18 @@ public class YearlyBookingCalendarDj extends JFrame {
 
         Set<String> bookedDates = bookedDatesPerHall.getOrDefault(currentDj, new HashSet<>());
         for (int day = 1; day <= daysInMonth; day++) {
+            monthStart.set(Calendar.DAY_OF_MONTH, day);
             String dayString = DATE_FORMAT.format(monthStart.getTime());
             JButton dayButton = new JButton(Integer.toString(day));
+
             if (bookedDates.contains(dayString)) {
                 dayButton.setEnabled(false);
                 dayButton.setBackground(Color.RED);
             } else {
                 dayButton.addActionListener(e -> bookDate(dayString));
             }
+
             monthPanel.add(dayButton);
-            monthStart.add(Calendar.DAY_OF_MONTH, 1);
         }
 
         monthPanel.revalidate();
@@ -85,37 +92,36 @@ public class YearlyBookingCalendarDj extends JFrame {
     }
 
     private void bookDate(String date) {
-        String bookingKey = currentDj + "," + date;
-        if (!bookedDatesPerHall.computeIfAbsent(currentDj, k -> new HashSet<>()).add(date)) return;
-        saveBooking(bookingKey);
-        JOptionPane.showMessageDialog(this, "Date booked successfully for " + currentDj + " on " + date);
-        dispose(); // Close the window after booking
+        Set<String> dates = bookedDatesPerHall.computeIfAbsent(currentDj, k -> new HashSet<>());
+        if (dates.add(date)) {
+            saveBooking(currentDj + "," + date);
+            JOptionPane.showMessageDialog(this, "Date booked successfully for " + currentDj + " on " + date);
+            dispose(); // Close the window after booking
+        } else {
+            JOptionPane.showMessageDialog(this, "This date is already booked.");
+        }
     }
 
     private void loadBookings() {
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get(BOOKINGS_FILE))) {
+        Path path = Paths.get(BOOKINGS_FILE);
+        try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 bookedDatesPerHall.computeIfAbsent(parts[0], k -> new HashSet<>()).add(parts[1]);
             }
         } catch (IOException e) {
-            System.err.println("Failed to load bookings from file: " + e.getMessage());
+            logger.log(Level.SEVERE, "Failed to load bookings from file: " + e.getMessage(), e);
         }
     }
 
     private void saveBooking(String bookingKey) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(BOOKINGS_FILE, true))) {
+        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(BOOKINGS_FILE), StandardOpenOption.APPEND)) {
             writer.write(bookingKey);
             writer.newLine();
         } catch (IOException e) {
-            System.err.println("Failed to save booking: " + e.getMessage());
+            logger.log(Level.SEVERE, "Failed to save booking: " + e.getMessage(), e);
         }
-    }
-
-
-    public String getDjName() {
-        return DjName;
     }
 
     public String getCurrentDj() {
