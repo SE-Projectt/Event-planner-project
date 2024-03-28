@@ -2,7 +2,11 @@ package MyApp;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
+
 public class AdminMyApp {
+    private static final Logger LOGGER = Logger.getLogger(AdminMyApp.class.getName());
+
     public static int Counts(String fileName) throws IOException {
         int lineCount = 0;
         BufferedReader br = null;
@@ -21,7 +25,7 @@ public class AdminMyApp {
                     br.close();
                 } catch (IOException e) {
                     // Handle the potential IOException from closing the BufferedReader
-                    e.printStackTrace();
+                    LOGGER.severe("Error while closing BufferedReader: " + e.getMessage());
                 }
             }
         }
@@ -31,17 +35,13 @@ public class AdminMyApp {
     public static void deleteLine(String fileName, String username) throws IOException {
         File inputFile = new File(fileName);
         File tempFile = new File("temp.txt");
-
         BufferedReader reader = null;
         BufferedWriter writer = null;
         boolean deleted = false; // Flag to track if the file is deleted
-
         try {
             reader = new BufferedReader(new FileReader(inputFile));
             writer = new BufferedWriter(new FileWriter(tempFile));
-
             String currentLine;
-
             while ((currentLine = reader.readLine()) != null) {
                 // Split the current line by comma (assuming username and password are separated by comma)
                 String[] parts = currentLine.split(",");
@@ -56,35 +56,32 @@ public class AdminMyApp {
                 try {
                     writer.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.severe("Error while closing BufferedWriter: " + e.getMessage());
                 }
             }
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.severe("Error while closing BufferedReader: " + e.getMessage());
                 }
             }
         }
-
         // Proceed with file deletion and renaming only if the writing and reading operations succeeded
         if (deleted) {
             // Delete the original file
             if (!inputFile.delete()) {
-                System.out.println("Could not delete original file");
+                LOGGER.severe("Could not delete original file");
                 return;
             }
-
             // Rename the temporary file to the original file name
             if (!tempFile.renameTo(inputFile)) {
-                System.out.println("Could not rename temporary file");
+                LOGGER.severe("Could not rename temporary file");
                 return;
             }
-
-            System.out.println("Delete successful");
+            LOGGER.info("Delete successful");
         } else {
-            System.out.println("No lines were deleted");
+            LOGGER.info("No lines were deleted");
         }
     }
 
@@ -105,17 +102,16 @@ public class AdminMyApp {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.severe("Error while reading file: " + e.getMessage());
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.severe("Error while closing BufferedReader: " + e.getMessage());
                 }
             }
         }
-
         return false;
     }
 }
