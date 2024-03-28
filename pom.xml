@@ -15,6 +15,7 @@
         <junit.version>5.9.1</junit.version>
         <sonar.organization>se-projectt</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <java.version>19</java.version>
     </properties>
 
     <dependencies>
@@ -81,7 +82,16 @@
 
     <build>
         <plugins>
-            <!-- Other plugins -->
+            <!-- Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.9.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
 
             <!-- JaCoCo Plugin with exclusion -->
             <plugin>
@@ -110,8 +120,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!-- Other plugins -->
         </plugins>
     </build>
 </project>
