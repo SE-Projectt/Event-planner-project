@@ -1,4 +1,3 @@
-
 package org.example;
 import Entity.PayInformation;
 import MyApp.*;
@@ -9,7 +8,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
-    private static final String  logoutM="Logging out \n Thank you !",unValidOptionMsg="Invalid option. Please try again.";;
+    private static final String  LOGOUT_MSG ="Logging out \n Thank you !",UN_VALID_OPTION_MSG="Invalid option. Please try again.";
+    private static final String HN_FAIL_MSG="Hall Name field is required ! \n", ENTER_V_CAPACITY_MSG ="Enter a Valid Capacity ! \n";
     public static void main(String[] args) throws IOException {
 
         SignUpMyApp myApp = new SignUpMyApp();
@@ -155,10 +155,10 @@ outer2:
                                     break;
                                 case 6:
 
-                                    System.out.println(logoutM);
+                                    System.out.println(LOGOUT_MSG );
                                     break outerWhile1;
                                 default:
-                                    System.out.println(unValidOptionMsg);
+                                    System.out.println(UN_VALID_OPTION_MSG);
                             }
                         }
                     }
@@ -196,7 +196,7 @@ outer2:
                                                         HallName = scanner.nextLine();
 
                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(HallName) ) {
-                                                            System.out.print("Hall Name field is required ! \n");
+                                                            System.out.print(HN_FAIL_MSG);
                                                             continue ;
                                                         }
                                                         else if (!signup.thereIsNoDuplicatedUserOnTheFile(HallName,HallPath)) {
@@ -212,11 +212,11 @@ outer2:
                                                                     System.out.print("Hall capacity field is required ! \n");
                                                                     continue;
                                                                 } else if (! payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(HallCapacity)) {
-                                                                    System.out.print("Enter a Valid Capacity ! \n");
+                                                                    System.out.print(ENTER_V_CAPACITY_MSG );
                                                                     continue;
                                                                 }
                                                                 else if (!payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(HallCapacity)) {
-                                                                    System.out.print("Enter a Valid Capacity ! \n");
+                                                                    System.out.print(ENTER_V_CAPACITY_MSG );
                                                                     continue;
                                                                 }
 
@@ -379,7 +379,7 @@ while (true){
                                                         HallnameP = scanner.nextLine();
 
                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(HallnameP)) {
-                                                            System.out.print("Hall Name field is required ! \n");
+                                                            System.out.print(HN_FAIL_MSG);
                                                             continue;
                                                         } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(HallnameP)) {
                                                             System.out.print("Enter a Valid Name ! \n");
@@ -392,10 +392,10 @@ while (true){
                                                                     System.out.print("Hall capacity field is required ! \n");
                                                                     continue;
                                                                 } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(CapacityP)) {
-                                                                    System.out.print("Enter a Valid Capacity ! \n");
+                                                                    System.out.print(ENTER_V_CAPACITY_MSG );
                                                                     continue;
                                                                 } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(CapacityP)) {
-                                                                    System.out.print("Enter a Valid Capacity ! \n");
+                                                                    System.out.print(ENTER_V_CAPACITY_MSG );
                                                                     continue;
                                                                 } else {//
                                                                     while (true) {
@@ -687,11 +687,11 @@ while (true){
 
 
                                                 case "7" :
-                                                    System.out.println(logoutM);
+                                                    System.out.println(LOGOUT_MSG );
                                                     // Add your logic for logging out
                                                     break outerWhile1;  // Exit the outer while loop
                                                 default:
-                                                    System.out.println(unValidOptionMsg);
+                                                    System.out.println(UN_VALID_OPTION_MSG);
                                             }
 
                                         }
@@ -775,7 +775,7 @@ while (true){
                                                     System.out.println("Enter Hall Name:");//enter hallname
                                                     hallName = scanner.nextLine();
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(hallName)) {
-                                                        System.out.print("Hall Name field is required ! \n");
+                                                        System.out.print(HN_FAIL_MSG);
                                                         continue;
                                                     } else if (!userMyApp.checkFile(hallName, "Halls.txt")) {
                                                         System.out.println("----------------------------------------------------------");
@@ -1000,7 +1000,7 @@ while (true){
                                                 break innerWhile;
 
                                             default:
-                                                System.out.println(unValidOptionMsg);
+                                                System.out.println(UN_VALID_OPTION_MSG);
                                         }
                                     } // end inner whil loopop
                                     break;
@@ -1184,7 +1184,7 @@ UserProfit = UserMyApp.getColumnValueForHall("Package.txt",name,1);
                                                     UserMyApp.AddtoEvent("Package Name ", name);
                                                     UserMyApp.AddtoEvent("Price =", String.valueOf(UserMyApp.getColumnValueForHall("Package.txt", name, 1)));
                                                     userMyApp.AddtoEvent(":::::::::::::::::", ":::::::::::::::::");
-                                                 //   System.out.println("Added successfully ! ");
+                                             
                                                 }
                                                 break outerWhile;
                                             }//
@@ -1195,16 +1195,16 @@ UserProfit = UserMyApp.getColumnValueForHall("Package.txt",name,1);
 
 
                                 case "4":
-                                    System.out.println(logoutM);
-                                    // Add your logic for logging out
-                                    break outerWhile1;  // Exit the outer while loop
+                                    System.out.println(LOGOUT_MSG );
+                                
+                                    break outerWhile1;  
                                 default:
-                                    System.out.println(unValidOptionMsg);
+                                    System.out.println(UN_VALID_OPTION_MSG);
                             }
-                        } // end outer while loop
+                        } 
                     } else {
                         System.out.println("Wrong username or password !");
-                        continue ;   // Break from the second while loop and go back to the main menu
+                        continue ;   
                     }
                 }
             }
