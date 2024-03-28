@@ -9,7 +9,10 @@ import java.util.Scanner;
 
 public class Main {
     private static final String  LOGOUT_MSG ="Logging out \n Thank you !",UN_VALID_OPTION_MSG="Invalid option. Please try again.";
-    private static final String HN_FAIL_MSG="Hall Name field is required ! \n", ENTER_V_CAPACITY_MSG ="Enter a Valid Capacity ! \n";
+    private static final String HN_FAIL_MSG="Hall Name field is required ! \n", ENTER_V_CAPACITY_MSG ="Enter a Valid Capacity ! \n",HALL_PATH ="Halls.txt", ERROR_WRITE_FILE_MSG ="Error writing to the file: ", PACKAGE_NAME_REQ ="Package Name field is required ! \n";
+    private static final String SPACE_SEPARATOR="----------------------------------------------------------",NAME_NOT_IN_LIST_MSG="This name is not in the list , please rewrite the name ! \n";
+    private static final String ERROR_READ_IN_FILE_MSG = "Error reading the file: {}";
+
     public static void main(String[] args) throws IOException {
 
         SignUpMyApp myApp = new SignUpMyApp();
@@ -24,7 +27,7 @@ public class Main {
         String username, password, option1, useroption,Paypage, HallName,HallCapacity,HallPrice,HallLocation,ProvidernametoDeleteit,UsernameToDeleteit ;
         String UserFile = "user_data.txt",ProviderFile = "provider_data.txt";
         String hallName = null,djName= null,StudioName= null,FlowerName=null,Maincourse=null,Desert=null;
-        String HallPath="Halls.txt",DjFile="Dj.txt",DesertFile="desert.txt",maincourseFile="maincourse.txt",FlowerFile="flower.txt",StudioFile="studio.txt";
+        String DjFile="Dj.txt",DesertFile="desert.txt",maincourseFile="maincourse.txt",FlowerFile="flower.txt",StudioFile="studio.txt";
 
         int UserProfit=0, packgCount=0;
         String PackgName ;
@@ -199,7 +202,7 @@ outer2:
                                                             System.out.print(HN_FAIL_MSG);
                                                             continue ;
                                                         }
-                                                        else if (!signup.thereIsNoDuplicatedUserOnTheFile(HallName,HallPath)) {
+                                                        else if (!signup.thereIsNoDuplicatedUserOnTheFile(HallName,HALL_PATH )) {
                                                             System.out.print("This Hall already Exist ! \n");
                                                             continue;
                                                         }
@@ -244,13 +247,13 @@ outer2:
                                                                                     continue;
                                                                                 }
                                                                                 else {
-                                                                                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(HallPath, true))) {
+                                                                                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(HALL_PATH , true))) {
 
                                                                                         writer.write(HallName + "," + HallCapacity + "," + HallPrice + "," + HallLocation + "," +username);
                                                                                         writer.newLine();
 
                                                                                     } catch (IOException e) {
-                                                                                        System.err.println("Error writing to the file: " + e.getMessage());
+                                                                                        System.err.println(ERROR_WRITE_FILE_MSG+ e.getMessage());
                                                                                     }
                                                                                     System.out.print("Adding Hall successful ! \n" );
 
@@ -270,19 +273,19 @@ outer2:
 
                                                     break ;
                                                 case "3":
-                                                    userMyApp.searchValueInFile(HallPath,username);
+                                                    userMyApp.searchValueInFile(HALL_PATH ,username);
                                                     System.out.println("Enter The Name Of Hall To Delete It : ");
                                                     String fileName1 = "Halls.txt";
                                                     String wordToDelete1 = scanner.nextLine();
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(wordToDelete1) ) {
-                                                        System.out.print("Package Name field is required ! \n");
+                                                        System.out.print(PACKAGE_NAME_REQ );
                                                         continue ;
                                                     }
 
                                                     else if (!userMyApp.checkFile(  wordToDelete1, fileName1)) {
-                                                        System.out.println("----------------------------------------------------------");
-                                                        System.out.print("This name is not in the list , please rewrite the name ! \n");
-                                                        System.out.println("----------------------------------------------------------");
+                                                        System.out.println(SPACE_SEPARATOR);
+                                                        System.out.print(NAME_NOT_IN_LIST_MSG);
+                                                        System.out.println(SPACE_SEPARATOR);
                                                         continue;
                                                     }
                                                     File inputFile1 = new File(fileName1);
@@ -333,7 +336,7 @@ outer2:
                                                         System.out.println("Enter Package Name : ");
                                                         PackgName = scanner.nextLine();
                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(PackgName)) {
-                                                            System.out.print("Package Name field is required ! \n");
+                                                            System.out.print(PACKAGE_NAME_REQ );
                                                             continue;
                                                         } else if (!signup.thereIsNoDuplicatedUserOnTheFile(PackgName, "Package.txt")) {
                                                             System.out.print("This Package already Exist ! \n");
@@ -362,7 +365,7 @@ outer2:
                                                                     // Append hall details to the file
                                                                     writer.write(PackgName + "," + FlowerPriceP);
                                                                 } catch (IOException e) {
-                                                                    System.err.println("Error writing to the file: " + e.getMessage());
+                                                                    System.err.println(ERROR_WRITE_FILE_MSG + e.getMessage());
                                                                 }
 
 
@@ -417,7 +420,7 @@ while (true){
 
 
                                                                                     } catch (IOException e) {
-                                                                                        System.err.println("Error writing to the file: " + e.getMessage());
+                                                                                        System.err.println(ERROR_WRITE_FILE_MSG + e.getMessage());
                                                                                     }
 
 
@@ -470,7 +473,7 @@ while (true){
                                                                 writer.write(  "," +"Dj Name :"+ DjnameP );
 
                                                             } catch (IOException e) {
-                                                                System.err.println("Error writing to the file: " + e.getMessage());
+                                                                System.err.println(ERROR_WRITE_FILE_MSG + e.getMessage());
                                                             }
 
 
@@ -507,7 +510,7 @@ while (true){
                                                                 writer.write(  "," +"Studio Name :"+ studionameP  );
 
                                                             } catch (IOException e) {
-                                                                System.err.println("Error writing to the file: " + e.getMessage());
+                                                                System.err.println(ERROR_WRITE_FILE_MSG + e.getMessage());
                                                             }
 
 
@@ -542,7 +545,7 @@ while (true){
                                                                 writer.write(  "," + "Dessert Name :"+ DessertnameP  );
 
                                                             } catch (IOException e) {
-                                                                System.err.println("Error writing to the file: " + e.getMessage());
+                                                                System.err.println(ERROR_WRITE_FILE_MSG + e.getMessage());
                                                             }
 
 
@@ -578,7 +581,7 @@ while (true){
                                                                 writer.write(  "," + "Main_Course Name :" +MainCnameP  );
 
                                                             } catch (IOException e) {
-                                                                System.err.println("Error writing to the file: " + e.getMessage());
+                                                                System.err.println(ERROR_WRITE_FILE_MSG + e.getMessage());
                                                             }
 
 
@@ -611,7 +614,7 @@ while (true){
                                                                     writer.write("," + "Flower Name :" + FlowernameP);
 
                                                                 } catch (IOException e) {
-                                                                    System.err.println("Error writing to the file: " + e.getMessage());
+                                                                    System.err.println(ERROR_WRITE_FILE_MSG + e.getMessage());
                                                                 }
 
 
@@ -626,7 +629,7 @@ while (true){
                                                                 writer.newLine();
                                                                 System.out.print("Adding Package successful ! \n");//
                                                             } catch (IOException e) {
-                                                                System.err.println("Error writing to the file: " + e.getMessage());
+                                                                System.err.println(ERROR_WRITE_FILE_MSG + e.getMessage());
                                                             }
                                                             break secondWhile ;
 
@@ -778,9 +781,9 @@ while (true){
                                                         System.out.print(HN_FAIL_MSG);
                                                         continue;
                                                     } else if (!userMyApp.checkFile(hallName, "Halls.txt")) {
-                                                        System.out.println("----------------------------------------------------------");
-                                                        System.out.print("This name is not in the list , please rewrite the name ! \n");
-                                                        System.out.println("----------------------------------------------------------");
+                                                        System.out.println(SPACE_SEPARATOR);
+                                                        System.out.print(NAME_NOT_IN_LIST_MSG);
+                                                        System.out.println(SPACE_SEPARATOR);
                                                         continue;
                                                     } else {
                                                         HallProfitUpdater.updateOrPrintProfits(hallName);
@@ -803,9 +806,9 @@ while (true){
                                                         System.out.print("Dj Name field is required ! \n");
                                                         continue;
                                                     } else if (!userMyApp.checkFile(djName, DjFile)) {
-                                                        System.out.println("----------------------------------------------------------");
-                                                        System.out.print("This name is not in the list , please rewrite the name ! \n");
-                                                        System.out.println("----------------------------------------------------------");
+                                                        System.out.println(SPACE_SEPARATOR);
+                                                        System.out.print(NAME_NOT_IN_LIST_MSG);
+                                                        System.out.println(SPACE_SEPARATOR);
                                                         continue;
                                                     } else {
                                                         if (djName != null && !djName.trim().isEmpty()) {
@@ -827,9 +830,9 @@ while (true){
                                                         System.out.print(" Studio Name field is required ! \n");
                                                         continue;
                                                     } else if (!userMyApp.checkFile(StudioName, StudioFile)) {
-                                                        System.out.println("----------------------------------------------------------");
-                                                        System.out.print("This name is not in the list , please rewrite the name ! \n");
-                                                        System.out.println("----------------------------------------------------------");
+                                                        System.out.println(SPACE_SEPARATOR);
+                                                        System.out.print(NAME_NOT_IN_LIST_MSG);
+                                                        System.out.println(SPACE_SEPARATOR);
                                                         continue;
                                                     } else {
                                                         if (StudioName != null && !StudioName.trim().isEmpty()) {
@@ -852,9 +855,9 @@ while (true){
                                                         System.out.print(" Flower Name field is required ! \n");
                                                         continue;
                                                     } else if (!userMyApp.checkFile(FlowerName, FlowerFile)) {
-                                                        System.out.println("----------------------------------------------------------");
-                                                        System.out.print("This name is not in the list , please rewrite the name ! \n");
-                                                        System.out.println("----------------------------------------------------------");
+                                                        System.out.println(SPACE_SEPARATOR);
+                                                        System.out.print(NAME_NOT_IN_LIST_MSG);
+                                                        System.out.println(SPACE_SEPARATOR);
                                                         continue;
                                                     }
 
@@ -871,9 +874,9 @@ while (true){
                                                         System.out.print("  Main course Name field is required ! \n");
                                                         continue;
                                                     } else if (!userMyApp.checkFile(Maincourse, maincourseFile)) {
-                                                        System.out.println("----------------------------------------------------------");
-                                                        System.out.print("This name is not in the list , please rewrite the name ! \n");
-                                                        System.out.println("----------------------------------------------------------");
+                                                        System.out.println(SPACE_SEPARATOR);
+                                                        System.out.print(NAME_NOT_IN_LIST_MSG);
+                                                        System.out.println(SPACE_SEPARATOR);
                                                         continue;
                                                     }
 
@@ -890,9 +893,9 @@ while (true){
                                                         System.out.print("  Dessert Name field is required ! \n");
                                                         continue;
                                                     } else if (!userMyApp.checkFile(Desert, DesertFile)) {
-                                                        System.out.println("----------------------------------------------------------");
-                                                        System.out.print("This name is not in the list , please rewrite the name ! \n");
-                                                        System.out.println("----------------------------------------------------------");
+                                                        System.out.println(SPACE_SEPARATOR);
+                                                        System.out.print(NAME_NOT_IN_LIST_MSG);
+                                                        System.out.println(SPACE_SEPARATOR);
                                                         continue;
                                                     }
 
@@ -904,7 +907,7 @@ while (true){
                                                 /////////////////////////////
                                                 if (!Objects.equals(hallName, null)) {
                                                     userMyApp.AddtoEvent("HallName: ", hallName);
-                                                    UserProfit += userMyApp.getColumnValueForHall(HallPath, hallName, 2);
+                                                    UserProfit += userMyApp.getColumnValueForHall(HALL_PATH , hallName, 2);
                                                 }
 
                                                 if (!Objects.equals(djName, null)) {
@@ -1023,9 +1026,9 @@ while (true){
                                                 System.out.print("  Packge Name field is required ! \n");
                                                 continue;
                                             } else if (!userMyApp.checkFile(  Pname, "Package.txt")) {
-                                                System.out.println("----------------------------------------------------------");
-                                                System.out.print("This name is not in the list , please rewrite the name ! \n");
-                                                System.out.println("----------------------------------------------------------");
+                                                System.out.println(SPACE_SEPARATOR);
+                                                System.out.print(NAME_NOT_IN_LIST_MSG);
+                                                System.out.println(SPACE_SEPARATOR);
                                                 continue;
                                             }
                                             else {
@@ -1116,12 +1119,12 @@ while (true){
                                                 Scanner scanner4 = new Scanner(System.in);
                                                 String name = scanner4.nextLine();
                                                 if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(name)) {
-                                                    System.out.print("Package Name field is required ! \n");
+                                                    System.out.print(PACKAGE_NAME_REQ );
                                                     continue;
                                                 } else if (!userMyApp.checkFile(name, "Package.txt ")) {
-                                                    System.out.println("----------------------------------------------------------");
-                                                    System.out.print("This name is not in the list , please rewrite the name ! \n");
-                                                    System.out.println("----------------------------------------------------------");
+                                                    System.out.println(SPACE_SEPARATOR);
+                                                    System.out.print(NAME_NOT_IN_LIST_MSG);
+                                                    System.out.println(SPACE_SEPARATOR);
                                                     continue;
                                                 } else {
 
@@ -1184,7 +1187,7 @@ UserProfit = UserMyApp.getColumnValueForHall("Package.txt",name,1);
                                                     UserMyApp.AddtoEvent("Package Name ", name);
                                                     UserMyApp.AddtoEvent("Price =", String.valueOf(UserMyApp.getColumnValueForHall("Package.txt", name, 1)));
                                                     userMyApp.AddtoEvent(":::::::::::::::::", ":::::::::::::::::");
-                                             
+                                                 //   System.out.println("Added successfully ! ");
                                                 }
                                                 break outerWhile;
                                             }//
@@ -1196,12 +1199,12 @@ UserProfit = UserMyApp.getColumnValueForHall("Package.txt",name,1);
 
                                 case "4":
                                     System.out.println(LOGOUT_MSG );
-                                
-                                    break outerWhile1;  
+                                    // Add your logic for logging out
+                                    break outerWhile1;  // Exit the outer while loop
                                 default:
                                     System.out.println(UN_VALID_OPTION_MSG);
                             }
-                        } 
+                        } // end outer while loop
                     } else {
                         System.out.println("Wrong username or password !");
                         continue ;   
