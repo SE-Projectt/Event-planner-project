@@ -38,5 +38,5 @@ jobs:
           mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar \
           -Dsonar.projectKey=SE-Projectt \
           -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.organization=SE-Projectt \
+          -Dsonar.organization=se-projectt \
           -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml # adjust this path according to your coverage report location
