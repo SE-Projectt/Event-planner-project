@@ -9,6 +9,8 @@
 
     <properties>
     <sonar.coverage.exclusions>**/YearlyBookingCalendar.java,**/YearlyBookingCalendarDj.java,**/YearlyBookingCalendarPachage.java,**/YearlyBookingCalendarStudio.java</sonar.coverage.exclusions>
+ <sonar.coverage.exclusions>**/Entity/**</sonar.coverage.exclusions>
+    <sonar.cpd.exclusions>**/Entity/**</sonar.cpd.exclusions>
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
