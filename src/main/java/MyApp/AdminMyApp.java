@@ -42,7 +42,8 @@ public final class AdminMyApp {
                     LOGGER.info("Delete successful");
                 } catch (IOException e) {
                     LOGGER.severe("Error while deleting or renaming files: " + e.getMessage());
-                    throw new IOException("Error occurred while deleting or renaming files: " + e.getMessage());
+                    // Log the error without rethrowing
+                    LOGGER.severe("Error occurred while deleting or renaming files: " + e.getMessage());
                 }
             } else {
                 LOGGER.info("No lines were deleted");
@@ -54,7 +55,8 @@ public final class AdminMyApp {
                     Files.delete(tempPath);
                 } catch (IOException e) {
                     LOGGER.severe("Could not delete temporary file: " + e.getMessage());
-                    throw new IOException("Error occurred while deleting temporary file: " + e.getMessage());
+                    // Log the error without rethrowing
+                    LOGGER.severe("Error occurred while deleting temporary file: " + e.getMessage());
                 }
             }
         }
@@ -77,3 +79,4 @@ public final class AdminMyApp {
         return false;
     }
 }
+
