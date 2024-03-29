@@ -1,13 +1,16 @@
 package org.example.AcceptanceTest;
 
-import myapp.UserMyApp;
+import MyApp.UserMyApp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PlanningWeddingTest {
+    private String filename="dd.txt";
+    private String result;
+    private Exception exception;
     UserMyApp userMyApp;
     public PlanningWeddingTest(){
         userMyApp=new UserMyApp();
@@ -39,7 +42,7 @@ public class PlanningWeddingTest {
     @Then("store the chosen hall {string} with chosen Date {string} in the file {string}")
     public void storeTheChosenHallWithChosenDateInTheFile(String hall, String date, String filename) {
         hall="alameer"; filename="bookingHall.txt";date="2024-01-1";
-        assertTrue(userMyApp.checkHallandDate(filename,date,hall));
+        assertTrue(userMyApp.checkHallAndDate(filename,date,hall));
     }
     @When("the user clicks to choose a Dj")
     public void theUserClicksToChooseADj() {
@@ -62,7 +65,7 @@ public class PlanningWeddingTest {
     @Then("store the chosen Dj {string} with chosen Date {string} in the file {string}")
     public void storeTheChosenDjWithChosenDateInTheFile(String Dj, String date, String filename) {
         Dj="yasmeen"; filename="BookingDJ.txt";date="2024-01-1";
-        assertTrue(userMyApp.checkHallandDate(filename,date,Dj));
+        assertTrue(userMyApp.checkHallAndDate(filename,date,Dj));
     }
 
     @When("the user clicks to choose a Studio")
@@ -86,7 +89,7 @@ public class PlanningWeddingTest {
     @Then("store the chosen Studio {string} with chosen Date {string} in the file {string}")
     public void storeTheChosenStudioWithChosenDateInTheFile(String studio, String date, String filename) {
         studio="alahrame"; filename="bookingStudio.txt";date="2024-01-1";
-        assertTrue(userMyApp.checkHallandDate(filename,date,studio));
+        assertTrue(userMyApp.checkHallAndDate(filename,date,studio));
     }
 
     @When("the user clicks to choose a Flower")
@@ -148,6 +151,25 @@ public class PlanningWeddingTest {
         Desert="kunafa"; filename="Event.txt";
         assertTrue(userMyApp.checkFile(filename,"Desert",Desert));
  }
+    @Given("the file {string} does not exist")
+    public void theFileDoesNotExist(String filename) {
+        // Do nothing, file does not exist by default
+        this.filename = filename;
+    }
 
+    @When("I attempt to delete a line from the file")
+    public void iAttemptToDeleteALineFromTheFile() {
+        try {
+            UserMyApp.deleteLineFromFile("Alice", filename);
+        } catch (Exception e) {
+            exception = e;
+        }
+    }
 
-}
+    @Then("an error should be thrown with message {string}")
+    public void anErrorShouldBeThrownWithMessage(String errorMessage) {
+      assertNull("Expected an exception to be thrown", exception);
+        
+    }
+
+}  
