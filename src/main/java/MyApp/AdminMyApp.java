@@ -60,7 +60,7 @@ public final class AdminMyApp {
         }
     }
 
-    public static boolean isUsernameExists(String filename, String username) {
+    public static boolean isUsernameExists(String filename, String username) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = reader.readLine()) != null) {
