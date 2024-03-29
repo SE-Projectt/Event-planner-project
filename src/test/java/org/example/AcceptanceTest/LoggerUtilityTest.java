@@ -2,8 +2,12 @@ import static org.junit.Assert.*;
 import org.junit.*;
 import java.util.logging.*;
 import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import org.example.LoggerUtility; 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.Handler;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.SimpleFormatter;
+import org.example.LoggerUtility;
 
 public class LoggerUtilityTest {
     private Logger logger;
@@ -36,19 +40,27 @@ public class LoggerUtilityTest {
 
     @Test
     public void testLogInfo() {
+        // Redirect logger output to a ByteArrayOutputStream to capture logs
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        Handler[] handlers = logger.getHandlers();
+        for (Handler handler : handlers) {
+            if (handler instanceof ConsoleHandler) {
+                handler.setOutputStream(new PrintStream(outContent));
+            }
+        }
+
         // Assuming logger level is set to INFO
         logger.setLevel(Level.INFO);
-        
-        // Redirect output to a ByteArrayOutputStream to capture logs
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
         LoggerUtility.logInfo(logger, "Test message: %s", "arg1");
 
         // Verify log message
         assertTrue(outContent.toString().contains("Test message: arg1"));
 
-        // Reset output stream
-        System.setOut(System.out);
+        // Reset logger output stream
+        for (Handler handler : handlers) {
+            if (handler instanceof ConsoleHandler) {
+                handler.setOutputStream(System.out);
+            }
+        }
     }
 }
