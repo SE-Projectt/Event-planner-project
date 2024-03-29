@@ -5,9 +5,11 @@ import java.util.logging.Logger;
 
 public class AdminMyApp {
     private static final Logger LOGGER = Logger.getLogger(AdminMyApp.class.getName());
-    private static final String ERROR_CLOSE_BR = "Error while closing BufferedReader: ";
 
-
+    // Private constructor to hide the implicit public one
+    private AdminMyApp() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void deleteLine(String fileName, String username) throws IOException {
         File inputFile = new File(fileName);
@@ -32,7 +34,7 @@ public class AdminMyApp {
         // Close the BufferedWriter outside the try-with-resources block
         try (BufferedReader reader = new BufferedReader(new FileReader(tempFile))) {
             if (deleted) {
-                if (!inputFile.delete()) {
+                if (!java.nio.file.Files.delete(inputFile.toPath())) {
                     LOGGER.severe("Could not delete original file");
                     return;
                 }
@@ -45,7 +47,7 @@ public class AdminMyApp {
                 LOGGER.info("No lines were deleted");
             }
         } finally {
-            if (tempFile.exists() && !tempFile.delete()) {
+            if (tempFile.exists() && !java.nio.file.Files.delete(tempFile.toPath())) {
                 LOGGER.severe("Could not delete temporary file");
             }
         }
