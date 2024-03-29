@@ -2,17 +2,15 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.*;
 import java.nio.file.*;
 import java.text.*;
 import java.util.logging.*;
 import java.util.*;
-import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 public class YearlyBookingCalendar extends JFrame {
     private static final String BOOKINGS_FILE = "bookingHall.txt";
-    private final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private final Map<String, Set<String>> bookedDatesPerHall = new HashMap<>();
     private final String currentHall;
     private final JLabel monthLabel = new JLabel("", SwingConstants.CENTER);
@@ -20,15 +18,16 @@ public class YearlyBookingCalendar extends JFrame {
     private JPanel monthPanel;
     private static final Logger LOGGER = Logger.getLogger(YearlyBookingCalendar.class.getName());
 
-public YearlyBookingCalendar(String hallName) {
-    this.currentHall = hallName;
-    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    setSize(500, 400);
-    setLocationRelativeTo(null);
-    setLayout(new BorderLayout());
-    loadBookings();
-    initUI();
-}
+    public YearlyBookingCalendar(String hallName) {
+        this.currentHall = hallName;
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(500, 400);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        loadBookings();
+        initUI();
+    }
+
     private void initUI() {
         JPanel topPanel = new JPanel(new BorderLayout());
         JButton prevButton = new JButton("<");
@@ -75,7 +74,7 @@ public YearlyBookingCalendar(String hallName) {
 
         for (int day = 1; day <= daysInMonth; day++) {
             monthStart.set(Calendar.DAY_OF_MONTH, day);
-            String dayString = DATE_FORMAT.format(monthStart.getTime());
+            String dayString = dateFormat.format(monthStart.getTime());
             JButton dayButton = new JButton(Integer.toString(day));
 
             if (bookedDates.contains(dayString)) {
@@ -112,7 +111,7 @@ public YearlyBookingCalendar(String hallName) {
                 bookedDatesPerHall.computeIfAbsent(parts[0], k -> new HashSet<>()).add(parts[1]);
             }
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to load bookings from file: " + e.getMessage(), e);
+            LOGGER.log(Level.SEVERE, () -> "Failed to load bookings from file: " + e.getMessage(), e);
         }
     }
 
@@ -121,7 +120,7 @@ public YearlyBookingCalendar(String hallName) {
             writer.write(bookingKey);
             writer.newLine();
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to save booking: " + e.getMessage(), e);
+            LOGGER.log(Level.SEVERE, () -> "Failed to save booking: " + e.getMessage(), e);
         }
     }
 
