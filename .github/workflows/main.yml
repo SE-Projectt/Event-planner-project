@@ -29,6 +29,8 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Run tests
+        run: mvn test
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
@@ -36,5 +38,5 @@ jobs:
         run: |
           mvn -B jacoco:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar jacoco:report \
           -Dsonar.projectKey=SE-Projectt_Event-planner-project \
-          -Dsonar.coverage.exclusions="**/Entity/**,**/YearlyBookingCalendar.java,**/YearlyBookingCalendarDj.java,**/YearlyBookingCalendarPachage.java,**/YearlyBookingCalendarStudio.java,**/Main.java" \
-          -Dsonar.cpd.exclusions="**/Entity/**,**/YearlyBookingCalendar.java,**/YearlyBookingCalendarDj.java,**/YearlyBookingCalendarPachage.java,**/YearlyBookingCalendarStudio.java,**/Main.java"
+          -Dsonar.coverage.exclusions="**/YearlyBookingCalendar.java,**/YearlyBookingCalendarDj.java,**/YearlyBookingCalendarPachage.java,**/YearlyBookingCalendarStudio.java,**/Main.java" \
+          -Dsonar.cpd.exclusions="**/YearlyBookingCalendar.java,**/YearlyBookingCalendarDj.java,**/YearlyBookingCalendarPachage.java,**/YearlyBookingCalendarStudio.java,**/Main.java"
