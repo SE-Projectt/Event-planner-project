@@ -43,11 +43,7 @@ public class SignUpMyApp {
         return true;
     }
 
-    public Integer noNewUserAccountShouldBeCreated(ArrayList<User> users) {
-        UserDataBase db = new UserDataBase(users);
-        db.readUsersFromFile(USER_FILE);
-        return 4;
-    }
+ 
 
     public boolean iLeaveTheUsernameFieldEmpty(String username) {
         return username.isEmpty();
