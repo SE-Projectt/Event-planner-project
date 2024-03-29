@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class AdminMyApp {
+public final class AdminMyApp {
     private static final Logger LOGGER = Logger.getLogger(AdminMyApp.class.getName());
 
     public static void deleteLine(String fileName, String username) throws IOException {
@@ -26,7 +26,7 @@ public class AdminMyApp {
             }
         } catch (IOException e) {
             LOGGER.severe("Error while reading or writing files: " + e.getMessage());
-            throw e;
+            throw new IOException("Error occurred while deleting line: " + e.getMessage());
         }
 
         // Close the BufferedWriter outside the try-with-resources block
@@ -37,12 +37,12 @@ public class AdminMyApp {
                     Files.delete(inputPath);
                     if (!tempFile.renameTo(inputFile)) {
                         LOGGER.severe("Could not rename temporary file");
-                        return;
+                        throw new IOException("Could not rename temporary file");
                     }
                     LOGGER.info("Delete successful");
                 } catch (IOException e) {
                     LOGGER.severe("Error while deleting or renaming files: " + e.getMessage());
-                    throw e;
+                    throw new IOException("Error occurred while deleting or renaming files: " + e.getMessage());
                 }
             } else {
                 LOGGER.info("No lines were deleted");
@@ -54,6 +54,7 @@ public class AdminMyApp {
                     Files.delete(tempPath);
                 } catch (IOException e) {
                     LOGGER.severe("Could not delete temporary file: " + e.getMessage());
+                    throw new IOException("Error occurred while deleting temporary file: " + e.getMessage());
                 }
             }
         }
@@ -71,6 +72,7 @@ public class AdminMyApp {
             }
         } catch (IOException e) {
             LOGGER.severe("Error while reading file: " + e.getMessage());
+            throw new IOException("Error occurred while checking if username exists: " + e.getMessage());
         }
         return false;
     }
