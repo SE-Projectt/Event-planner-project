@@ -44,3 +44,10 @@ Feature: User Planning Wedding
     And display all Deserts available in the file "desert.txt"
     Then Check if the entrance Desert name "Desert" is in the file "desert.txt"
     And store the chosen Desert "Desert" in the file "event.txt"
+
+
+
+Scenario: Attempt to delete a line from a non-existent file
+    Given the file "non_existent_file.txt" does not exist
+    When I attempt to delete a line from the file
+    Then an error should be thrown with message "File not found"
