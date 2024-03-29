@@ -55,7 +55,7 @@ public class Main {
         String username, password, option1, useroption,Paypage, HallName,HallCapacity,HallPrice,HallLocation,ProvidernametoDeleteit,UsernameToDeleteit ;
 
         String hallName = null,djName= null,StudioName= null,FlowerName=null,Maincourse=null,Desert=null;
-        String Dj_File="Dj.txt",Desert_File="desert.txt",MAIN_COURSE_FILE="maincourse.txt",Flower_File="flower.txt",Studio_File="studio.txt";
+
 
         int UserProfit=0, packgCount=0;
         String PackgName ;
@@ -773,7 +773,7 @@ public class Main {
                                                     break planningloop;
                                                 }
                                             case "2":
-                                                displayFileContents( Dj_File);
+                                                displayFileContents(  DJ_FILE);
                                                 while (true) {
 
                                                     utilityLogger.info("Enter Dj Name:");
@@ -781,7 +781,7 @@ public class Main {
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(djName)) {
                                                         utilityLogger.info("Dj Name field is required ! \n");
                                                         continue;
-                                                    } else if (!userMyApp.checkFile(djName,  Dj_File)) {
+                                                    } else if (!userMyApp.checkFile(djName,  DJ_FILE)) {
                                                         utilityLogger.info(SPACE_SEPARATOR);
                                                         utilityLogger.info(NAME_NOT_IN_LIST_MSG);
                                                         utilityLogger.info(SPACE_SEPARATOR);
@@ -796,7 +796,7 @@ public class Main {
                                                     break planningloop;
                                                 }
                                             case "3":
-                                                displayFileContents(Studio_File);
+                                                displayFileContents(STUDIO_FILE);
                                                 while (true) {
 
                                                     utilityLogger.info("Enter Studio Name:");
@@ -804,7 +804,7 @@ public class Main {
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(StudioName)) {
                                                         utilityLogger.info(" Studio Name field is required ! \n");
                                                         continue;
-                                                    } else if (!userMyApp.checkFile(StudioName, Studio_File)) {
+                                                    } else if (!userMyApp.checkFile(StudioName, STUDIO_FILE)) {
                                                         utilityLogger.info(SPACE_SEPARATOR);
                                                         utilityLogger.info(NAME_NOT_IN_LIST_MSG);
                                                         utilityLogger.info(SPACE_SEPARATOR);
@@ -820,7 +820,7 @@ public class Main {
 
                                                 }
                                             case "4":
-                                                displayFileContents(Flower_File);
+                                                displayFileContents(FLOWER_FILE);
                                                 while (true) {
 
                                                     utilityLogger.info("Enter Flower Type:");
@@ -828,7 +828,7 @@ public class Main {
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(FlowerName)) {
                                                         System.out.print(" Flower Name field is required ! \n");
                                                         continue;
-                                                    } else if (!userMyApp.checkFile(FlowerName, Flower_File)) {
+                                                    } else if (!userMyApp.checkFile(FlowerName,FLOWER_FILE)) {
                                                         utilityLogger.info(SPACE_SEPARATOR);
                                                         utilityLogger.info(NAME_NOT_IN_LIST_MSG);
                                                         utilityLogger.info(SPACE_SEPARATOR);
@@ -856,14 +856,14 @@ public class Main {
                                                     break planningloop;
                                                 }
                                             case "6":
-                                                displayFileContents(Desert_File);
+                                                displayFileContents(DESERT_FILE);
                                                 while (true) {
                                                     utilityLogger.info("Enter Desert Name:");
                                                     Desert = scanner.nextLine();
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Desert)) {
                                                         utilityLogger.info("  Dessert Name field is required ! \n");
                                                         continue;
-                                                    } else if (!userMyApp.checkFile(Desert, Desert_File)) {
+                                                    } else if (!userMyApp.checkFile(Desert, DESERT_FILE)) {
                                                         utilityLogger.info(SPACE_SEPARATOR);
                                                         utilityLogger.info(NAME_NOT_IN_LIST_MSG);
                                                         utilityLogger.info(SPACE_SEPARATOR);
@@ -882,18 +882,18 @@ public class Main {
 
                                                 if (!Objects.equals(djName, null)) {
                                                     AddtoEvent("Dj: ", djName);
-                                                    UserProfitDj =  getColumnValueForHall( Dj_File, djName, 1);
+                                                    UserProfitDj =  getColumnValueForHall( DJ_FILE, djName, 1);
                                                 }
 
 
                                                 if (!Objects.equals(StudioName, null)) {
                                                     AddtoEvent("Studio: ", StudioName);
-                                                    UserProfitstudio =  getColumnValueForHall(Studio_File, StudioName, 1);
+                                                    UserProfitstudio =  getColumnValueForHall(STUDIO_FILE, StudioName, 1);
                                                 }
 
                                                 if (!Objects.equals(FlowerName, null)) {
                                                     AddtoEvent("Flower: ", FlowerName);
-                                                    UserProfit +=  getColumnValueForHall(Flower_File, FlowerName, 1);//
+                                                    UserProfit +=  getColumnValueForHall(FLOWER_FILE, FlowerName, 1);//
                                                 }
 
                                                 if (!Objects.equals(Maincourse, null)) {
@@ -902,7 +902,7 @@ public class Main {
                                                 }
                                                 if (!Objects.equals(Desert, null)) {
                                                     AddtoEvent("Desert: ", Desert);
-                                                    UserProfit +=  getColumnValueForHall(Desert_File, Desert, 1);//
+                                                    UserProfit +=  getColumnValueForHall(DESERT_FILE, Desert, 1);//
                                                 }
 
                                                 if (!Objects.equals(djName, null)) {
