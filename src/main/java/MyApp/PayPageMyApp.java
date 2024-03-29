@@ -1,98 +1,53 @@
 package MyApp;
 
 public class PayPageMyApp {
-    public boolean theUserSubmitsThePaymentFormWithoutEnteringACardNumber(String CardNumber) {
-        if(CardNumber.isEmpty())  return true;
-        return false;
+    public boolean theUserSubmitsThePaymentFormWithoutEnteringACardNumber(String cardNumber) {
+        return cardNumber.isEmpty();
     }
 
-    public  boolean theUserSubmitsThePaymentFormWithACardNumberContainingLetters(String userInput) {
-        // Loop through each character in the string
-        for (char c : userInput.toCharArray()) {
-            // Check if the character is not a digit
-            if (!Character.isDigit(c)) {
-                return false;
-            }
-        }
-        // If all characters are digits, return true
-        return true;
+    public boolean theUserSubmitsThePaymentFormWithACardNumberContainingLetters(String userInput) {
+        return userInput.chars().allMatch(Character::isDigit);
     }
+
     public boolean theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(String userInput) {
-
-        // Convert the user input to a double
-        Long number = Long.parseLong(userInput);
-
-        // Check if the number is non-negative
-        if (number < 0) {
-            return false; // If it's negative, return false
-        }
-        return true; // If it's non-negative, return true
-
+        long cardNumber = Long.parseLong(userInput);
+        return cardNumber >= 0;
     }
-    public  boolean theUserSubmitsThePaymentFormWithACardNumberStartingWith(String userInput) {
-        // Check if the input starts with the character '0'
+
+    public boolean theUserSubmitsThePaymentFormWithACardNumberStartingWith(String userInput) {
         return userInput.startsWith("0");
     }
 
     public boolean theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(String userInput) {
-        // Check if the length of the input string is 15 or 16
-        int length = userInput.length();
-        return length == 16;
+        return userInput.length() == 16;
     }
 
-    public boolean theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(String CardOwnerName) {
-        if(CardOwnerName.isEmpty())  return true;
-        return false;
+    public boolean theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(String cardOwnerName) {
+        return cardOwnerName.isEmpty();
     }
 
-    public  boolean theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(String userInput) {
-        // Loop through each character in the input string
-        for (char c : userInput.toCharArray()) {
-            // Check if the character is not a letter
-            if (!Character.isLetter(c)) {
-                return true; // If it's not a letter, return true
-            }
-        }
-        return false; // If all characters are letters, return false
+    public boolean theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(String userInput) {
+        return userInput.chars().noneMatch(Character::isLetter);
     }
+
     public boolean theUserSubmitsThePaymentFormWithoutEnteringTheCVC(String CVC) {
-        if(CVC.isEmpty())  return true;
-        return false;
+        return CVC.isEmpty();
     }
 
     public boolean theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(String userInput) {
-
-        // Convert the user input to a double
-        Long number = Long.parseLong(userInput);
-
-        // Check if the number is non-negative
-        if (number < 0) {
-            return false; // If it's negative, return false
-        }
-        return true; // If it's non-negative, return true
-
+        long cvcNumber = Long.parseLong(userInput);
+        return cvcNumber >= 0;
     }
+
     public boolean theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(String userInput) {
-        // Check if the length of the input string is 15 or 16
-        int length = userInput.length();
-        return length == 4;
+        return userInput.length() == 4;
     }
 
-    public  boolean theUserSubmitsThePaymentFormWithACVCContainingLetters(String userInput) {
-        // Loop through each character in the string
-        for (char c : userInput.toCharArray()) {
-            // Check if the character is not a digit
-            if (!Character.isDigit(c)) {
-                return false;
-            }
-        }
-        // If all characters are digits, return true
-        return true;
+    public boolean theUserSubmitsThePaymentFormWithACVCContainingLetters(String userInput) {
+        return userInput.chars().allMatch(Character::isDigit);
     }
 
-    public  boolean theUserSubmitsThePaymentFormWithACVCStartingWith(String userInput) {
-        // Check if the input starts with the character '0'
+    public boolean theUserSubmitsThePaymentFormWithACVCStartingWith(String userInput) {
         return userInput.startsWith("0");
     }
-
 }
