@@ -10,16 +10,7 @@ public class UserMyApp {
     private static final String ERROR_READING_FILE = "Error reading the file: {}";
     private static final String ERROR_CLOSING_READER = "Error closing the reader: {}";
 
-    public static void displayFileContents(String filePath) {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                logger.info(line);
-            }
-        } catch (IOException e) {
-            logger.error(ERROR_READING_FILE, e.getMessage());
-        }
-    }
+
 
     public static boolean checkFile(String filename, String typeEvent, String eventName) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
@@ -58,14 +49,7 @@ public class UserMyApp {
         return false;
     }
 
-    public static void AddtoEvent(String name, String item) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Event.txt", true))) {
-            writer.write(name + item);
-            writer.newLine();
-        } catch (IOException e) {
-            logger.error("Error writing to the file: {}", e.getMessage());
-        }
-    }
+
 
     public static boolean checkFile(String word, String filename) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
@@ -92,42 +76,6 @@ public class UserMyApp {
         }
     }
 
-    public static int getColumnValueForHall(String filePath, String hallName, int columnIndex) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] columns = line.split(",");
-                for (String column : columns) {
-                    if (column.trim().equals(hallName)) {
-                        if (columnIndex < columns.length) {
-                            return Integer.parseInt(columns[columnIndex].trim());
-                        } else {
-                            throw new IllegalArgumentException("Column index is out of bounds");
-                        }
-                    }
-                }
-            }
-            throw new IllegalArgumentException("Hall " + hallName + " not found in file");
-        }
-    }
-
-    public static int checkPrise(String filename, int value, int columnIndex) throws IOException {
-        int counter = 0;
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length > columnIndex) {
-                    int columnValue = Integer.parseInt(parts[columnIndex].trim());
-                    if (columnValue <= value) {
-                        logger.info(line);
-                        counter++;
-                    }
-                }
-            }
-        }
-        return counter;
-    }
 
     public static boolean deleteLineFromFile(String name, String filename) {
         File inputFile = new File(filename);
@@ -161,18 +109,5 @@ public class UserMyApp {
         return deleted;
     }
 
-    public static void searchValueInFile(String filePath, String searchValue) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                String valueToSearch = parts[parts.length - 1];
-                if (valueToSearch.equals(searchValue)) {
-                    logger.info(line);
-                }
-            }
-        } catch (IOException e) {
-            logger.error(ERROR_READING_FILE, e.getMessage());
-        }
-    }
+
 }
