@@ -1,17 +1,17 @@
 package org.example;
-
 import MyApp.*;
-
 import javax.swing.*;
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Scanner;
-
 import java.util.logging.Logger;
 
 
 public class Main {
-    private static final Logger logger = Logger.getLogger(Main.class.getName());
+
+    private static final Logger logger = LoggerUtility.getLogger();
     private static final String LOGOUT_MSG = "Logging out \n Thank you !";
     private static final String UN_VALID_OPTION_MSG = "Invalid option. Please try again.";
     private static final String HN_FAIL_MSG = "Hall Name field is required ! \n";
@@ -27,7 +27,6 @@ public class Main {
         SignUpMyApp myApp = new SignUpMyApp();
         SwitchAccountToProviderMyApp switchAccountToProviderMyApp=new SwitchAccountToProviderMyApp() ;
         PayPageMyApp payPageMyApp=new PayPageMyApp();
-      
         LoginMyApp loginMyApp = new LoginMyApp();
         SignUpMyApp signup=new SignUpMyApp();
         AdminMyApp adminMyApp=new AdminMyApp();
@@ -78,14 +77,14 @@ public class Main {
                         break;
                     }
                 }
-                logger.info("Do you want to login? Enter 2 to login, or any other key to go back to the main menu");
+                logger.info("Do you want to login? Enter 2 to login, or any other key to go back to the main menu \n");
                 option1 = scanner.nextLine();
             }
 
             if (option1.equals("2")) {
-                logger.info("***************************************************************");
-                logger.info("Welcome to Fiesta App, please enter your username and password.");
-                logger.info("***************************************************************");
+                logger.info("*************************************************************** \n");
+                logger.info("Welcome to Fiesta App, please enter your username and password. \n");
+                logger.info("*************************************************************** \n");
                 while (true) {
                     logger.info("Enter your username:");
                     username = scanner.nextLine();
@@ -106,17 +105,17 @@ public class Main {
                     }
 
                     if (LoginMyApp.iEnterUsernameAndPassword(username, password)) {
-                        logger.info("Login successfully As Admin , Welcome Zaid :)");
+                        logger.info("Login successfully As Admin , Welcome Zaid :) \n");
                         while (true) {
                             logger.info("Choose: \n 1. View a provider count  \n 2. View a user count \n 3. Delete provider \n 4. Delete User \n 5. view a profit \n 6. Logout");
                             int choice = scanner.nextInt();
                             breakSwitchAdmin:
                             switch (choice) {
                                 case 1:
-                                    logger.info("The Provider Count =  " + adminMyApp.Counts(ProviderFile));
+                                    logger.info("The Provider Count =  " +  Counts(ProviderFile));
                                     break;
                                 case 2:
-                                    logger.info("The User Count =  " + adminMyApp.Counts(UserFile));
+                                    logger.info("The User Count =  " +  Counts(UserFile));
                                     break;
                                 case 3:
                                     Scanner Sc = new Scanner(System.in);
@@ -135,7 +134,7 @@ public class Main {
                                 case 4:
                                     Scanner Sc1 = new Scanner(System.in);
                                     while (true) {
-                                        logger.info("Enter the name of the User you want to delete :");
+                                        logger.info("Enter the name of the User you want to delete : \n");
                                         UsernameToDeleteit = Sc1.nextLine();
                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(UsernameToDeleteit)) {
                                             logger.info("User name field is required ! \n");
@@ -147,8 +146,8 @@ public class Main {
                                     }
                                     break;
                                 case 5:
-                                    logger.info("The monthly subscription is 30$");
-                                    logger.info("The Total of profits " + (adminMyApp.Counts(ProviderFile)) * 30 + "$");
+                                    logger.info("The monthly subscription is 30$ \n");
+                                    logger.info("The Total of profits " + ( Counts(ProviderFile)) * 30 + "$");
                                     break;
                                 case 6:
                                     logger.info(LOGOUT_MSG);
@@ -158,7 +157,7 @@ public class Main {
                             }
                         }
                     } else if (loginMyApp.theSystemHasRegisteredUserWithUsernameAndPassword(username, password)) {
-                        logger.info("Login successfully , Welcome " + username + ":)");
+                        logger.info("Login successfully , Welcome " + username + ":)" +"\n");
 
                         while (true) {
                             logger.info("Choose: \n 1. Switch account to Provider account \n 2. Start Planning to wedding from zero \n 3. Select package \n 4. Logout");
@@ -167,16 +166,16 @@ public class Main {
                             outerWhile :
                             switch (useroption) {
                                 case "1":
-                                    logger.info("Switching to Provider account");
+                                    logger.info("Switching to Provider account \n");
                                     if (switchAccountToProviderMyApp.thisUsernamePasswordHaveAccessToBeProvider(username, password)) {
-                                        logger.info("Login successfully As Provider , welcome " + username + " To provider Page :) ");
+                                        logger.info("Login successfully As Provider , welcome " + username + " To provider Page :) \n ");
                                         while (true) {
                                             logger.info("Choose: \n 1. Switch account to User account \n 2. Add Halls Wedding \n 3. Delete Halls Wedding \n 4. Add package \n 5. Delete Package \n 6. Provider Profits   \n 7. Logout ");
                                             useroption = scanner.nextLine();
                                             secondWhile :
                                             switch (useroption) {
                                                 case "1":
-                                                    logger.info("Going back to the main menu");
+                                                    logger.info("Going back to the main menu \n");
                                                     break;
                                                 case "2":
                                                     while (true) {
@@ -244,7 +243,7 @@ public class Main {
                                                     break;
                                                 case "3":
                                                     logger.info("Enter The Name Of Hall To Delete It : ");
-                                                    userMyApp.searchValueInFile(HALL_PATH, username);
+                                                     searchValueInFile(HALL_PATH, username);
                                                     String fileName1 = "Halls.txt";
                                                     String wordToDelete1 = scanner.nextLine();
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(wordToDelete1)) {
@@ -273,7 +272,7 @@ public class Main {
                                                             }
                                                         }
                                                     } catch (IOException e) {
-                                                        e.printStackTrace();
+                                                        logger.warning("we have Exception");
                                                     }
 
                                                     // File operations should be outside the try-with-resources block to ensure they happen after the streams are closed
@@ -292,7 +291,7 @@ public class Main {
                                                     } else {
                                                         logger.info("No lines were deleted");
                                                     }
-                                                
+
                                                     break secondWhile;
 
 
@@ -306,10 +305,10 @@ public class Main {
                                                             logger.info(PACKAGE_NAME_REQ);
                                                             continue;
                                                         } else if (!signup.thereIsNoDuplicatedUserOnTheFile(PackgName, "Package.txt")) {
-                                                            logger.info("This Package already Exist !");
+                                                            logger.info("This Package already Exist ! \n");
                                                             continue;
                                                         } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(PackgName)) {
-                                                            logger.info("Enter a Valid Name !");
+                                                            logger.info("Enter a Valid Name ! \n");
                                                             continue;
                                                         }
 
@@ -318,13 +317,13 @@ public class Main {
                                                             FlowerPriceP = scanner.nextLine();
 
                                                             if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(FlowerPriceP)) {
-                                                                logger.info("PackagePrice field is required !");
+                                                                logger.info("PackagePrice field is required ! \n");
                                                                 continue;
                                                             } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(FlowerPriceP)) {
-                                                                logger.info("Enter a Valid Package Price !");
+                                                                logger.info("Enter a Valid Package Price ! \n");
                                                                 continue;
                                                             } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(FlowerPriceP)) {
-                                                                logger.info("Enter a Valid Package Price !");
+                                                                logger.info("Enter a Valid Package Price ! \n");
                                                                 continue;
                                                             } else {
                                                                 try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
@@ -600,7 +599,7 @@ public class Main {
 
                                                 case "5":
                                                     ///
-                                                    userMyApp.searchValueInFile("Package.txt",username);
+                                                    searchValueInFile("Package.txt",username);
                                                     logger.info("Enter The Name Of Package To Delete It : ");
                                                     String fileName = "Package.txt";
                                                     String wordToDelete = scanner.nextLine();
@@ -665,8 +664,8 @@ public class Main {
 
                                     else {
                                         while (true){
-                                            logger.info("The monthly subscription  is 30$");
-                                            logger.info("if you want to subscribe to Fiesta app enter 1 else enter 0 ");
+                                            logger.info("The monthly subscription  is 30$ \n ");
+                                            logger.info("if you want to subscribe to Fiesta app enter 1 else enter 0 \n ");
                                             Enternumber=scanner.nextLine();
                                             if (Enternumber.equals("1")) {
 
@@ -705,7 +704,7 @@ public class Main {
                                                                         continue;
                                                                     } else {
                                                                         logger.info(" * Payment was successful * ! \n");
-                                                                        logger.info("You have successfully subscribed :)");
+                                                                        logger.info("You have successfully subscribed :) \n ");
                                                                         b = switchAccountToProviderMyApp.storeProviderData(username, password);
                                                                         break;
                                                                     }
@@ -727,12 +726,12 @@ public class Main {
                                     innerWhile:
                                     while (true) {
                                         logger.info("Choose: \n 1. Wedding Halls  \n 2. Hire a DJ  \n 3. Photography Studio \n " +
-                                                "4. Flowers \n 5. Main course \n 6. Dessert \n  7.Save \n 8. Back to the previous page  ");
+                                                "4. Flowers \n 5. Main course \n 6. Dessert \n  7.Save \n 8. Back to the previous page \n ");
                                         option1 = scanner.nextLine();
                                         planningloop:
                                         switch (option1) {
                                             case "1":
-                                                userMyApp.displayFileContents("Halls.txt");//print
+                                               displayFileContents("Halls.txt");//print
                                                 // Add your logic for Wedding Halls
                                                 while (true) {
 
@@ -758,7 +757,7 @@ public class Main {
                                                 }
                                             case "2":
                                                 // Add your logic for Hiring a DJ
-                                                userMyApp.displayFileContents("Dj.txt");
+                                                displayFileContents("Dj.txt");
                                                 while (true) {
 
                                                     logger.info("Enter Dj Name:");
@@ -781,7 +780,7 @@ public class Main {
                                                     break planningloop;
                                                 }
                                             case "3":
-                                                userMyApp.displayFileContents("studio.txt");
+                                                displayFileContents("studio.txt");
                                                 // Add your logic for Photography Studio
                                                 while (true) {
 
@@ -806,7 +805,7 @@ public class Main {
 
                                                 }
                                             case "4":
-                                                userMyApp.displayFileContents("flower.txt");
+                                               displayFileContents("flower.txt");
                                                 // Add your logic for Flowers
                                                 while (true) {
 
@@ -825,7 +824,7 @@ public class Main {
                                                     break planningloop;
                                                 }
                                             case "5":
-                                                userMyApp.displayFileContents("maincourse.txt");
+                                                displayFileContents("maincourse.txt");
                                                 // Add your logic for Main course
                                                 while (true) {
 
@@ -844,7 +843,7 @@ public class Main {
                                                     break planningloop;
                                                 }
                                             case "6":
-                                                userMyApp.displayFileContents("desert.txt");
+                                                displayFileContents("desert.txt");
                                                 while (true) {
                                                     // Add your logic for Dessert
 
@@ -867,46 +866,46 @@ public class Main {
                                                 int UserProfitstudio = 0;
                                                 /////////////////////////////
                                                 if (!Objects.equals(hallName, null)) {
-                                                    userMyApp.AddtoEvent("HallName: ", hallName);
-                                                    UserProfit += userMyApp.getColumnValueForHall(HALL_PATH , hallName, 2);
+                                                    AddtoEvent("HallName: ", hallName);
+                                                    UserProfit +=  getColumnValueForHall(HALL_PATH , hallName, 2);
                                                 }
 
                                                 if (!Objects.equals(djName, null)) {
-                                                    userMyApp.AddtoEvent("Dj: ", djName);
-                                                    UserProfitDj = userMyApp.getColumnValueForHall(DjFile, djName, 1);//
+                                                    AddtoEvent("Dj: ", djName);
+                                                    UserProfitDj =  getColumnValueForHall(DjFile, djName, 1);//
                                                 }
 
 
                                                 if (!Objects.equals(StudioName, null)) {
-                                                    userMyApp.AddtoEvent("Studio: ", StudioName);
-                                                    UserProfitstudio = userMyApp.getColumnValueForHall(StudioFile, StudioName, 1);
+                                                     AddtoEvent("Studio: ", StudioName);
+                                                    UserProfitstudio =  getColumnValueForHall(StudioFile, StudioName, 1);
                                                 }
 
                                                 if (!Objects.equals(FlowerName, null)) {
-                                                    userMyApp.AddtoEvent("Flower: ", FlowerName);
-                                                    UserProfit += userMyApp.getColumnValueForHall(FlowerFile, FlowerName, 1);//
+                                                    AddtoEvent("Flower: ", FlowerName);
+                                                    UserProfit +=  getColumnValueForHall(FlowerFile, FlowerName, 1);//
                                                 }
 
                                                 if (!Objects.equals(Maincourse, null)) {
-                                                    userMyApp.AddtoEvent("Maincourse: ", Maincourse);
-                                                    UserProfit += userMyApp.getColumnValueForHall(maincourseFile, Maincourse, 1);//
+                                                    AddtoEvent("Maincourse: ", Maincourse);
+                                                    UserProfit +=  getColumnValueForHall(maincourseFile, Maincourse, 1);//
                                                 }
                                                 if (!Objects.equals(Desert, null)) {
-                                                    userMyApp.AddtoEvent("Desert: ", Desert);
-                                                    UserProfit += userMyApp.getColumnValueForHall(DesertFile, Desert, 1);//
+                                                    AddtoEvent("Desert: ", Desert);
+                                                    UserProfit +=  getColumnValueForHall(DesertFile, Desert, 1);//
                                                 }
 
                                                 //////////////////////////////
                                                 if (!Objects.equals(djName, null)) {
-                                                    logger.info("The amount you should pay for Dj : " + UserProfitDj);
+                                                    logger.info("\nThe amount you should pay for Dj : " + UserProfitDj);
                                                 }
 
                                                 if (!Objects.equals(StudioName, null)) {
-                                                    logger.info("The amount you should pay for studio : " + UserProfitstudio);
+                                                    logger.info("\nThe amount you should pay for studio : " + UserProfitstudio);
                                                 }
 
-                                                logger.info("Total amount you should pay for Provider="+UserProfit);
-                                                logger.info("To complete the order , please pay !");
+                                                logger.info("\nTotal amount you should pay for Provider="+UserProfit);
+                                                logger.info("\nTo complete the order , please pay ! \n");
                                                 /////////////////////////////////
                                                 while (true){
                                                     logger.info("Enter Card Number : ");
@@ -943,7 +942,7 @@ public class Main {
                                                                         continue;
                                                                     } else {
                                                                         logger.info(" * Payment was successful * ! \n");
-                                                                        logger.info("Saved correctly");
+                                                                        logger.info("Saved correctly \n");
                                                                         b = switchAccountToProviderMyApp.storeProviderData(username, password);
                                                                         break;
                                                                     }
@@ -955,11 +954,11 @@ public class Main {
                                                         break ; }
                                                 }
 
-                                                userMyApp.AddtoEvent(":::::::::::::::::",":::::::::::::::::");
+                                                AddtoEvent(":::::::::::::::::",":::::::::::::::::");
                                                 break innerWhile;
 
                                             case "8":
-                                                logger.info("Going back to the main menu");
+                                                logger.info("Going back to the main menu \n");
                                                 break innerWhile;
 
                                             default:
@@ -975,7 +974,7 @@ public class Main {
 
                                     int x =scanner.nextInt();
                                     if (x==1){
-                                        userMyApp.displayFileContents("Package.txt");
+                                        displayFileContents("Package.txt");
                                         while (true) {
                                             // Add your logic for Dessert
                                             logger.info("Enter Package name:");
@@ -1047,9 +1046,9 @@ public class Main {
                                                         break ; }
                                                 }
 
-                                                userMyApp.AddtoEvent("Package: ",Pname);
-                                                UserProfit = userMyApp.getColumnValueForHall("Package.txt", Pname, 1);//
-                                                userMyApp.AddtoEvent(":::::::::::::::::",":::::::::::::::::");
+                                                 AddtoEvent("Package: ",Pname);
+                                                UserProfit = getColumnValueForHall("Package.txt", Pname, 1);//
+                                                AddtoEvent(":::::::::::::::::",":::::::::::::::::");
 
 
                                                 break outerWhile;
@@ -1068,7 +1067,7 @@ public class Main {
 
 
                                         while (true) {
-                                            packgCount= UserMyApp.checkPrise("Package.txt",budget,1);
+                                            packgCount=checkPrise("Package.txt",budget,1);
                                             if(packgCount==0){
                                                 logger.info("Sorry, There is no suitable package.");
                                                 break outerWhile;//
@@ -1093,7 +1092,7 @@ public class Main {
                                                         SwingUtilities.invokeLater(() -> new YearlyBookingCalendarPachage( finalPackgName.trim()));
                                                     }
 
-                                                    UserProfit = UserMyApp.getColumnValueForHall("Package.txt",name,1);
+                                                    UserProfit = getColumnValueForHall("Package.txt",name,1);
                                                     logger.info("Total amount u should pay to provider =" + UserProfit);
                                                     logger.info("To complete the order , please pay !");
 
@@ -1143,9 +1142,9 @@ public class Main {
                                                             }
                                                             break ; }
                                                     }
-                                                    UserMyApp.AddtoEvent("Package Name ", name);
-                                                    UserMyApp.AddtoEvent("Price =", String.valueOf(UserMyApp.getColumnValueForHall("Package.txt", name, 1)));
-                                                    userMyApp.AddtoEvent(":::::::::::::::::", ":::::::::::::::::");
+                                                    AddtoEvent("Package Name ", name);
+                                                     AddtoEvent("Price =", String.valueOf( getColumnValueForHall("Package.txt", name, 1)));
+                                                     AddtoEvent(":::::::::::::::::", ":::::::::::::::::");
 
                                                 }
                                                 break outerWhile;
@@ -1172,4 +1171,141 @@ public class Main {
             }
         }
     }
+
+    public static void displayFileContents(String filePath) {
+        BufferedReader bufferedReader = null;
+        try {
+            bufferedReader = new BufferedReader(new FileReader(filePath));
+            String line;
+
+
+            while ((line = bufferedReader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    public static void AddtoEvent(String name, String item) {
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter("Event.txt", true));
+            writer.write(name + item);
+            writer.newLine();
+        } catch (IOException e) {
+            System.err.println("Error writing to the file: " + e.getMessage());
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    System.err.println("Error closing the writer: " + e.getMessage());
+                }
+            }
+        }
+    }
+    public static int getColumnValueForHall(String filePath, String hallName, int columnIndex) throws IOException {
+        Path path = Paths.get(filePath);
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(path.toFile()));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] columns = line.split(",");
+                for (String column : columns) {
+                    if (column.trim().equals(hallName)) {
+                        if (columnIndex < columns.length) {
+                            return Integer.parseInt(columns[columnIndex].trim());
+                        } else {
+                            throw new IllegalArgumentException("Column index is out of bounds");
+                        }
+                    }
+                }
+            }
+
+            throw new IllegalArgumentException("Hall " + hallName + " not found in file");
+        } finally {
+            if (br != null) {
+                br.close();
+            }
+        }
+    }
+    public static int checkPrise(String filename, int value, int columnIndex) throws IOException {
+        BufferedReader reader = null;
+        int counter = 0;
+        try {
+            reader = new BufferedReader(new FileReader(filename));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length > columnIndex) {
+                    int columnValue = Integer.parseInt(parts[columnIndex].trim());
+                    if (columnValue <= value) {
+                        System.out.println(line);
+                        counter++;
+                    }
+                }
+            }
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+        }
+        return counter;
+    }
+    public static void searchValueInFile(String filePath, String searchValue) {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(filePath));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                String valueToSearch = parts[parts.length - 1];
+                if (valueToSearch.equals(searchValue)) {
+                    System.out.println(line);
+
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("حدث خطأ أثناء قراءة الملف: " + e.getMessage());
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    System.err.println("حدث خطأ أثناء إغلاق الملف: " + e.getMessage());
+                }
+            }
+        }
+    }
+    public static int Counts(String fileName) throws IOException {
+        int lineCount = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Increment line count for each non-empty line
+                if (!line.trim().isEmpty()) {
+                    lineCount++;
+                }
+            }
+        } catch (IOException e) {
+            // Handle the potential IOException
+            e.printStackTrace();
+        }
+        return lineCount;
+    }
+
+
+
 }
