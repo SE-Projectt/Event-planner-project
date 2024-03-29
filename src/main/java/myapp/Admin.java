@@ -1,14 +1,14 @@
 package myapp;
 
 public class Admin {
-    private static final String mya = "Zaid";
-    private static final String myp = "123456";
+    private static final String MY_A = "Zaid";
+    private static final String MY_P = "123456";
 
-    public String getmya() {
-        return mya;
+    public String getMyA() {
+        return MY_A;
     }
 
-    public String getmyp() {
-        return myp;
+    public String getMyP() {
+        return MY_P;
     }
 }
