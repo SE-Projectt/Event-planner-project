@@ -111,7 +111,7 @@ public class YearlyBookingCalendar extends JFrame {
                 bookedDatesPerHall.computeIfAbsent(parts[0], k -> new HashSet<>()).add(parts[1]);
             }
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, () -> "Failed to load bookings from file: " + e.getMessage(), e);
+            LOGGER.log(Level.SEVERE, "Failed to load bookings from file: " + e.getMessage(), e);
         }
     }
 
@@ -120,7 +120,7 @@ public class YearlyBookingCalendar extends JFrame {
             writer.write(bookingKey);
             writer.newLine();
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, () -> "Failed to save booking: " + e.getMessage(), e);
+            LOGGER.log(Level.SEVERE, "Failed to save booking: " + e.getMessage(), e);
         }
     }
 
