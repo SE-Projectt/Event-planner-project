@@ -1320,6 +1320,8 @@ public class Main {
         }
         return false;
     }
-
-
+  public static void handleIOException(String message, IOException e) throws IOException {
+        LOGGER.severe(message + e.getMessage());
+        throw new IOException(message + e.getMessage());
+  }
 }
