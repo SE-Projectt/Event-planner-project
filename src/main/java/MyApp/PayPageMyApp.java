@@ -26,10 +26,15 @@ public class PayPageMyApp {
         return cardOwnerName.isEmpty();
     }
 
-    public boolean theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(String userInput) {
-        return userInput.chars().noneMatch(Character::isLetter);
+  
+public boolean theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(String userInput) {
+    for (char c : userInput.toCharArray()) {
+        if (!Character.isLetter(c)) {
+            return true; 
+        }
     }
-
+    return false; 
+}
     public boolean theUserSubmitsThePaymentFormWithoutEnteringTheCVC(String CVC) {
         return CVC.isEmpty();
     }
