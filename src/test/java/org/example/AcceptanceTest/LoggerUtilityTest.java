@@ -1,13 +1,8 @@
 import static org.junit.Assert.*;
 import org.junit.*;
 import java.util.logging.*;
-import java.io.PrintStream;
 import java.io.ByteArrayOutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.Handler;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.SimpleFormatter;
+import java.io.PrintStream;
 import org.example.LoggerUtility;
 
 public class LoggerUtilityTest {
@@ -46,7 +41,7 @@ public class LoggerUtilityTest {
         Handler[] handlers = logger.getHandlers();
         for (Handler handler : handlers) {
             if (handler instanceof ConsoleHandler) {
-                handler.setOutputStream(new PrintStream(outContent));
+                ((ConsoleHandler) handler).setOutputStream(new PrintStream(outContent));
             }
         }
 
@@ -60,7 +55,7 @@ public class LoggerUtilityTest {
         // Reset logger output stream
         for (Handler handler : handlers) {
             if (handler instanceof ConsoleHandler) {
-                handler.setOutputStream(System.out);
+                ((ConsoleHandler) handler).setOutputStream(System.out);
             }
         }
     }
