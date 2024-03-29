@@ -10,19 +10,21 @@ import java.util.logging.Logger;
 
 
 public class Main {
-  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+ private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     private static final Logger logger = LoggerUtility.getLogger();
     private static final String LOGOUT_MSG = "Logging out \n Thank you !";
-    private static final String UN_VALID_OPTION_MSG = "Invalid option. Please try again.";
-    private static final String HN_FAIL_MSG = "Hall Name field is required ! \n";
-    private static final String ENTER_V_CAPACITY_MSG = "Enter a Valid Capacity ! \n";
-    private static final String HALL_PATH = "Halls.txt";
+    private static final String UN_VALID_OPTION_MSG = "Invalid option. Please try again.",PAYMENT_SUCCESSFUL_MSG = " * Payment was successful * ! \n";
+    private static final String HN_FAIL_MSG = "Hall Name field is required ! \n",CARD_NUMBER_REQUIRED_MSG = "Card Number field is required ! \n",CARD_OWNER_NAME_REQUIRED_MSG = "Card Owner Name field is required ! \n";
+    private static final String ENTER_V_CAPACITY_MSG = "Enter a Valid Capacity ! \n",VALID_NUMBER_MSG = "Enter a Valid Number ! \n",VALID_CVC_MSG = "Enter a Valid CVC Number ! \n";
+    private static final String HALL_PATH = "Halls.txt",PACKAGE_FILE ="Package.txt";
     private static final String ERROR_WRITE_FILE_MSG = "Error writing to the file: ";
     private static final String PACKAGE_NAME_REQ = "Package Name field is required ! \n";
-    private static final String SPACE_SEPARATOR = "----------------------------------------------------------";
+    private static final String SPACE_SEPARATOR = "----------------------------------------------------------",SEPARATOR_LINE = ":::::::::::::::::";
     private static final String NAME_NOT_IN_LIST_MSG = "This name is not in the list, please rewrite the name ! \n";
-
-
+    private static final String EXCEPTION_MESSAGE ="we have Exception";
+    private static final String UserFile = "user_data.txt",ProviderFile = "provider_data.txt",DjFile="Dj.txt",DesertFile="desert.txt",maincourseFile="maincourse.txt",FlowerFile="flower.txt",StudioFile="studio.txt";
+    private static final String ENTER_VALID_NAME_MSG = "Enter a Valid Name ! \n", YES_OPTION ="Yes : 1 \n",NO_OPTION = "NO : 0 \n";
+    private static final String ENTER_CARD_NUMBER_MSG = "Enter Card Number : ",ENTER_CARD_OWNER_NAME_MSG = "Enter Card Owner Name : ", ENTER_CVC_MSG = "Enter CVC : ";
     public static void main(String[] args) throws IOException {
         SignUpMyApp myApp = new SignUpMyApp();
         SwitchAccountToProviderMyApp switchAccountToProviderMyApp=new SwitchAccountToProviderMyApp() ;
@@ -33,7 +35,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         UserMyApp  userMyApp=new UserMyApp() ;
         String username, password, option1, useroption,Paypage, HallName,HallCapacity,HallPrice,HallLocation,ProvidernametoDeleteit,UsernameToDeleteit ;
-        String UserFile = "user_data.txt",ProviderFile = "provider_data.txt";
+
         String hallName = null,djName= null,StudioName= null,FlowerName=null,Maincourse=null,Desert=null;
         String DjFile="Dj.txt",DesertFile="desert.txt",maincourseFile="maincourse.txt",FlowerFile="flower.txt",StudioFile="studio.txt";
 
@@ -272,7 +274,7 @@ public class Main {
                                                             }
                                                         }
                                                     } catch (IOException e) {
-                                                        logger.warning("we have Exception");
+                                                        logger.warning(EXCEPTION_MESSAGE );
                                                     }
 
                                                     // File operations should be outside the try-with-resources block to ensure they happen after the streams are closed
@@ -304,11 +306,11 @@ public class Main {
                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(PackgName)) {
                                                             logger.info(PACKAGE_NAME_REQ);
                                                             continue;
-                                                        } else if (!signup.thereIsNoDuplicatedUserOnTheFile(PackgName, "Package.txt")) {
+                                                        } else if (!signup.thereIsNoDuplicatedUserOnTheFile(PackgName, PACKAGE_FILE )) {
                                                             logger.info("This Package already Exist ! \n");
                                                             continue;
                                                         } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(PackgName)) {
-                                                            logger.info("Enter a Valid Name ! \n");
+                                                            logger.info(ENTER_VALID_NAME_MSG);
                                                             continue;
                                                         }
 
@@ -326,7 +328,7 @@ public class Main {
                                                                 logger.info("Enter a Valid Package Price ! \n");
                                                                 continue;
                                                             } else {
-                                                                try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
+                                                                try (BufferedWriter writer = new BufferedWriter(new FileWriter(PACKAGE_FILE , true))) {
                                                                     writer.write(PackgName + "," + FlowerPriceP);
                                                                 } catch (IOException e) {
                                                                     logger.severe(ERROR_WRITE_FILE_MSG + e.getMessage());
@@ -345,7 +347,7 @@ public class Main {
                                                                 System.out.print(HN_FAIL_MSG);
                                                                 continue;
                                                             } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(HallnameP)) {
-                                                                logger.info("Enter a Valid Name ! \n");
+                                                                logger.info(ENTER_VALID_NAME_MSG);
                                                                 continue;
                                                             } else {
                                                                 while (true) {
@@ -374,7 +376,7 @@ public class Main {
                                                                                         logger.info("Hall Location field is required ! \n");
                                                                                         continue;
                                                                                     } else {
-                                                                                        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
+                                                                                        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PACKAGE_FILE , true))) {
                                                                                             // Append hall details to the file
                                                                                             writer.write("," + "Hall Name :" + HallnameP + "," + "Hall Capacity :" + CapacityP + "," + " Hall Location :" + HLocationP);
 
@@ -406,8 +408,8 @@ public class Main {
                                                     }
                                                     Scanner scanner2 = new Scanner(System.in);
                                                     logger.info("Do U Want to Add Dj \n");
-                                                    logger.info("Yes : 1 \n");
-                                                    logger.info("NO : 0 \n");
+                                                    logger.info(YES_OPTION);
+                                                    logger.info(NO_OPTION);
                                                     s= scanner2.nextInt();
                                                     if(s==0)flag=false;else flag=true;
 
@@ -422,13 +424,13 @@ public class Main {
                                                         }
 
                                                         else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField( DjnameP)) {
-                                                            logger.info("Enter a Valid Name ! \n");
+                                                            logger.info(ENTER_VALID_NAME_MSG);
                                                             continue;
                                                         }
 
                                                         else {
 
-                                                            try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
+                                                            try (BufferedWriter writer = new BufferedWriter(new FileWriter(PACKAGE_FILE , true))) {
                                                                 // Append hall details to the file
                                                                 writer.write(  "," +"Dj Name :"+ DjnameP );
 
@@ -445,8 +447,8 @@ public class Main {
                                                         }
                                                     }
                                                     logger.info("Do U Want to Add Studio \n");
-                                                    logger.info("Yes : 1 \n");
-                                                    logger.info("NO : 0 \n");
+                                                    logger.info(YES_OPTION);
+                                                    logger.info(NO_OPTION);
                                                     s= scanner2.nextInt();
                                                     if(s==0)flag=false;else flag=true;
                                                     while (flag){
@@ -459,13 +461,13 @@ public class Main {
                                                         }
 
                                                         else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(  studionameP)) {
-                                                            logger.info("Enter a Valid Name ! \n");
+                                                            logger.info(ENTER_VALID_NAME_MSG);
                                                             continue;
                                                         }
 
                                                         else {
 
-                                                            try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
+                                                            try (BufferedWriter writer = new BufferedWriter(new FileWriter(PACKAGE_FILE , true))) {
                                                                 // Append hall details to the file
                                                                 writer.write(  "," +"Studio Name :"+ studionameP  );
 
@@ -479,8 +481,8 @@ public class Main {
                                                     }
 
                                                     logger.info("Do U Want to Add Dessert \n");
-                                                    logger.info("Yes : 1 \n");
-                                                    logger.info("NO : 0 \n");
+                                                    logger.info(YES_OPTION);
+                                                    logger.info(NO_OPTION);
                                                     s= scanner2.nextInt();
                                                     if(s==0)flag=false;else flag=true;
 
@@ -494,13 +496,13 @@ public class Main {
                                                         }
 
                                                         else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(  DessertnameP)) {
-                                                            logger.info("Enter a Valid Name ! \n");
+                                                            logger.info(ENTER_VALID_NAME_MSG);
                                                             continue;
                                                         }
 
 
                                                         else {
-                                                            try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
+                                                            try (BufferedWriter writer = new BufferedWriter(new FileWriter(PACKAGE_FILE , true))) {
                                                                 // Append hall details to the file
                                                                 writer.write(  "," + "Dessert Name :"+ DessertnameP  );
 
@@ -515,8 +517,8 @@ public class Main {
                                                     }
 
                                                     logger.info("Do U Want to Add Main Course \n");
-                                                    logger.info("Yes : 1 \n");
-                                                    logger.info("NO : 0 \n");
+                                                    logger.info(YES_OPTION);
+                                                    logger.info(NO_OPTION);
                                                     s= scanner2.nextInt();
                                                     if(s==0)flag=false;else flag=true;
 
@@ -530,13 +532,13 @@ public class Main {
                                                         }
 
                                                         else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(  MainCnameP)) {
-                                                            logger.info("Enter a Valid Name ! \n");
+                                                            logger.info(ENTER_VALID_NAME_MSG);
                                                             continue;
                                                         }
 
                                                         else {
 
-                                                            try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
+                                                            try (BufferedWriter writer = new BufferedWriter(new FileWriter(PACKAGE_FILE , true))) {
 
                                                                 writer.write(  "," + "Main_Course Name :" +MainCnameP  );
 
@@ -552,8 +554,8 @@ public class Main {
 
 
                                                     logger.info("Do U Want to Add Flowers \n");
-                                                    logger.info("Yes : 1 \n");
-                                                    logger.info("NO : 0 \n");
+                                                    logger.info(YES_OPTION);
+                                                    logger.info(NO_OPTION);
                                                     s= scanner2.nextInt();
                                                     if(s==0)flag=false;else flag=true;
 
@@ -566,10 +568,10 @@ public class Main {
                                                                 logger.info("Flower field is required ! \n");
                                                                 continue;
                                                             } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(FlowernameP)) {
-                                                                logger.info("Enter a Valid Name ! \n");
+                                                                logger.info(ENTER_VALID_NAME_MSG);
                                                                 continue;
                                                             }
-                                                            try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
+                                                            try (BufferedWriter writer = new BufferedWriter(new FileWriter(PACKAGE_FILE , true))) {
 
                                                                 writer.write("," + "Flower Name :" + FlowernameP);
 
@@ -583,7 +585,7 @@ public class Main {
 
                                                         }
 
-                                                        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Package.txt", true))) {
+                                                        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PACKAGE_FILE , true))) {
 
                                                             writer.write(","+username);
                                                             writer.newLine();
@@ -599,9 +601,9 @@ public class Main {
 
                                                 case "5":
                                                     ///
-                                                    searchValueInFile("Package.txt",username);
+                                                    searchValueInFile(PACKAGE_FILE ,username);
                                                     logger.info("Enter The Name Of Package To Delete It : ");
-                                                    String fileName = "Package.txt";
+                                                    String fileName = PACKAGE_FILE ;
                                                     String wordToDelete = scanner.nextLine();
                                                     File inputFile = new File(fileName);
                                                     File tempFile = new File("temp.txt");
@@ -670,40 +672,40 @@ public class Main {
                                             if (Enternumber.equals("1")) {
 
                                                 while (true){
-                                                    logger.info("Enter Card Number : ");
+                                                    logger.info(ENTER_CARD_NUMBER_MSG);
                                                     Paypage = scanner.nextLine();
 
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage) ) {
-                                                        logger.info("Card Number field is required ! \n");
+                                                        logger.info(CARD_NUMBER_REQUIRED_MSG);
                                                         continue ;
                                                     }
                                                     else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(Paypage)) {
-                                                        logger.info("Enter a Valid Number ! \n");
+                                                        logger.info(VALID_NUMBER_MSG);
                                                         continue ;
                                                     }
 
                                                     else {
                                                         while (true) {
-                                                            logger.info("Enter Card Owner Name : ");
+                                                            logger.info(ENTER_CARD_OWNER_NAME_MSG);
                                                             Paypage = scanner.nextLine();
                                                             if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Paypage)) {
-                                                                logger.info("Card Owner Name field is required ! \n");
+                                                                logger.info(CARD_OWNER_NAME_REQUIRED_MSG);
                                                                 continue;
                                                             } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(Paypage)) {
-                                                                logger.info("Enter a Valid Name ! \n");
+                                                                logger.info(ENTER_VALID_NAME_MSG);
                                                                 continue;
                                                             } else {
                                                                 while (true) {
-                                                                    logger.info("Enter  CVC : ");
+                                                                    logger.info(ENTER_CVC_MSG);
                                                                     Paypage = scanner.nextLine();
                                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage)) {
-                                                                        logger.info("Card Number field is required ! \n");
+                                                                        logger.info(CARD_NUMBER_REQUIRED_MSG);
                                                                         continue;
                                                                     } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(Paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(Paypage)) {
-                                                                        logger.info("Enter a Valid CVC Number ! \n");
+                                                                        logger.info(VALID_CVC_MSG);
                                                                         continue;
                                                                     } else {
-                                                                        logger.info(" * Payment was successful * ! \n");
+                                                                        logger.info(PAYMENT_SUCCESSFUL_MSG);
                                                                         logger.info("You have successfully subscribed :) \n ");
                                                                         b =  storeProviderData(username, password);
                                                                         break;
@@ -908,40 +910,40 @@ public class Main {
                                                 logger.info("\nTo complete the order , please pay ! \n");
                                                 /////////////////////////////////
                                                 while (true){
-                                                    logger.info("Enter Card Number : ");
+                                                    logger.info(ENTER_CARD_NUMBER_MSG);
                                                     Paypage = scanner.nextLine();
 
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage) ) {
-                                                        logger.info("Card Number field is required ! \n");
+                                                        logger.info(CARD_NUMBER_REQUIRED_MSG);
                                                         continue ;
                                                     }
                                                     else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(Paypage)) {
-                                                        logger.info("Enter a Valid Number ! \n");
+                                                        logger.info(VALID_NUMBER_MSG);
                                                         continue ;
                                                     }
 
                                                     else {
                                                         while (true) {
-                                                            logger.info("Enter Card Owner Name : ");
+                                                            logger.info(ENTER_CARD_OWNER_NAME_MSG);
                                                             Paypage = scanner.nextLine();
                                                             if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Paypage)) {
-                                                                logger.info("Card Owner Name field is required ! \n");
+                                                                logger.info(CARD_OWNER_NAME_REQUIRED_MSG);
                                                                 continue;
                                                             } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(Paypage)) {
-                                                                logger.info("Enter a Valid Name ! \n");
+                                                                logger.info(ENTER_VALID_NAME_MSG);
                                                                 continue;
                                                             } else {
                                                                 while (true) {
-                                                                    logger.info("Enter  CVC : ");
+                                                                    logger.info(ENTER_CVC_MSG);
                                                                     Paypage = scanner.nextLine();
                                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage)) {
-                                                                        logger.info("Card Number field is required ! \n");
+                                                                        logger.info(CARD_NUMBER_REQUIRED_MSG);
                                                                         continue;
                                                                     } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(Paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(Paypage)) {
-                                                                        logger.info("Enter a Valid CVC Number ! \n");
+                                                                        logger.info(VALID_CVC_MSG);
                                                                         continue;
                                                                     } else {
-                                                                        logger.info(" * Payment was successful * ! \n");
+                                                                        logger.info(PAYMENT_SUCCESSFUL_MSG);
                                                                         logger.info("Saved correctly \n");
                                                                         b =  storeProviderData(username, password);
                                                                         break;
@@ -954,7 +956,7 @@ public class Main {
                                                         break ; }
                                                 }
 
-                                                AddtoEvent(":::::::::::::::::",":::::::::::::::::");
+                                                AddtoEvent(SEPARATOR_LINE,SEPARATOR_LINE);
                                                 break innerWhile;
 
                                             case "8":
@@ -974,7 +976,7 @@ public class Main {
 
                                     int x =scanner.nextInt();
                                     if (x==1){
-                                        displayFileContents("Package.txt");
+                                        displayFileContents(PACKAGE_FILE );
                                         while (true) {
                                             // Add your logic for Dessert
                                             logger.info("Enter Package name:");
@@ -984,7 +986,7 @@ public class Main {
                                             if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Pname)) {
                                                 logger.info("  Packge Name field is required ! \n");
                                                 continue;
-                                            } else if (!userMyApp.checkFile(  Pname, "Package.txt")) {
+                                            } else if (!userMyApp.checkFile(  Pname, PACKAGE_FILE )) {
                                                 logger.info(SPACE_SEPARATOR);
                                                 logger.info(NAME_NOT_IN_LIST_MSG);
                                                 logger.info(SPACE_SEPARATOR);
@@ -1000,40 +1002,40 @@ public class Main {
                                                 logger.info("To complete the order , please pay !");
                                                 //////////////////
                                                 while (true){
-                                                    logger.info("Enter Card Number : ");
+                                                    logger.info(ENTER_CARD_NUMBER_MSG);
                                                     Paypage = scanner11.nextLine();
 
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage) ) {
-                                                        logger.info("Card Number field is required ! \n");
+                                                        logger.info(CARD_NUMBER_REQUIRED_MSG);
                                                         continue ;
                                                     }
                                                     else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(Paypage)) {
-                                                        logger.info("Enter a Valid Number ! \n");
+                                                        logger.info(VALID_NUMBER_MSG);
                                                         continue ;
                                                     }
 
                                                     else {
                                                         while (true) {
-                                                            logger.info("Enter Card Owner Name : ");
+                                                            logger.info(ENTER_CARD_OWNER_NAME_MSG);
                                                             Paypage = scanner11.nextLine();
                                                             if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Paypage)) {
-                                                                logger.info("Card Owner Name field is required ! \n");
+                                                                logger.info(CARD_OWNER_NAME_REQUIRED_MSG);
                                                                 continue;
                                                             } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(Paypage)) {
-                                                                logger.info("Enter a Valid Name ! \n");
+                                                                logger.info(ENTER_VALID_NAME_MSG);
                                                                 continue;
                                                             } else {
                                                                 while (true) {
-                                                                    logger.info("Enter  CVC : ");
+                                                                    logger.info(ENTER_CVC_MSG);
                                                                     Paypage = scanner11.nextLine();
                                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage)) {
-                                                                        logger.info("Card Number field is required ! \n");
+                                                                        logger.info(CARD_NUMBER_REQUIRED_MSG);
                                                                         continue;
                                                                     } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(Paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(Paypage)) {
-                                                                        logger.info("Enter a Valid CVC Number ! \n");
+                                                                        logger.info(VALID_CVC_MSG);
                                                                         continue;
                                                                     } else {
-                                                                        logger.info(" * Payment was successful * ! \n");
+                                                                        logger.info(PAYMENT_SUCCESSFUL_MSG);
                                                                         logger.info("Saved correctly");
                                                                         b =  storeProviderData(username, password);
                                                                         break;
@@ -1047,8 +1049,8 @@ public class Main {
                                                 }
 
                                                  AddtoEvent("Package: ",Pname);
-                                                UserProfit = getColumnValueForHall("Package.txt", Pname, 1);//
-                                                AddtoEvent(":::::::::::::::::",":::::::::::::::::");
+                                                UserProfit = getColumnValueForHall(PACKAGE_FILE , Pname, 1);//
+                                                AddtoEvent(SEPARATOR_LINE,SEPARATOR_LINE);
 
 
                                                 break outerWhile;
@@ -1067,7 +1069,7 @@ public class Main {
 
 
                                         while (true) {
-                                            packgCount=checkPrise("Package.txt",budget,1);
+                                            packgCount=checkPrise(PACKAGE_FILE ,budget,1);
                                             if(packgCount==0){
                                                 logger.info("Sorry, There is no suitable package.");
                                                 break outerWhile;//
@@ -1092,45 +1094,45 @@ public class Main {
                                                         SwingUtilities.invokeLater(() -> new YearlyBookingCalendarPachage( finalPackgName.trim()));
                                                     }
 
-                                                    UserProfit = getColumnValueForHall("Package.txt",name,1);
+                                                    UserProfit = getColumnValueForHall(PACKAGE_FILE ,name,1);
                                                     logger.info("Total amount u should pay to provider =" + UserProfit);
                                                     logger.info("To complete the order , please pay !");
 
                                                     while (true){
-                                                        logger.info("Enter Card Number : ");
+                                                        logger.info(ENTER_CARD_NUMBER_MSG);
                                                         Paypage = scanner11.nextLine();
 
                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage) ) {
-                                                            logger.info("Card Number field is required ! \n");
+                                                            logger.info(CARD_NUMBER_REQUIRED_MSG);
                                                             continue ;
                                                         }
                                                         else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(Paypage)) {
-                                                            logger.info("Enter a Valid Number ! \n");
+                                                            logger.info(VALID_NUMBER_MSG);
                                                             continue ;
                                                         }
 
                                                         else {
                                                             while (true) {
-                                                                logger.info("Enter Card Owner Name : ");
+                                                                logger.info(ENTER_CARD_OWNER_NAME_MSG);
                                                                 Paypage = scanner11.nextLine();
                                                                 if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Paypage)) {
-                                                                    logger.info("Card Owner Name field is required ! \n");
+                                                                    logger.info(CARD_OWNER_NAME_REQUIRED_MSG);
                                                                     continue;
                                                                 } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(Paypage)) {
-                                                                    logger.info("Enter a Valid Name ! \n");
+                                                                    logger.info(ENTER_VALID_NAME_MSG);
                                                                     continue;
                                                                 } else {
                                                                     while (true) {
-                                                                        logger.info("Enter  CVC : ");
+                                                                        logger.info(ENTER_CVC_MSG);
                                                                         Paypage = scanner11.nextLine();
                                                                         if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage)) {
-                                                                            logger.info("Card Number field is required ! \n");
+                                                                            logger.info(CARD_NUMBER_REQUIRED_MSG);
                                                                             continue;
                                                                         } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(Paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(Paypage)) {
-                                                                            logger.info("Enter a Valid CVC Number ! \n");
+                                                                            logger.info(VALID_CVC_MSG);
                                                                             continue;
                                                                         } else {
-                                                                            logger.info(" * Payment was successful * ! \n");
+                                                                            logger.info(PAYMENT_SUCCESSFUL_MSG);
                                                                             logger.info("Saved correctly");
                                                                             b =  storeProviderData(username, password);
                                                                             break;
@@ -1143,8 +1145,8 @@ public class Main {
                                                             break ; }
                                                     }
                                                     AddtoEvent("Package Name ", name);
-                                                     AddtoEvent("Price =", String.valueOf( getColumnValueForHall("Package.txt", name, 1)));
-                                                     AddtoEvent(":::::::::::::::::", ":::::::::::::::::");
+                                                     AddtoEvent("Price =", String.valueOf( getColumnValueForHall(PACKAGE_FILE , name, 1)));
+                                                     AddtoEvent(SEPARATOR_LINE, SEPARATOR_LINE);
 
                                                 }
                                                 break outerWhile;
@@ -1184,13 +1186,13 @@ public class Main {
             }
         } catch (IOException e) {
 
-            logger.warning("we have Exception");
+            logger.warning(EXCEPTION_MESSAGE );
         } finally {
             if (bufferedReader != null) {
                 try {
                     bufferedReader.close();
                 } catch (IOException e) {
-                    logger.warning("we have Exception");
+                    logger.warning(EXCEPTION_MESSAGE );
                 }
             }
         }
@@ -1301,7 +1303,7 @@ public class Main {
             }
         } catch (IOException e) {
             // Handle the potential IOException
-            logger.warning("we have Exception");
+            logger.warning(EXCEPTION_MESSAGE );
         }
         return lineCount;
     }
@@ -1324,4 +1326,5 @@ public class Main {
         LOGGER.severe(message + e.getMessage());
         throw new IOException(message + e.getMessage());
   }
+
 }
