@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 import org.junit.*;
 import java.util.logging.*;
+import java.io.PrintStream;
 import java.io.ByteArrayOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
