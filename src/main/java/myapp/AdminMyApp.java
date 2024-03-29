@@ -1,17 +1,17 @@
 package myapp;
 
 import java.io.*;
-import java.util.logging.Logger;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.logging.Logger;
 
 public final class AdminMyApp {
     private static final Logger LOGGER = Logger.getLogger(AdminMyApp.class.getName());
 
     public static void deleteLine(String fileName, String username) throws IOException {
         File inputFile = new File(fileName);
-        File tempFile = new File("temp.txt");
+        File tempFile = File.createTempFile("temp", null);
+
         boolean deleted = false;
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
              BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
@@ -19,46 +19,29 @@ public final class AdminMyApp {
             while ((currentLine = reader.readLine()) != null) {
                 String[] parts = currentLine.split(",");
                 if (!parts[0].trim().equals(username)) {
-                    writer.write(currentLine + System.getProperty("line.separator"));
+                    writer.write(currentLine);
+                    writer.newLine();
                 } else {
                     deleted = true;
                 }
             }
         } catch (IOException e) {
-            LOGGER.severe("Error while reading or writing files: " + e.getMessage());
-            throw new IOException("Error occurred while deleting line: " + e.getMessage());
+            handleIOException("Error occurred while deleting line: ", e);
         }
 
-        // Close the BufferedWriter outside the try-with-resources block
-        try (BufferedReader reader = new BufferedReader(new FileReader(tempFile))) {
-            if (deleted) {
-                try {
-                    Path inputPath = Paths.get(inputFile.getPath());
-                    Files.delete(inputPath);
-                    if (!tempFile.renameTo(inputFile)) {
-                        LOGGER.severe("Could not rename temporary file");
-                        throw new IOException("Could not rename temporary file");
-                    }
-                    LOGGER.info("Delete successful");
-                } catch (IOException e) {
-                    LOGGER.severe("Error while deleting or renaming files: " + e.getMessage());
-                    // Log the error without rethrowing
-                    LOGGER.severe("Error occurred while deleting or renaming files: " + e.getMessage());
+        if (deleted) {
+            try {
+                Files.delete(inputFile.toPath());
+                if (!tempFile.renameTo(inputFile)) {
+                    LOGGER.severe("Could not rename temporary file");
+                    throw new IOException("Could not rename temporary file");
                 }
-            } else {
-                LOGGER.info("No lines were deleted");
+                LOGGER.info("Delete successful");
+            } catch (IOException e) {
+                handleIOException("Error occurred while deleting or renaming files: ", e);
             }
-        } finally {
-            if (tempFile.exists()) {
-                try {
-                    Path tempPath = Paths.get(tempFile.getPath());
-                    Files.delete(tempPath);
-                } catch (IOException e) {
-                    LOGGER.severe("Could not delete temporary file: " + e.getMessage());
-                    // Log the error without rethrowing
-                    LOGGER.severe("Error occurred while deleting temporary file: " + e.getMessage());
-                }
-            }
+        } else {
+            LOGGER.info("No lines were deleted");
         }
     }
 
@@ -73,10 +56,13 @@ public final class AdminMyApp {
                 }
             }
         } catch (IOException e) {
-            LOGGER.severe("Error while reading file: " + e.getMessage());
-            throw new IOException("Error occurred while checking if username exists: " + e.getMessage());
+            handleIOException("Error occurred while checking if username exists: ", e);
         }
         return false;
     }
-}
 
+    private static void handleIOException(String message, IOException e) throws IOException {
+        LOGGER.severe(message + e.getMessage());
+        throw new IOException(message + e.getMessage());
+    }
+}
