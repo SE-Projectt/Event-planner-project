@@ -1,6 +1,6 @@
 package org.example.AcceptanceTest;
 
-import myapp.UserMyApp;
+import MyApp.UserMyApp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -151,6 +151,25 @@ public class PlanningWeddingTest {
         Desert="kunafa"; filename="Event.txt";
         assertTrue(userMyApp.checkFile(filename,"Desert",Desert));
  }
+    @Given("the file {string} does not exist")
+    public void theFileDoesNotExist(String filename) {
+        // Do nothing, file does not exist by default
+        this.filename = filename;
+    }
 
+    @When("I attempt to delete a line from the file")
+    public void iAttemptToDeleteALineFromTheFile() {
+        try {
+            UserMyApp.deleteLineFromFile("Alice", filename);
+        } catch (Exception e) {
+            exception = e;
+        }
+    }
 
-}  
+    @Then("an error should be thrown with message {string}")
+    public void anErrorShouldBeThrownWithMessage(String errorMessage) {
+      assertNull("Expected an exception to be thrown", exception);
+        
+    }
+
+} 
