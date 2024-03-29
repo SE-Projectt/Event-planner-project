@@ -4,11 +4,11 @@ public class Admin {
     private static final String mya = "Zaid";
     private static final String myp = "123456";
 
-    public String getmyA() {
+    public String getmya() {
         return mya;
     }
 
-    public String getmyPP() {
+    public String getmyp() {
         return myp;
     }
 }
