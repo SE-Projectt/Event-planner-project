@@ -1184,13 +1184,13 @@ public class Main {
             }
         } catch (IOException e) {
 
-            e.printStackTrace();
+            logger.warning("we have Exception");
         } finally {
             if (bufferedReader != null) {
                 try {
                     bufferedReader.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.warning("we have Exception");
                 }
             }
         }
@@ -1301,7 +1301,7 @@ public class Main {
             }
         } catch (IOException e) {
             // Handle the potential IOException
-            e.printStackTrace();
+            logger.warning("we have Exception");
         }
         return lineCount;
     }
