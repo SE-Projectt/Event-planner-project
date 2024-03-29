@@ -7,8 +7,9 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class LoginMyApp {
-    static Admin admin = new Admin();
 
+ private static final String MY_A = "Zaid";
+    private static final String MY_P = "123456";
     private static final Logger logger = Logger.getLogger(LoginMyApp.class.getName());
 
     public static boolean iEnterValidUsernameAndIncorrectPassword(String username, String password) {
@@ -50,6 +51,6 @@ public class LoginMyApp {
     }
 
     public static boolean iEnterUsernameAndPassword(String adminname, String password) {
-        return adminname.equals(admin.getMyA()) && password.equals(admin.getMyP());
+        return adminname.equals(MY_A) && password.equals(MY_P);
     }
 }
