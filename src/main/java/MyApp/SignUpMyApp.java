@@ -1,10 +1,10 @@
 package MyApp;
 
-import DB.UserDataBase;
-import Entity.User;
+
+
 
 import java.io.*;
-import java.util.ArrayList;
+
 import java.util.logging.Logger;
 
 public class SignUpMyApp {
