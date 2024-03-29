@@ -1,4 +1,4 @@
-package myapp;
+package MyApp;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -7,10 +7,7 @@ import java.io.*;
 
 public class UserMyApp {
     private static final Logger logger = LogManager.getLogger(UserMyApp.class);
-    private static final String ERROR_READING_FILE = "Error reading the file: {}";
-    private static final String ERROR_CLOSING_READER = "Error closing the reader: {}";
 
-    // Method to check if a specific typeEvent and eventName combination exists in a file
     public static boolean checkFile(String filename, String typeEvent, String eventName) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -24,14 +21,15 @@ public class UserMyApp {
                     }
                 }
             }
+        } catch (FileNotFoundException e) {
+            logger.error("File not found: {}", filename);
         } catch (IOException e) {
-            logger.error(ERROR_READING_FILE, e.getMessage());
+            logger.error("Error reading file: {}", filename);
         }
         return false;
     }
 
-    // Method to check if a specific eventName and date combination exists in a file
-    public static boolean checkHallandDate(String fileName, String date, String eventName) {
+    public static boolean checkHallAndDate(String fileName, String date, String eventName) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -43,13 +41,14 @@ public class UserMyApp {
                     }
                 }
             }
+        } catch (FileNotFoundException e) {
+            logger.error("File not found: {}", fileName);
         } catch (IOException e) {
-            logger.error(ERROR_READING_FILE, e.getMessage());
+            logger.error("Error reading file: {}", fileName);
         }
         return false;
     }
 
-    // Method to check if a specific word exists in a file
     public static boolean checkFile(String word, String filename) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -59,24 +58,24 @@ public class UserMyApp {
                     return true;
                 }
             }
+        } catch (FileNotFoundException e) {
+            logger.error("File not found: {}", filename);
         } catch (IOException e) {
-            logger.error(ERROR_READING_FILE, e.getMessage());
+            logger.error("Error reading file: {}", filename);
         }
         return false;
     }
 
-    // Method to add a package name to a file
     public static void addPackageToFile(String packageName, String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
             writer.write(packageName);
             writer.newLine();
             logger.info("Package '{}' added to file '{}'", packageName, filename);
         } catch (IOException e) {
-            logger.error("Error occurred while writing to file: {}", e.getMessage());
+            logger.error("Error writing to file: {}", filename);
         }
     }
 
-    // Method to delete a line containing a specific name from a file
     public static boolean deleteLineFromFile(String name, String filename) {
         File inputFile = new File(filename);
         File tempFile = new File("temp.txt");
@@ -89,19 +88,21 @@ public class UserMyApp {
                     deleted = true;
                     continue;
                 }
-                writer.write(currentLine + System.getProperty("line.separator"));
+                writer.write(currentLine);
+                writer.newLine();
             }
+        } catch (FileNotFoundException e) {
+            logger.error("File not found: {}", filename);
         } catch (IOException e) {
-            logger.error("Error occurred while deleting line from file: {}", e.getMessage());
-            return false;
+            logger.error("Error reading/writing file: {}", filename);
         }
         if (deleted) {
             if (!inputFile.delete()) {
-                logger.error("Could not delete the original file.");
+                logger.error("Could not delete the original file: {}", filename);
                 return false;
             }
             if (!tempFile.renameTo(inputFile)) {
-                logger.error("Could not rename the temp file.");
+                logger.error("Could not rename the temp file: {}", filename);
                 return false;
             }
             logger.info("Line containing '{}' deleted from file '{}'", name, filename);
