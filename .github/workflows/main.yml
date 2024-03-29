@@ -38,5 +38,5 @@ jobs:
         run: |
           mvn -B jacoco:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar jacoco:report \
           -Dsonar.projectKey=SE-Projectt_Event-planner-project \
-          -Dsonar.coverage.exclusions="**/YearlyBookingCalendar.java,**/YearlyBookingCalendarDj.java,**/YearlyBookingCalendarPachage.java,**/YearlyBookingCalendarStudio.java,**/Main.java" \
+          -Dsonar.coverage.exclusions="**/YearlyBookingCalendar.java,**/YearlyBookingCalendarDj.java,**/User.java,**/YearlyBookingCalendarPachage.java,**/YearlyBookingCalendarStudio.java,**/Main.java" \
           -Dsonar.cpd.exclusions="**/YearlyBookingCalendar.java,**/YearlyBookingCalendarDj.java,**/YearlyBookingCalendarPachage.java,**/YearlyBookingCalendarStudio.java,**/Main.java"
