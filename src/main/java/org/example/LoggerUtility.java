@@ -13,6 +13,7 @@ public class LoggerUtility {
         }
         return logger;
     }
+
     private static void setupLogger() {
         logger.setUseParentHandlers(false);
         SimpleFormatter simpleFormatter = new SimpleFormatter() {
@@ -26,9 +27,10 @@ public class LoggerUtility {
         consoleHandler.setFormatter(simpleFormatter);
         logger.addHandler(consoleHandler);
     }
+
     public static void logInfo(Logger logger, String format, Object... args) {
         if (logger.isLoggable(Level.INFO)) {
             logger.info(String.format(format, args));
-        }
-    }
+        }
+    }
 }
