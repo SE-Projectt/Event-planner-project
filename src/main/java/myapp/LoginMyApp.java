@@ -50,7 +50,7 @@ public class LoginMyApp {
         return false;
     }
 
-    public static boolean iEnterUsernameAndPassword(String adminname, String password) {
-        return adminname.equals(MY_A) && password.equals(MY_P);
+    public static boolean iEnterUsernameAndPassword(String adminname, String pata) {
+        return adminname.equals(MY_A) && pata.equals(MY_P);
     }
 }
