@@ -8,47 +8,35 @@ import java.util.logging.Logger;
 public class HallProfitUpdater {
     private static final Logger logger = Logger.getLogger(HallProfitUpdater.class.getName());
 
-    public static void updateOrPrintProfits(String hallName) {
+    public static void updateOrPrintProfits(String hallName) throws IOException {
         String hallsFilePath = "Halls.txt";
         String profitsFilePath = "profits.txt";
         Map<String, Integer> profitMap = new HashMap<>();
 
-        try (BufferedReader profitReader = new BufferedReader(new FileReader(profitsFilePath))) {
-            String line;
-            while ((line = profitReader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 2) {
-                    profitMap.put(parts[0].trim(), Integer.parseInt(parts[1].trim()));
-                }
+        BufferedReader profitReader = new BufferedReader(new FileReader(profitsFilePath));
+        String line;
+        while ((line = profitReader.readLine()) != null) {
+            String[] parts = line.split(",");
+            if (parts.length >= 2) {
+                profitMap.put(parts[0].trim(), Integer.parseInt(parts[1].trim()));
             }
-        } catch (FileNotFoundException e) {
-            logger.warning("Profits file not found. A new one will be created.");
-        } catch (IOException e) {
-            logger.severe("An error occurred while reading the profits file."); 
         }
+        profitReader.close();
 
-        try (BufferedReader hallReader = new BufferedReader(new FileReader(hallsFilePath))) {
-            String line;
-            while ((line = hallReader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts[0].equalsIgnoreCase(hallName) && parts.length >= 5) {
-                    String name = parts[4].trim();
-                    int price = Integer.parseInt(parts[2].trim());
-                    profitMap.merge(name, price, Integer::sum);
-                    break;
-                }
+        BufferedReader hallReader = new BufferedReader(new FileReader(hallsFilePath));
+        while ((line = hallReader.readLine()) != null) {
+            String[] parts = line.split(",");
+            if (parts[0].equalsIgnoreCase(hallName) && parts.length >= 5) {
+                String name = parts[4].trim();
+                int price = Integer.parseInt(parts[2].trim());
+                profitMap.merge(name, price, Integer::sum);
+                break;
             }
-        } catch (IOException e) {
-            logger.severe("An error occurred while reading the Halls file.");
-            // Log statement executed, but IOException branch not covered
         }
+        hallReader.close();
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter(profitsFilePath))) {
-            profitMap.forEach((key, value) -> writer.println(key + "," + value));
-            // All lines of this try block are covered
-        } catch (IOException e) {
-            logger.severe("An error occurred while writing to the profits file.");
-            // Log statement executed, but IOException branch not covered
-        }
+        PrintWriter writer = new PrintWriter(new FileWriter(profitsFilePath));
+        profitMap.forEach((key, value) -> writer.println(key + "," + value));
+        writer.close();
     }
 }
