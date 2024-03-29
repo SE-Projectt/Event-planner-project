@@ -1,5 +1,5 @@
 package org.example.AcceptanceTest;
-import Entity.PayInformation;
+
 import MyApp.LoginMyApp;
 import MyApp.PayPageMyApp;
 import MyApp.SignUpMyApp;
@@ -11,7 +11,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 public class PaymentPageValidationTest {
     PayPageMyApp Pay;
-    PayInformation PayI=new PayInformation();
+  
     public PaymentPageValidationTest(){
 
         Pay=new PayPageMyApp();
