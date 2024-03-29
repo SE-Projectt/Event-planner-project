@@ -135,6 +135,25 @@
         </execution>
     </executions>
 </plugin>
+   <plugins>
+        <!-- Other plugins -->
+        <plugin>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>3.9.0.2155</version>
+            <configuration>
+                <!-- Other configurations -->
+                <!-- Exclude specific classes from code coverage analysis -->
+                <exclusions>
+                    <exclusion>**/YearlyBookingCalendar.java</exclusion>
+                    <exclusion>**/YearlyBookingCalendarDj.java</exclusion>
+                    <exclusion>**/YearlyBookingCalendarPachage.java</exclusion>
+                    <exclusion>**/YearlyBookingCalendarStudio.java</exclusion>
+                    <exclusion>**/Main.java</exclusion>
+                </exclusions>
+            </configuration>
+        </plugin>
+    </plugins>
 
 <plugin>
     <groupId>org.jacoco</groupId>
