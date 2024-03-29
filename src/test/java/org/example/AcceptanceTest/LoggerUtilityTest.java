@@ -2,15 +2,24 @@ import static org.junit.Assert.*;
 import org.junit.*;
 import java.util.logging.*;
 import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import org.example.LoggerUtility;
 
 public class LoggerUtilityTest {
     private Logger logger;
+    private ByteArrayOutputStream logOutput;
 
     @Before
     public void setUp() {
         logger = LoggerUtility.getLogger();
+        logOutput = new ByteArrayOutputStream();
+        Handler memoryHandler = null;
+        try {
+            memoryHandler = new MemoryHandler(new StreamHandler(logOutput, new SimpleFormatter()), 0);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        logger.addHandler(memoryHandler);
     }
 
     @Test
@@ -36,27 +45,14 @@ public class LoggerUtilityTest {
 
     @Test
     public void testLogInfo() {
-        // Redirect logger output to a ByteArrayOutputStream to capture logs
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        Handler[] handlers = logger.getHandlers();
-        for (Handler handler : handlers) {
-            if (handler instanceof ConsoleHandler) {
-                ((ConsoleHandler) handler).setOutputStream(new PrintStream(outContent));
-            }
-        }
-
         // Assuming logger level is set to INFO
         logger.setLevel(Level.INFO);
         LoggerUtility.logInfo(logger, "Test message: %s", "arg1");
 
-        // Verify log message
-        assertTrue(outContent.toString().contains("Test message: arg1"));
+        // Flush the memory handler to ensure the log message is written to the ByteArrayOutputStream
+        logger.getHandlers()[0].flush();
 
-        // Reset logger output stream
-        for (Handler handler : handlers) {
-            if (handler instanceof ConsoleHandler) {
-                ((ConsoleHandler) handler).setOutputStream(System.out);
-            }
-        }
+        // Verify log message
+        assertTrue(logOutput.toString().contains("Test message: arg1"));
     }
 }
