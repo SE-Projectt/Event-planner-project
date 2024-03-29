@@ -2,14 +2,12 @@ package MyApp;
 
 import java.io.*;
 import java.util.logging.Logger;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class AdminMyApp {
     private static final Logger LOGGER = Logger.getLogger(AdminMyApp.class.getName());
-
-    // Private constructor to hide the implicit public one
-    private AdminMyApp() {
-        throw new IllegalStateException("Utility class");
-    }
 
     public static void deleteLine(String fileName, String username) throws IOException {
         File inputFile = new File(fileName);
@@ -31,18 +29,33 @@ public class AdminMyApp {
             throw e;
         }
 
-        // No need for if conditions, Files.delete does not return a value
-        java.nio.file.Files.delete(inputFile.toPath());
-        java.nio.file.Files.delete(tempFile.toPath());
-
-        if (deleted) {
-            if (!tempFile.renameTo(inputFile)) {
-                LOGGER.severe("Could not rename temporary file");
-                return;
+        // Close the BufferedWriter outside the try-with-resources block
+        try (BufferedReader reader = new BufferedReader(new FileReader(tempFile))) {
+            if (deleted) {
+                try {
+                    Path inputPath = Paths.get(inputFile.getPath());
+                    Files.delete(inputPath);
+                    if (!tempFile.renameTo(inputFile)) {
+                        LOGGER.severe("Could not rename temporary file");
+                        return;
+                    }
+                    LOGGER.info("Delete successful");
+                } catch (IOException e) {
+                    LOGGER.severe("Error while deleting or renaming files: " + e.getMessage());
+                    throw e;
+                }
+            } else {
+                LOGGER.info("No lines were deleted");
             }
-            LOGGER.info("Delete successful");
-        } else {
-            LOGGER.info("No lines were deleted");
+        } finally {
+            if (tempFile.exists()) {
+                try {
+                    Path tempPath = Paths.get(tempFile.getPath());
+                    Files.delete(tempPath);
+                } catch (IOException e) {
+                    LOGGER.severe("Could not delete temporary file: " + e.getMessage());
+                }
+            }
         }
     }
 
