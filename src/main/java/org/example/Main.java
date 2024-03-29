@@ -13,18 +13,35 @@ public class Main {
  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     private static final Logger logger = LoggerUtility.getLogger();
     private static final String LOGOUT_MSG = "Logging out \n Thank you !";
-    private static final String UN_VALID_OPTION_MSG = "Invalid option. Please try again.",PAYMENT_SUCCESSFUL_MSG = " * Payment was successful * ! \n";
-    private static final String HN_FAIL_MSG = "Hall Name field is required ! \n",CARD_NUMBER_REQUIRED_MSG = "Card Number field is required ! \n",CARD_OWNER_NAME_REQUIRED_MSG = "Card Owner Name field is required ! \n";
-    private static final String ENTER_V_CAPACITY_MSG = "Enter a Valid Capacity ! \n",VALID_NUMBER_MSG = "Enter a Valid Number ! \n",VALID_CVC_MSG = "Enter a Valid CVC Number ! \n";
+    private static final String UN_VALID_OPTION_MSG = "Invalid option. Please try again.";
+    private static final String HN_FAIL_MSG = "Hall Name field is required ! \n";
+    private static final String CARD_OWNER_NAME_REQUIRED_MSG = "Card Owner Name field is required ! \n";
+    private static final String CARD_NUMBER_REQUIRED_MSG = "Card Number field is required ! \n";
+    private static final String ENTER_V_CAPACITY_MSG = "Enter a Valid Capacity ! \n";
+    private static final String VALID_NUMBER_MSG = "Enter a Valid Number ! \n";
+    private static final String VALID_CVC_MSG = "Enter a Valid CVC Number ! \n";
     private static final String HALL_PATH = "Halls.txt",PACKAGE_FILE ="Package.txt";
     private static final String ERROR_WRITE_FILE_MSG = "Error writing to the file: ";
     private static final String PACKAGE_NAME_REQ = "Package Name field is required ! \n";
-    private static final String SPACE_SEPARATOR = "----------------------------------------------------------",SEPARATOR_LINE = ":::::::::::::::::";
+    private static final String SPACE_SEPARATOR = "----------------------------------------------------------";
+    private static final String SEPARATOR_LINE = ":::::::::::::::::";
     private static final String NAME_NOT_IN_LIST_MSG = "This name is not in the list, please rewrite the name ! \n";
     private static final String EXCEPTION_MESSAGE ="we have Exception";
-    private static final String UserFile = "user_data.txt",ProviderFile = "provider_data.txt",DjFile="Dj.txt",DesertFile="desert.txt",maincourseFile="maincourse.txt",FlowerFile="flower.txt",StudioFile="studio.txt";
-    private static final String ENTER_VALID_NAME_MSG = "Enter a Valid Name ! \n", YES_OPTION ="Yes : 1 \n",NO_OPTION = "NO : 0 \n";
-    private static final String ENTER_CARD_NUMBER_MSG = "Enter Card Number : ",ENTER_CARD_OWNER_NAME_MSG = "Enter Card Owner Name : ", ENTER_CVC_MSG = "Enter CVC : ";
+    private static final String UserFile = "user_data.txt";
+    private static final String ProviderFile = "provider_data.txt";
+    private static final String DjFile="Dj.txt";
+    private static final String DesertFile="desert.txt";
+    private static final String maincourseFile="maincourse.txt";
+    private static final String FlowerFile="flower.txt";
+    private static final String StudioFile="studio.txt";
+    private static final String ENTER_VALID_NAME_MSG = "Enter a Valid Name ! \n";
+    private static final String YES_OPTION ="Yes : 1 \n";
+    private static final String NO_OPTION = "NO : 0 \n";
+    private static final String ENTER_CARD_NUMBER_MSG = "Enter Card Number : ";
+    private static final String ENTER_CARD_OWNER_NAME_MSG = "Enter Card Owner Name : ";
+    private static final String ENTER_CVC_MSG = "Enter CVC : ";
+    private static final String PAYMENT_SUCCESSFUL_MSG = " * Payment was successful * ! \n";
+
     public static void main(String[] args) throws IOException {
         SignUpMyApp myApp = new SignUpMyApp();
         SwitchAccountToProviderMyApp switchAccountToProviderMyApp=new SwitchAccountToProviderMyApp() ;
@@ -1322,9 +1339,9 @@ public class Main {
         }
         return false;
     }
+
   public static void handleIOException(String message, IOException e) throws IOException {
         LOGGER.severe(message + e.getMessage());
         throw new IOException(message + e.getMessage());
   }
-
 }
