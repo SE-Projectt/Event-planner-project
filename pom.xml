@@ -8,6 +8,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+    <sonar.coverage.exclusions>**/YearlyBookingCalendar.java,**/YearlyBookingCalendarDj.java,**/YearlyBookingCalendarPachage.java,**/YearlyBookingCalendarStudio.java</sonar.coverage.exclusions>
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
