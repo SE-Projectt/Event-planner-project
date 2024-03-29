@@ -1,7 +1,7 @@
 import io.cucumber.java.en.*;
 import static org.junit.Assert.*;
 import java.util.logging.*;
-
+import org.example.LoggerUtility;
 public class LoggerUtilityStepDefinitions {
     private Logger logger;
     private String logMessage;
