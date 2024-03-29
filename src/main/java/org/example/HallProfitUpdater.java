@@ -35,14 +35,14 @@ public class HallProfitUpdater {
             }
         } catch (IOException e) {
             logger.severe("An error occurred while reading the Halls file.");
-           
+            // Log statement executed, but IOException branch not covered
         }
         try (PrintWriter writer = new PrintWriter(new FileWriter(profitsFilePath))) {
             profitMap.forEach((key, value) -> writer.println(key + "," + value));
-            
+            // All lines of this try block are covered
         } catch (IOException e) {
             logger.severe("An error occurred while writing to the profits file.");
-            /
+            // Log statement executed, but IOException branch not covered
         }
     }
 }
