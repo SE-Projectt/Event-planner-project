@@ -1,5 +1,5 @@
 package org.example;
-import Entity.PayInformation;
+
 import MyApp.*;
 
 import javax.swing.*;
@@ -27,7 +27,7 @@ public class Main {
         SignUpMyApp myApp = new SignUpMyApp();
         SwitchAccountToProviderMyApp switchAccountToProviderMyApp=new SwitchAccountToProviderMyApp() ;
         PayPageMyApp payPageMyApp=new PayPageMyApp();
-        PayInformation payInformation =new PayInformation();
+      
         LoginMyApp loginMyApp = new LoginMyApp();
         SignUpMyApp signup=new SignUpMyApp();
         AdminMyApp adminMyApp=new AdminMyApp();
