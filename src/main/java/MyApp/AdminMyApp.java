@@ -7,21 +7,7 @@ public class AdminMyApp {
     private static final Logger LOGGER = Logger.getLogger(AdminMyApp.class.getName());
     private static final String ERROR_CLOSE_BR = "Error while closing BufferedReader: ";
 
-    public static int Counts(String fileName) throws IOException {
-        int lineCount = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
-                    lineCount++;
-                }
-            }
-        } catch (IOException e) {
-            LOGGER.severe("Error while reading file: " + e.getMessage());
-            throw e;
-        }
-        return lineCount;
-    }
+
 
     public static void deleteLine(String fileName, String username) throws IOException {
         File inputFile = new File(fileName);
