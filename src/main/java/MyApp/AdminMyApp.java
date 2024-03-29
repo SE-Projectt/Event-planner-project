@@ -31,25 +31,18 @@ public class AdminMyApp {
             throw e;
         }
 
-        // Close the BufferedWriter outside the try-with-resources block
-        try (BufferedReader reader = new BufferedReader(new FileReader(tempFile))) {
-            if (deleted) {
-                if (!java.nio.file.Files.delete(inputFile.toPath())) {
-                    LOGGER.severe("Could not delete original file");
-                    return;
-                }
-                if (!tempFile.renameTo(inputFile)) {
-                    LOGGER.severe("Could not rename temporary file");
-                    return;
-                }
-                LOGGER.info("Delete successful");
-            } else {
-                LOGGER.info("No lines were deleted");
+        // No need for if conditions, Files.delete does not return a value
+        java.nio.file.Files.delete(inputFile.toPath());
+        java.nio.file.Files.delete(tempFile.toPath());
+
+        if (deleted) {
+            if (!tempFile.renameTo(inputFile)) {
+                LOGGER.severe("Could not rename temporary file");
+                return;
             }
-        } finally {
-            if (tempFile.exists() && !java.nio.file.Files.delete(tempFile.toPath())) {
-                LOGGER.severe("Could not delete temporary file");
-            }
+            LOGGER.info("Delete successful");
+        } else {
+            LOGGER.info("No lines were deleted");
         }
     }
 
