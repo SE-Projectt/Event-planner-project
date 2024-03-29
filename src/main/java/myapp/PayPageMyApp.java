@@ -1,4 +1,4 @@
-package MyApp;
+package myapp;
 
 public class PayPageMyApp {
     public boolean theUserSubmitsThePaymentFormWithoutEnteringACardNumber(String cardNumber) {

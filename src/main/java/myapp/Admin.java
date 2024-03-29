@@ -1,4 +1,4 @@
-package MyApp;
+package myapp;
 
 public class Admin {
     private static final String myA = "Zaid";

@@ -1,8 +1,8 @@
 package org.example.AcceptanceTest;
 
-import MyApp.LoginMyApp;
-import MyApp.PayPageMyApp;
-import MyApp.SignUpMyApp;
+import myapp.LoginMyApp;
+import myapp.PayPageMyApp;
+import myapp.SignUpMyApp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

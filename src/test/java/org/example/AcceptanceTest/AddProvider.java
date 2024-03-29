@@ -1,7 +1,7 @@
 package org.example.AcceptanceTest;
 
-import MyApp.AddProviderMyApp;
-import MyApp.SignUpMyApp;
+import myapp.AddProviderMyApp;
+import myapp.SignUpMyApp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

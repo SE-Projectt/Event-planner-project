@@ -1,4 +1,4 @@
-package MyApp;
+package myapp;
 import java.io.*;
 
 public class SwitchAccountToProviderMyApp {

@@ -2,8 +2,8 @@ package org.example.AcceptanceTest;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import Entity.User;
-import MyApp.SignUpMyApp;
+import myapp.User;
+import myapp.SignUpMyApp;
 import io.cucumber.cienvironment.internal.com.eclipsesource.json.JsonArray;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

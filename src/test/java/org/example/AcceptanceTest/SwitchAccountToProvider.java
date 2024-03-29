@@ -1,7 +1,7 @@
 package org.example.AcceptanceTest;
-import MyApp.LoginMyApp;
-import MyApp.SignUpMyApp;
-import MyApp.SwitchAccountToProviderMyApp;
+import myapp.LoginMyApp;
+import myapp.SignUpMyApp;
+import myapp.SwitchAccountToProviderMyApp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
