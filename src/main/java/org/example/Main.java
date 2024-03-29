@@ -705,7 +705,7 @@ public class Main {
                                                                     } else {
                                                                         logger.info(" * Payment was successful * ! \n");
                                                                         logger.info("You have successfully subscribed :) \n ");
-                                                                        b = switchAccountToProviderMyApp.storeProviderData(username, password);
+                                                                        b =  storeProviderData(username, password);
                                                                         break;
                                                                     }
                                                                 }
@@ -943,7 +943,7 @@ public class Main {
                                                                     } else {
                                                                         logger.info(" * Payment was successful * ! \n");
                                                                         logger.info("Saved correctly \n");
-                                                                        b = switchAccountToProviderMyApp.storeProviderData(username, password);
+                                                                        b =  storeProviderData(username, password);
                                                                         break;
                                                                     }
                                                                 }
@@ -1035,7 +1035,7 @@ public class Main {
                                                                     } else {
                                                                         logger.info(" * Payment was successful * ! \n");
                                                                         logger.info("Saved correctly");
-                                                                        b = switchAccountToProviderMyApp.storeProviderData(username, password);
+                                                                        b =  storeProviderData(username, password);
                                                                         break;
                                                                     }
                                                                 }
@@ -1132,7 +1132,7 @@ public class Main {
                                                                         } else {
                                                                             logger.info(" * Payment was successful * ! \n");
                                                                             logger.info("Saved correctly");
-                                                                            b = switchAccountToProviderMyApp.storeProviderData(username, password);
+                                                                            b =  storeProviderData(username, password);
                                                                             break;
                                                                         }
                                                                     }
@@ -1305,7 +1305,21 @@ public class Main {
         }
         return lineCount;
     }
+    public static boolean storeProviderData(String username, String password ) {
 
+        try (FileWriter fileWriter = new FileWriter("provider_data.txt", true);
+             PrintWriter printWriter = new PrintWriter(fileWriter)) {
+
+            // Append the username and password to the file
+            printWriter.println(  username + "," + password );
+
+            // System.out.println("Provider data stored successfully!");
+            return true;
+        } catch (IOException e) {
+            System.err.println("Error writing to the file: " + e.getMessage());
+        }
+        return false;
+    }
 
 
 }
