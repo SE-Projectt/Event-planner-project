@@ -14,19 +14,20 @@ public class LoggerUtilityTest {
     private String logMessage;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
-@Given("I have a logger")
-public void iHaveALogger() {
-    // Write code here that turns the phrase above into concrete actions
+   @Given("I have a logger")
+    public void iHaveALogger() {
+        logger = LoggerUtility.getLogger();
+        System.setOut(new PrintStream(outContent));
+    }
 
-}
-@When("I log an info message with format {string}")
-public void iLogAnInfoMessageWithFormat(String string) {
-    // Write code here that turns the phrase above into concrete actions
-   
-}
-@Then("The log message should be {string}")
-public void theLogMessageShouldBe(String string) {
-    // Write code here that turns the phrase above into concrete actions
- 
-}
+    @When("I log an info message with format {string}")
+    public void iLogAnInfoMessageWithFormat(String format) {
+        LoggerUtility.logInfo(logger, format, "Test");
+        logMessage = outContent.toString().trim();
+    }
+
+    @Then("The log message should be {string}")
+    public void theLogMessageShouldBe(String expectedMessage) {
+        assertEquals(expectedMessage, logMessage);
+    }
 }
