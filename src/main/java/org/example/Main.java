@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 
 public class Main {
-
+  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     private static final Logger logger = LoggerUtility.getLogger();
     private static final String LOGOUT_MSG = "Logging out \n Thank you !";
     private static final String UN_VALID_OPTION_MSG = "Invalid option. Please try again.";
