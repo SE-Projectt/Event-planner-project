@@ -26,7 +26,7 @@ public final class AdminMyApp {
                 }
             }
         } catch (IOException e) {
-            handleIOException("Error occurred while deleting line: ", e);
+            Main.handleIOException("Error occurred while deleting line: ", e);
         }
 
         if (deleted) {
@@ -38,7 +38,7 @@ public final class AdminMyApp {
                 }
                 LOGGER.info("Delete successful");
             } catch (IOException e) {
-                handleIOException("Error occurred while deleting or renaming files: ", e);
+                Main.handleIOException("Error occurred while deleting or renaming files: ", e);
             }
         } else {
             LOGGER.info("No lines were deleted");
@@ -56,13 +56,10 @@ public final class AdminMyApp {
                 }
             }
         } catch (IOException e) {
-            handleIOException("Error occurred while checking if username exists: ", e);
+           Main.handleIOException("Error occurred while checking if username exists: ", e);
         }
         return false;
     }
 
-    private static void handleIOException(String message, IOException e) throws IOException {
-        LOGGER.severe(message + e.getMessage());
-        throw new IOException(message + e.getMessage());
-    }
+  
 }
