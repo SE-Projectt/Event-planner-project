@@ -1,6 +1,6 @@
 package org.example.AcceptanceTest;
 
-import MyApp.UserMyApp;
+import myapp.UserMyApp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
