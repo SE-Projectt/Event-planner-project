@@ -47,7 +47,4 @@ Feature: User Planning Wedding
 
 
 
-Scenario: Attempt to delete a line from a non-existent file
-    Given the file "non_existent_file.txt" does not exist
-    When I attempt to delete a line from the file
-    Then an error should be thrown with message "File not found"
+
