@@ -49,7 +49,7 @@ public class LoginTest {
 
     @Then("I should not be logged in")
     public void iShouldNotBeLoggedIn() {
-        System.out.println("Errrroooore");
+        System.out.println("Errrrooore");
     }
 
 
