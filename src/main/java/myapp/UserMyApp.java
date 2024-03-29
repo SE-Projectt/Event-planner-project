@@ -10,8 +10,7 @@ public class UserMyApp {
     private static final String ERROR_READING_FILE = "Error reading the file: {}";
     private static final String ERROR_CLOSING_READER = "Error closing the reader: {}";
 
-
-
+    // Method to check if a specific typeEvent and eventName combination exists in a file
     public static boolean checkFile(String filename, String typeEvent, String eventName) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -31,6 +30,7 @@ public class UserMyApp {
         return false;
     }
 
+    // Method to check if a specific eventName and date combination exists in a file
     public static boolean checkHallandDate(String fileName, String date, String eventName) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -49,8 +49,7 @@ public class UserMyApp {
         return false;
     }
 
-
-
+    // Method to check if a specific word exists in a file
     public static boolean checkFile(String word, String filename) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -66,6 +65,7 @@ public class UserMyApp {
         return false;
     }
 
+    // Method to add a package name to a file
     public static void addPackageToFile(String packageName, String filename) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
             writer.write(packageName);
@@ -76,7 +76,7 @@ public class UserMyApp {
         }
     }
 
-
+    // Method to delete a line containing a specific name from a file
     public static boolean deleteLineFromFile(String name, String filename) {
         File inputFile = new File(filename);
         File tempFile = new File("temp.txt");
@@ -108,6 +108,4 @@ public class UserMyApp {
         }
         return deleted;
     }
-
-
 }
