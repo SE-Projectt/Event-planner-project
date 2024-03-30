@@ -18,7 +18,7 @@ Feature: Admin Page
   Scenario: Delete User
     Given the admin has access to the user_data.txt file
     When the admin deletes a user
-    Then the user "Zaid" should be removed from the file "user_data.txt"
+    Then the user "rema" should be removed from the file "user_data.txt"
 
   Scenario: View profit
     Given the admin has access to the provider_data.txt file
