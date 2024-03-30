@@ -5,16 +5,12 @@ import myapp.SignUpMyApp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.example.Main;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 public class LoginTest {
     SignUpMyApp SignUp;
    LoginMyApp login;
