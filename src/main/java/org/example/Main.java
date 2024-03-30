@@ -1,5 +1,5 @@
 package org.example;
-import MyApp.*;
+import myapp.*;
 import javax.swing.*;
 import java.io.*;
 import java.nio.file.Path;
