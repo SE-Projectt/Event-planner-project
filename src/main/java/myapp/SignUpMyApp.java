@@ -15,8 +15,8 @@ public class SignUpMyApp {
         try (PrintWriter writer = new PrintWriter(new FileWriter(USER_FILE, true))) {
             writer.println(username + "," + password);
             logger.info("You have signed up successfully!");
-        } catch (IOException e) {
-            logger.severe("Error writing to file: " + e.getMessage());
+        } catch (IOException e) { logger.severe("Error writing to file: " + e.getMessage());
+            
         }
         return true;
     }
@@ -32,15 +32,13 @@ public class SignUpMyApp {
                 }
             }
         } catch (IOException e) {
-            logger.severe("Error reading user data file: " + e.getMessage());
-        }
-        return false; // Username not found
+            logger.severe("Error reading user data file: " + e.getMessage()); }return false; // Username not found
+   
     }
 
     public boolean iTryToSignUpWithUsernamePassword(String username, String pass) {
-        if (theSystemHasAnExistingUserWithUsername(username)) return false;
-        iiEnterValidUsernamePassword(username, pass);
-        return true;
+        if (theSystemHasAnExistingUserWithUsername(username)) return false;    iiEnterValidUsernamePassword(username, pass);return true;
+    
     }
 
  
@@ -56,9 +54,8 @@ public class SignUpMyApp {
     public boolean theUsernamePasswordShouldBeSavedToTheFile(String fileName, String username, String password) throws IOException {
         File file = new File(fileName);
 
-        if (!file.exists()) {
-            logger.warning("File does not exist.");
-            return false;
+        if (!file.exists()) { logger.warning("File does not exist.");return false;
+      
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -83,8 +80,8 @@ public class SignUpMyApp {
                 }
             }
         } catch (IOException e) {
-            logger.severe(e.getMessage());
-        }
-        return true; // No duplicate username found
+            logger.severe(e.getMessage());   }    return true; 
+       
+       
     }
 }
