@@ -32,9 +32,9 @@ public class SignUpMyApp {
                 }
             }
         } catch (IOException e) {
-            logger.severe("Error reading user data file: " + e.getMessage()); }return false; // Username not found
+            logger.severe("Error reading user data file: " + e.getMessage()); }return false; }
    
-    }
+    
 
     public boolean iTryToSignUpWithUsernamePassword(String username, String pass) {
         if (theSystemHasAnExistingUserWithUsername(username)) return false;    iiEnterValidUsernamePassword(username, pass);return true;
