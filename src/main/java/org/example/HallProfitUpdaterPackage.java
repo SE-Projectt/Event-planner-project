@@ -44,7 +44,7 @@ public class HallProfitUpdaterPackage {
                     profitMap.put(parts[0].trim(), Integer.parseInt(parts[1].trim()));
                 }
             }
-        } catch (FileNotFoundException e) { logger.warning("Profits file not found. A new one will be created."); } catch (IOException e) 
+        } catch (FileNotFoundException e) { logger.warning("Profits file not found. A new one will be created."); } catch (IOException e) {
            
      
          
