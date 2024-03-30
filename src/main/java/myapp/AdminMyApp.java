@@ -25,22 +25,19 @@ public class AdminMyApp {
                 }
             }
             // Delete the original file
-            if (!inputFile.delete()) {
-                logger.log(Level.WARNING, "Could not delete original file");
-                return;
+            if (!inputFile.delete()) {  logger.log(Level.WARNING, "Could not delete original file");  return;
+          
             }
             // Rename the temporary file to the original file name
-            if (!tempFile.renameTo(inputFile)) {
-                logger.log(Level.WARNING, "Could not rename temporary file");
-                return;
+            if (!tempFile.renameTo(inputFile)) {  logger.log(Level.WARNING, "Could not rename temporary file");   return;
+          
             }
             // Log if a line was deleted
             if (deleted) {
                 logger.info("Delete successful");
             } else {
-                logger.info("No lines were deleted");
-            }
-        }
+                logger.info("No lines were deleted");}}
+       
     }
 
     public static boolean isUsernameExists(String filename, String username) {
@@ -52,13 +49,12 @@ public class AdminMyApp {
                 // Trim to remove leading/trailing spaces
                 String existingUsername = parts[0].trim();
                 // Check if the username matches
-                if (existingUsername.equals(username)) {
-                    // Username already exists, return false
-                    return false;
+                if (existingUsername.equals(username)) {return false;
+                 
                 }
             }
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error reading file", e);
+        } catch (IOException e) {logger.log(Level.SEVERE, "Error reading file", e);
+         
         }
         // Username not found, return true
         return true;
