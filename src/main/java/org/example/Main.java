@@ -289,7 +289,7 @@ public class Main {
                                                 case "3":
                                                     utilityLogger.info("Enter The Name Of Hall To Delete It : ");
                                                     searchValueInFile(HALL_PATH, username);
-                                                    String fileName1 = "Halls.txt";
+                                                    String fileName1 = HALL_PATH;
                                                     String wordToDelete1 = scanner.nextLine();
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(wordToDelete1)) {
                                                         utilityLogger.info(PACKAGE_NAME_REQ);
@@ -1002,7 +1002,6 @@ public class Main {
                                     break;
 
                                 case "3":
-                                    caseLabel:
                                     utilityLogger.info("choose : \n 1. select the package and choose according to the price that suits you !\n "
                                             + " 2. Enter the price you have so we can show you prices that are closet to  the packages !");
 
@@ -1234,7 +1233,7 @@ public class Main {
             writer.write(name + item);
             writer.newLine();
         } catch (IOException e) {
-            System.err.println("Error writing to the file: " + e.getMessage());
+            System.err.println(ERROR_WRITE_FILE_MSG + e.getMessage());
         } finally {
             if (writer != null) {
                 try {
@@ -1337,13 +1336,13 @@ public class Main {
     }
     public static boolean storeProviderData(String username, String password ) {
 
-        try (FileWriter fileWriter = new FileWriter("provider_data.txt", true);
+        try (FileWriter fileWriter = new FileWriter(PROVIDER_FILE, true);
              PrintWriter printWriter = new PrintWriter(fileWriter)) {
 
             printWriter.println(  username + "," + password );
             return true;
         } catch (IOException e) {
-            System.err.println("Error writing to the file: " + e.getMessage());
+            System.err.println(ERROR_WRITE_FILE_MSG + e.getMessage());
         }
         return false;
     }
