@@ -6,11 +6,16 @@ import java.nio.file.Path;
 import java.util.logging.Logger;
 
 public final class AdminMyApp {
-    private static final Logger LOGGER = Logger.getLogger(AdminMyApp.class.getName());
+    private static final Logger LOGGER = LoggerUtility.getLogger() ;
 
     public static void deleteLine(String fileName, String username) throws IOException {
         File inputFile = new File(fileName);
-        File tempFile = File.createTempFile("temp", null);
+        File tempFile = File.createTempFile("temp", null, new File(System.getProperty("java.io.tmpdir")));
+
+        // Set the temporary file permissions to restrict access
+        tempFile.setReadable(true, true);
+        tempFile.setWritable(true, true);
+        tempFile.setExecutable(false, true);
 
         boolean deleted = false;
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -32,16 +37,18 @@ public final class AdminMyApp {
         if (deleted) {
             try {
                 Files.delete(inputFile.toPath());
-                if (!tempFile.renameTo(inputFile)) {
-                    LOGGER.severe("Could not rename temporary file");
-                    throw new IOException("Could not rename temporary file");
-                }
+                Files.move(tempFile.toPath(), inputFile.toPath(), StandardCopyOption.ATOMIC_MOVE);
                 LOGGER.info("Delete successful");
             } catch (IOException e) {
                 Main.handleIOException("Error occurred while deleting or renaming files: ", e);
             }
         } else {
             LOGGER.info("No lines were deleted");
+        }
+
+        // Cleanup: Ensure temporary file is deleted
+        if (!tempFile.delete()) {
+            LOGGER.warning("Temporary file could not be deleted");
         }
     }
 
