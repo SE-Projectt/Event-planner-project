@@ -24,9 +24,8 @@ public class LoginMyApp {
             }
         } catch (Exception e) {
             // Log the error
-            return false;
-        }
-        return false;
+            return false;  } return false;
+        
     }
 
     public static boolean theSystemHasRegisteredUserWithUsernameAndPassword(String username, String password) {
