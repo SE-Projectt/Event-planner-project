@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -176,7 +177,7 @@ public class Main {
                                     utilityLogger.info(UN_VALID_OPTION_MSG);
                             }
                         }
-                    } else if (loginMyApp.theSystemHasRegisteredUserWithUsernameAndPassword(username, password)) {
+                    } else if (theSystemHasRegisteredUserWithUsernameAndPassword(username, password)) {
                         utilityLogger.info("Login successfully , Welcome " + username + ":)" +"\n");
 
                         while (true) {
@@ -264,19 +265,19 @@ public class Main {
                                                 case "3":
                                                     utilityLogger.info("Enter The Name Of Hall To Delete It : ");
                                                     searchValueInFile(HALL_PATH, username);
-                                                    String fileName1 = "Halls.txt";
+
                                                     String wordToDelete1 = scanner.nextLine();
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(wordToDelete1)) {
                                                         utilityLogger.info(PACKAGE_NAME_REQ);
                                                         continue;
-                                                    } else if (!userMyApp.checkFile(wordToDelete1, fileName1)) {
+                                                    } else if (!userMyApp.checkFile(wordToDelete1, HALL_PATH)) {
                                                         utilityLogger.info(SPACE_SEPARATOR);
                                                         utilityLogger.info(NAME_NOT_IN_LIST_MSG);
                                                         utilityLogger.info(SPACE_SEPARATOR);
                                                         continue;
                                                     }
 
-                                                    File inputFile1 = new File(fileName1);
+                                                    File inputFile1 = new File(HALL_PATH);
                                                     File tempFile1 = new File("temp.txt");
                                                     boolean deleted = false;
 
@@ -741,15 +742,15 @@ public class Main {
 
                                 case "2":
                                     utilityLogger.info("Let's Go to wedding planning !");
-                                    innerWhile:
-                                    while (true) {
+                                    Boolean condition = true;
+                                    while (condition) {
                                         utilityLogger.info("Choose: \n 1. Wedding Halls  \n 2. Hire a DJ  \n 3. Photography Studio \n " +
                                                 "4. Flowers \n 5. Main course \n 6. Dessert \n  7.Save \n 8. Back to the previous page \n ");
                                         option1 = scanner.nextLine();
                                         planningloop:
                                         switch (option1) {
                                             case "1":
-                                                displayFileContents("Halls.txt");
+                                                displayFileContents(HALL_PATH);
                                                 while (true) {
 
                                                     utilityLogger.info("Enter Hall Name:");
@@ -757,7 +758,7 @@ public class Main {
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(hallName)) {
                                                         System.out.print(HN_FAIL_MSG);
                                                         continue;
-                                                    } else if (!userMyApp.checkFile(hallName, "Halls.txt")) {
+                                                    } else if (!userMyApp.checkFile(hallName, HALL_PATH)) {
                                                         System.out.println(SPACE_SEPARATOR);
                                                         System.out.print(NAME_NOT_IN_LIST_MSG);
                                                         System.out.println(SPACE_SEPARATOR);
@@ -964,17 +965,19 @@ public class Main {
                                                 }
 
                                                 AddtoEvent(SEPARATOR_LINE,SEPARATOR_LINE);
-                                                break innerWhile;
+                                                condition = false;
+                                                break ;
 
                                             case "8":
                                                 utilityLogger.info("Going back to the main menu \n");
-                                                break innerWhile;
+                                                condition = false;
+                                                break ;
 
                                             default:
                                                 utilityLogger.info(UN_VALID_OPTION_MSG);
                                         }
                                     }
-                                    break;
+                                  //  break;
 
                                 case "3":
                                     caseLabel:
@@ -1326,5 +1329,44 @@ public class Main {
     public static void handleIOException(String message, IOException e) throws IOException {
         utilityLogger.severe(message + e.getMessage());
         throw new IOException(message + e.getMessage());
+    }
+    public static boolean iEnterValidUsernameAndIncorrectPassword(String username, String password) {
+        String filePath = "user_data.txt";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 2 && parts[0].equals(username) && !(parts[1].equals(password))) {
+                    return true; // Username and password combination found in the file
+                }
+            }
+        } catch (IOException e) {
+            // Log the error
+            utilityLogger.log(Level.SEVERE, "An IOException occurred while reading user data", e);
+        } catch (Exception ex) {
+            // Log any other exceptions
+            utilityLogger.log(Level.SEVERE, "An unexpected exception occurred", ex);
+        }
+        return false;
+    }
+
+    public static boolean theSystemHasRegisteredUserWithUsernameAndPassword(String username, String password) {
+        String filePath = "user_data.txt";
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 2 && parts[0].equals(username) && (parts[1].equals(password))) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            // Log the error
+            utilityLogger.log(Level.SEVERE, "An IOException occurred while reading user data", e);
+        } catch (Exception ex) {
+            // Log any other exceptions
+            utilityLogger.log(Level.SEVERE, "An unexpected exception occurred", ex);
+        }
+        return false;
     }
 }
