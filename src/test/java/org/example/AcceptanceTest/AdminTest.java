@@ -78,7 +78,7 @@ assertTrue(adminMyApp.isUsernameExists(filename,username));
     filename ="user_data.txt";
     username = "rema";
     adminMyApp.deleteLine(filename,username);
-    assertTrue(adminMyApp.isUsernameExists(filename,username));
+    assertFalse(adminMyApp.isUsernameExists(filename,username));
   }
 
   @When("the admin views the count of provider")
