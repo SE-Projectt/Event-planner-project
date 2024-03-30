@@ -74,7 +74,7 @@ assertTrue(adminMyApp.isUsernameExists(filename,username));
 
   }
   @Then("the user {string} should be removed from the file {string}")
-  public void theUserShouldBeRemovedFromTheFile(String filename, String username) throws IOException {
+  public void theUserShouldBeRemovedFromTheFile(String filename, String username)  {
     filename ="user_data.txt";
     username = "rema";
     adminMyApp.deleteLine(filename,username);
