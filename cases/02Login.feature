@@ -33,3 +33,23 @@ Feature: User Login
     Given the system has no registered user
     When I enter non-existing username "nonexistent" and password "password123"
     Then I should not be logged in
+
+  Scenario: File reading throws an IOException
+    Given the user data file is inaccessible
+    When I attempt to login with username "Zaid" and password "incorrectpassword"
+    Then the system should log an IOException error
+
+  Scenario: General exception handling during file reading
+    Given the user data file causes an unexpected error
+    When I attempt to login with username "Zaid" and password "incorrectpassword"
+    Then the system should log an unexpected exception error
+
+  Scenario: File reading throws an IOException for registered user check
+    Given the user data file is inaccessible
+    When I check if the system has registered user with username "Zaid" and password "123456"
+    Then the system should log an IOException error for registered user check
+
+  Scenario: General exception handling during registered user check
+    Given the user data file causes an unexpected error
+    When I check if the system has registered user with username "Zaid" and password "123456"
+    Then the system should log an unexpected exception error for registered user check
