@@ -22,12 +22,9 @@ public class LoginMyApp {
                     return true; // Username and password combination found in the file
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             // Log the error
-            logger.log(Level.SEVERE, "An IOException occurred while reading user data", e);
-        } catch (Exception ex) {
-            // Log any other exceptions
-            logger.log(Level.SEVERE, "An unexpected exception occurred", ex);
+            return false;
         }
         return false;
     }
@@ -42,12 +39,11 @@ public class LoginMyApp {
                     return true;
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             // Log the error
-            logger.log(Level.SEVERE, "An IOException occurred while reading user data", e);
-        } catch (Exception ex) {
-            // Log any other exceptions
-            logger.log(Level.SEVERE, "An unexpected exception occurred", ex);
+           // logger.log(Level.SEVERE, "An IOException occurred while reading user data", e);
+            return false;
+
         }
         return false;
     }
