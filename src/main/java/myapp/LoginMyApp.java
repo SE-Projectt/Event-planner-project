@@ -1,4 +1,4 @@
-package MyApp;
+package myapp;
 
 import java.util.logging.Logger;
 
