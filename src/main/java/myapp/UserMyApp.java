@@ -94,8 +94,10 @@ public class UserMyApp {
                 writer.write(currentLine);
                 writer.newLine();
             }
-        } catch (FileNotFoundException e) { logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, filename); } catch (IOException e) { logger.error("Error reading/writing file: {}", filename); } if (deleted) { if (!inputFile.delete()) { logger.error("Could not delete the original file: {}", filename); return false; } if (!tempFile.renameTo(inputFile)) { logger.error("Could not rename the temp file: {}", filename); return false; } }
-
+        } catch (FileNotFoundException e) { logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, filename);  } catch (IOException e) { logger.error("Error reading/writing file: {}", filename);}
+  
+        if (deleted) { if (!inputFile.delete()) { logger.error("Could not delete the original file: {}", filename); return false;} if (!tempFile.renameTo(inputFile)) {   logger.error("Could not rename the temp file: {}", filename);return false; }
+   
             logger.info("Line containing '{}' deleted from file '{}'", name, filename);
         }
         return deleted;
