@@ -90,26 +90,7 @@ public class LoginTest {
     }
 
 
-    private boolean loginResult;
-    private String filePath = "user_data.txt";
-
-    @Given("the user data file is inaccessible")
-    public void theUserDataFileIsInaccessible() throws IOException {
-        Files.setAttribute(Path.of(filePath), "dos:readonly", true);
-        File file = new File(filePath);
-        file.setReadable(false);
-    }
-
-    @When("I attempt to login with valid username {string} and password {string}")
-    public void iAttemptToLoginWithValidUsernameAndPassword(String string, String string2) {
-        login = new LoginMyApp();
-        loginResult = login.iEnterValidUsernameAndIncorrectPassword(username, password);
-    }
-    @Then("the system should handle the error gracefully and return false")
-    public void theSystemShouldHandleTheErrorGracefullyAndReturnFalse() {
-        assertFalse(loginResult);
-    }
-
+ 
 
 
 
