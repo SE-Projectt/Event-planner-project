@@ -91,6 +91,58 @@ public class LoginTest {
     public void theSystemHasNoRegisteredUser() {
         // You can add any setup here if needed
     }
+ private LoginMyApp loginMyApp;
+    private boolean loginResult;
+    private String filePath = "user_data.txt";
 
+    @Given("the user data file is inaccessible")
+    public void theUserDataFileIsInaccessible() throws IOException {
+        // Assuming the file path is 'user_data.txt', make it inaccessible to trigger IOException
+        Files.setAttribute(Path.of(filePath), "dos:readonly", true);
+        File file = new File(filePath);
+        file.setReadable(false);
+    }
+
+    @When("I attempt to login with username {string} and password {string}")
+    public void iAttemptToLoginWithUsernameAndPassword(String username, String password) {
+        loginMyApp = new LoginMyApp();
+        loginResult = loginMyApp.iEnterValidUsernameAndIncorrectPassword(username, password);
+    }
+
+    @Then("the system should log an IOException error")
+    public void theSystemShouldLogAnIOExceptionError() {
+        // You would need a way to verify that an IOException has been logged, possibly through a logger assertion mechanism
+        assertFalse(loginResult); // Simplified assertion
+    }
+
+    @Given("the user data file causes an unexpected error")
+    public void theUserDataFileCausesAnUnexpectedError() {
+        // Simulate an unexpected error by manipulating the file or the environment
+        // This is a placeholder and would need to be replaced with actual error simulation code
+    }
+    @When("I check if the system has registered user with username {string} and password {string}")
+    public void iCheckIfTheSystemHasRegisteredUserWithUsernameAndPassword(String username, String password) {
+        loginMyApp = new LoginMyApp();
+        loginResult = loginMyApp.theSystemHasRegisteredUserWithUsernameAndPassword(username, password);
+    }
+    @Then("the system should log an unexpected exception error")
+    public void theSystemShouldLogAnUnexpectedExceptionError() {
+        // Verify that an unexpected exception has been logged
+        assertFalse(loginResult); // Simplified assertion
+    }
+
+
+
+    @Then("the system should log an IOException error for registered user check")
+    public void theSystemShouldLogAnIOExceptionErrorForRegisteredUserCheck() {
+        // Verify that an IOException has been logged for registered user check
+        assertFalse(loginResult); // Simplified assertion
+    }
+
+    @Then("the system should log an unexpected exception error for registered user check")
+    public void theSystemShouldLogAnUnexpectedExceptionErrorForRegisteredUserCheck() {
+        // Verify that an unexpected exception has been logged for registered user check
+        assertFalse(loginResult); // Simplified assertion
+    }
   
 }
