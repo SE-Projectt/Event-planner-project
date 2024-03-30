@@ -22,13 +22,13 @@ public class HallProfitUpdaterPackage {
                     String name = parts[0].trim(); // Corrected index
                     int price = Integer.parseInt(parts[1].trim());
                     String hall = parts[2].trim(); // Corrected index
-                    if (hall.equalsIgnoreCase(hallName)) {
-                        profitMap.merge(name, price, Integer::sum);
+                    if (hall.equalsIgnoreCase(hallName)) { profitMap.merge(name, price, Integer::sum);
+                      
                     }
                 }
             }
-        } catch (IOException e) {
-            logger.severe("An error occurred while reading the Halls file: " + e.getMessage());
+        } catch (IOException e) { logger.severe("An error occurred while reading the Halls file: " + e.getMessage());
+       
         }
 
         writeProfitMapToFile(profitsFilePath, profitMap);
@@ -44,10 +44,10 @@ public class HallProfitUpdaterPackage {
                     profitMap.put(parts[0].trim(), Integer.parseInt(parts[1].trim()));
                 }
             }
-        } catch (FileNotFoundException e) {
-            logger.warning("Profits file not found. A new one will be created.");
-        } catch (IOException e) {
-            logger.severe("An error occurred while reading the profits file: " + e.getMessage());
+        } catch (FileNotFoundException e) { logger.warning("Profits file not found. A new one will be created."); } catch (IOException e) 
+           
+     
+         
         }
         return profitMap;
     }
@@ -55,8 +55,8 @@ public class HallProfitUpdaterPackage {
     private static void writeProfitMapToFile(String filePath, Map<String, Integer> profitMap) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
             profitMap.forEach((key, value) -> writer.println(key + "," + value));
-        } catch (IOException e) {
-            logger.severe("An error occurred while writing to the profits file: " + e.getMessage());
+        } catch (IOException e) {  logger.severe("An error occurred while writing to the profits file: " + e.getMessage());
+       
         }
     }
 }
