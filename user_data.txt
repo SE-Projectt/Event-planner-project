@@ -9,4 +9,3 @@ lara,321
 ddd,123
 dddd,1234
 weq,3245
-Zaid,123456
