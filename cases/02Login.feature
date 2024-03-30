@@ -23,3 +23,13 @@ Feature: User Login
   Scenario: User login with empty password
     When I  leave the password field empty
     Then I should not be logged in
+
+  Scenario: User enters username with special characters and correct password
+    Given the system has registered user with username "user$123" and password "password123"
+    When I enter valid username "user$123" and password "password123" has already registered
+    Then I should be successfully logged in
+
+  Scenario: User logs in with no registered users
+    Given the system has no registered user
+    When I enter non-existing username "nonexistent" and password "password123"
+    Then I should not be logged in
