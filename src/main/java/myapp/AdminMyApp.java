@@ -1,79 +1,72 @@
 package myapp;
-import org.example.Main;
+
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.logging.Logger;
-import org.example.LoggerUtility;
-import java.nio.file.StandardCopyOption;
+import java.util.logging.*;
 
-public final class AdminMyApp {
-    private static final Logger LOGGER = LoggerUtility.getLogger() ;
+public class AdminMyApp {
 
-   public static void deleteLine(String fileName, String username) throws IOException {
-    File inputFile = new File(fileName);
-    File tempFile = File.createTempFile("temp", null, new File(System.getProperty("java.io.tmpdir")));
+    private static final Logger logger = Logger.getLogger(AdminMyApp.class.getName());
 
-    // Set the temporary file permissions to restrict access
-    boolean readableSet = tempFile.setReadable(true, true);
-    boolean writableSet = tempFile.setWritable(true, true);
-    boolean executableSet = tempFile.setExecutable(false, true);
+    public static void deleteLine(String fileName, String username) throws IOException {
+        File inputFile = new File(fileName);
+        File tempFile = new File("temp.txt");
 
-    // Check if the permissions were successfully set
-    if (!readableSet || !writableSet || !executableSet) {
-        LOGGER.severe("Failed to set necessary file permissions for the temporary file.");
-        throw new IOException("Failed to set file permissions.");
-    }
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
 
-    boolean deleted = false;
-    try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-         BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
         String currentLine;
+        boolean deleted = false; // Flag to track if the file is deleted
+
         while ((currentLine = reader.readLine()) != null) {
+            // Split the current line by comma (assuming username and password are separated by comma)
             String[] parts = currentLine.split(",");
             if (!parts[0].trim().equals(username)) {
-                writer.write(currentLine);
-                writer.newLine();
+                writer.write(currentLine + System.getProperty("line.separator"));
             } else {
-                deleted = true;
+                deleted = true; // Set flag to true if a line is deleted
             }
         }
-    } catch (IOException e) {
-        Main.handleIOException("Error occurred while deleting line: ", e);
+        writer.close();
+        reader.close();
+
+        // Delete the original file
+        if (!inputFile.delete()) {
+            logger.log(Level.WARNING, "Could not delete original file");
+            return;
+        }
+
+        // Rename the temporary file to the original file name
+        if (!tempFile.renameTo(inputFile)) {
+            logger.log(Level.WARNING, "Could not rename temporary file");
+            return;
+        }
+
+        // Log if a line was deleted
+        if (deleted) {
+            logger.info("Delete successful");
+        } else {
+            logger.info("No lines were deleted");
+        }
     }
 
-    if (deleted) {
-        try {
-            Files.delete(inputFile.toPath());
-            Files.move(tempFile.toPath(), inputFile.toPath(), StandardCopyOption.ATOMIC_MOVE);
-            LOGGER.info("Delete successful");
+    public static boolean isUsernameExists(String filename, String username) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Split the line by comma to separate username and password
+                String[] parts = line.split(",");
+                // Trim to remove leading/trailing spaces
+                String existingUsername = parts[0].trim();
+                // Check if the username matches
+                if (existingUsername.equals(username)) {
+                    // Username already exists, return false
+                    return false;
+                }
+            }
         } catch (IOException e) {
-            Main.handleIOException("Error occurred while deleting or renaming files: ", e);
+            logger.log(Level.SEVERE, "Error reading file", e);
         }
-    } else {
-        LOGGER.info("No lines were deleted");
+        // Username not found, return true
+        return true;
     }
-
-    // Cleanup: Ensure temporary file is deleted
-    if (!tempFile.delete()) {
-        LOGGER.warning("Temporary file could not be deleted");
-    }
-}
-
-public static boolean isUsernameExists(String filename, String username) throws IOException {
-    try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split(",");
-            String existingUsername = parts[0].trim();
-            if (existingUsername.equals(username)) {
-                return true;
-            }
-        }
-    } catch (IOException e) {
-        Main.handleIOException("Error occurred while checking if username exists: ", e);
-    }
-    return false;
-}
-  
 }
