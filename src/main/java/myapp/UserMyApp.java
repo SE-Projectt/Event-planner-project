@@ -6,6 +6,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.*;
 
 public class UserMyApp {
+    private static final String FILE_NOT_FOUND_ERROR_MESSAGE = "File not found: {}";
+    private static final String ERROR_READING_FILE_MESSAGE = "Error reading file: {}";
+
     private static final Logger logger = LogManager.getLogger(UserMyApp.class);
 
     public static boolean checkFile(String filename, String typeEvent, String eventName) {
@@ -22,9 +25,9 @@ public class UserMyApp {
                 }
             }
         } catch (FileNotFoundException e) {
-            logger.error("File not found: {}", filename);
+            logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, filename);
         } catch (IOException e) {
-            logger.error("Error reading file: {}", filename);
+            logger.error(ERROR_READING_FILE_MESSAGE, filename);
         }
         return false;
     }
@@ -42,9 +45,9 @@ public class UserMyApp {
                 }
             }
         } catch (FileNotFoundException e) {
-            logger.error("File not found: {}", fileName);
+            logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, fileName);
         } catch (IOException e) {
-            logger.error("Error reading file: {}", fileName);
+            logger.error(ERROR_READING_FILE_MESSAGE, fileName);
         }
         return false;
     }
@@ -59,9 +62,9 @@ public class UserMyApp {
                 }
             }
         } catch (FileNotFoundException e) {
-            logger.error("File not found: {}", filename);
+            logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, filename);
         } catch (IOException e) {
-            logger.error("Error reading file: {}", filename);
+            logger.error(ERROR_READING_FILE_MESSAGE, filename);
         }
         return false;
     }
@@ -92,7 +95,7 @@ public class UserMyApp {
                 writer.newLine();
             }
         } catch (FileNotFoundException e) {
-            logger.error("File not found: {}", filename);
+            logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, filename);
         } catch (IOException e) {
             logger.error("Error reading/writing file: {}", filename);
         }
