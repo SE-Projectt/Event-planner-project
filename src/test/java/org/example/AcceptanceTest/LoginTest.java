@@ -12,12 +12,12 @@ import static org.junit.Assert.assertTrue;
 
 public class LoginTest {
     SignUpMyApp SignUp;
-   Main login;
+   LoginMyApp login;
     private boolean result;
     private String username;
     private String password;
     public LoginTest(){
-        login=new Main();
+        login=new LoginMyApp();
         SignUp=new SignUpMyApp();
     }
     @Given("the system has registered user with username {string} and password {string}")
