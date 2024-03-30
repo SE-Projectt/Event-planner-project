@@ -30,7 +30,7 @@ public AdminTest ()
   }
   @Then("the admin should see the total count of providers from file {string}")
   public void theAdminShouldSeeTheTotalCountOfProvidersFromFile(String fileprovider) {
-  fileprovider="provider.txt";
+
 
 
   }
