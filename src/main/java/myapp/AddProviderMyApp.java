@@ -16,10 +16,9 @@ public class AddProviderMyApp {
             // Append the new user's data to the file
             writer.println(username + "," + password);
             LOGGER.info("You have signed up successfully!");
-        } catch (IOException e) {
-            LOGGER.severe("Error writing to file: " + e.getMessage());
-            return false;
-        }
+        } catch (IOException e) { LOGGER.severe("Error writing to file: " + e.getMessage());   return false;
+   
+ }
         return true;
     }
 }
