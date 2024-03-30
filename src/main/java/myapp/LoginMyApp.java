@@ -7,14 +7,12 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class LoginMyApp {
-
- private static final String MY_A = "Zaid";
+    private static final String MY_A = "Zaid";
     private static final String MY_P = "123456";
     private static final Logger logger = Logger.getLogger(LoginMyApp.class.getName());
 
     public static boolean iEnterValidUsernameAndIncorrectPassword(String username, String password) {
         String filePath = "user_data.txt";
-
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -26,14 +24,15 @@ public class LoginMyApp {
         } catch (IOException e) {
             // Log the error
             logger.log(Level.SEVERE, "An IOException occurred while reading user data", e);
+        } catch (Exception ex) {
+            // Log any other exceptions
+            logger.log(Level.SEVERE, "An unexpected exception occurred", ex);
         }
-
         return false;
     }
 
     public boolean theSystemHasRegisteredUserWithUsernameAndPassword(String username, String password) {
         String filePath = "user_data.txt";
-
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -45,8 +44,10 @@ public class LoginMyApp {
         } catch (IOException e) {
             // Log the error
             logger.log(Level.SEVERE, "An IOException occurred while reading user data", e);
+        } catch (Exception ex) {
+            // Log any other exceptions
+            logger.log(Level.SEVERE, "An unexpected exception occurred", ex);
         }
-
         return false;
     }
 
