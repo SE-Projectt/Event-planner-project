@@ -25,11 +25,8 @@ public class UserMyApp {
                 }
             }
         } catch (FileNotFoundException e) {
-            logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, filename);
-        } catch (IOException e) {
-            logger.error(ERROR_READING_FILE_MESSAGE, filename);
-        }
-        return false;
+            logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, filename); } catch (IOException e) { logger.error(ERROR_READING_FILE_MESSAGE, filename); }  return false;
+ 
     }
 
     public static boolean checkHallAndDate(String fileName, String date, String eventName) {
@@ -45,11 +42,8 @@ public class UserMyApp {
                 }
             }
         } catch (FileNotFoundException e) {
-            logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, fileName);
-        } catch (IOException e) {
-            logger.error(ERROR_READING_FILE_MESSAGE, fileName);
-        }
-        return false;
+            logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, fileName); } catch (IOException e) {logger.error(ERROR_READING_FILE_MESSAGE, fileName);} return false;
+
     }
 
     public static boolean checkFile(String word, String filename) {
@@ -62,11 +56,8 @@ public class UserMyApp {
                 }
             }
         } catch (FileNotFoundException e) {
-            logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, filename);
-        } catch (IOException e) {
-            logger.error(ERROR_READING_FILE_MESSAGE, filename);
-        }
-        return false;
+            logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, filename);} catch (IOException e) { logger.error(ERROR_READING_FILE_MESSAGE, filename);  } return false;
+    
     }
 
     public static void addPackageToFile(String packageName, String filename) {
@@ -74,8 +65,8 @@ public class UserMyApp {
             writer.write(packageName);
             writer.newLine();
             logger.info("Package '{}' added to file '{}'", packageName, filename);
-        } catch (IOException e) {
-            logger.error("Error writing to file: {}", filename);
+        } catch (IOException e) {logger.error("Error writing to file: {}", filename);
+          
         }
     }
 
