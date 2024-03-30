@@ -34,6 +34,7 @@ Feature: User Login
     When I enter non-existing username "nonexistent" and password "password123"
     Then I should not be logged in
 
-
-
-
+  Scenario: Handling file read error during login
+    Given the user data file is inaccessible
+    When I attempt to login with valid username "Zaid" and password "123456"
+    Then the system should handle the error gracefully and return false
