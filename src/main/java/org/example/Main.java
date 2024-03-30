@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -22,7 +21,8 @@ public class Main {
     private static final String ENTER_V_CAPACITY_MSG = "Enter a Valid Capacity ! \n";
     private static final String VALID_NUMBER_MSG = "Enter a Valid Number ! \n";
     private static final String VALID_CVC_MSG = "Enter a Valid CVC Number ! \n";
-    private static final String HALL_PATH = "Halls.txt",PACKAGE_FILE ="Package.txt";
+    private static final String HALL_PATH = "Halls.txt";
+    private static final String PACKAGE_FILE ="Package.txt";
     private static final String ERROR_WRITE_FILE_MSG = "Error writing to the file: ";
     private static final String PACKAGE_NAME_REQ = "Package Name field is required ! \n";
     private static final String SPACE_SEPARATOR = "----------------------------------------------------------";
@@ -53,9 +53,24 @@ public class Main {
         AdminMyApp adminMyApp=new AdminMyApp();
         Scanner scanner = new Scanner(System.in);
         UserMyApp  userMyApp=new UserMyApp() ;
-        String username, password, option1, useroption,Paypage, HallName,HallCapacity,HallPrice,HallLocation,ProvidernametoDeleteit,UsernameToDeleteit ;
+        String username;
+        String password;
+        String option1;
+        String useroption;
+        String paypage;
+        String HallName;
+        String hallCapacity;
+        String hallPrice;
+        String hallLocation;
+        String providerNameToDeleteIt;
+        String usernameToDeleteIt ;
 
-        String hallName = null,djName= null,StudioName= null,FlowerName=null,Maincourse=null,Desert=null;
+        String hallName = null;
+        String djName= null;
+        String studioName = null;
+        String flowerName =null;
+        String mainCourse =null;
+        String desert =null;
 
 
         int UserProfit=0, packgCount=0;
@@ -142,12 +157,12 @@ public class Main {
                                     Scanner Sc = new Scanner(System.in);
                                     while (true) {
                                         utilityLogger.info("Enter the name of the provider you want to delete : ");
-                                        ProvidernametoDeleteit = Sc.nextLine();
-                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(ProvidernametoDeleteit)) {
+                                        providerNameToDeleteIt = Sc.nextLine();
+                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(providerNameToDeleteIt)) {
                                             utilityLogger.info("Provider name field is required ! \n");
                                             continue;
                                         } else {
-                                            AdminMyApp.deleteLine(PROVIDER_FILE , ProvidernametoDeleteit);
+                                            AdminMyApp.deleteLine(PROVIDER_FILE , providerNameToDeleteIt);
                                             break;
                                         }
                                     }
@@ -156,12 +171,12 @@ public class Main {
                                     Scanner Sc1 = new Scanner(System.in);
                                     while (true) {
                                         utilityLogger.info("Enter the name of the User you want to delete : \n");
-                                        UsernameToDeleteit = Sc1.nextLine();
-                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(UsernameToDeleteit)) {
+                                        usernameToDeleteIt = Sc1.nextLine();
+                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(usernameToDeleteIt)) {
                                             utilityLogger.info("User name field is required ! \n");
                                             continue;
                                         } else {
-                                            adminMyApp.deleteLine(USER_FILE, UsernameToDeleteit);
+                                            adminMyApp.deleteLine(USER_FILE, usernameToDeleteIt);
                                             break;
                                         }
                                     }
@@ -177,7 +192,7 @@ public class Main {
                                     utilityLogger.info(UN_VALID_OPTION_MSG);
                             }
                         }
-                    } else if (theSystemHasRegisteredUserWithUsernameAndPassword(username, password)) {
+                    } else if (loginMyApp.theSystemHasRegisteredUserWithUsernameAndPassword(username, password)) {
                         utilityLogger.info("Login successfully , Welcome " + username + ":)" +"\n");
 
                         while (true) {
@@ -211,39 +226,39 @@ public class Main {
                                                         } else {
                                                             while (true) {
                                                                 utilityLogger.info("Enter Hall Capacity : ");
-                                                                HallCapacity = scanner.nextLine();
-                                                                if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(HallCapacity)) {
+                                                                hallCapacity = scanner.nextLine();
+                                                                if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(hallCapacity)) {
                                                                     utilityLogger.info("Hall capacity field is required ! \n");
                                                                     continue;
-                                                                } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(HallCapacity)) {
+                                                                } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(hallCapacity)) {
                                                                     utilityLogger.info(ENTER_V_CAPACITY_MSG);
                                                                     continue;
-                                                                } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(HallCapacity)) {
+                                                                } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(hallCapacity)) {
                                                                     utilityLogger.info(ENTER_V_CAPACITY_MSG);
                                                                     continue;
                                                                 } else {
                                                                     while (true) {
                                                                         utilityLogger.info("Enter Hall Price : ");
-                                                                        HallPrice = scanner.nextLine();
-                                                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(HallPrice)) {
+                                                                        hallPrice = scanner.nextLine();
+                                                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(hallPrice)) {
                                                                             utilityLogger.info("HallPrice field is required ! \n");
                                                                             continue;
-                                                                        } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(HallPrice)) {
+                                                                        } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(hallPrice)) {
                                                                             utilityLogger.info("Enter a Valid Hall Price ! \n");
                                                                             continue;
-                                                                        } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(HallPrice)) {
+                                                                        } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(hallPrice)) {
                                                                             utilityLogger.info("Enter a Valid Hall Price ! \n");
                                                                             continue;
                                                                         } else {
                                                                             while (true) {
                                                                                 utilityLogger.info("Enter Hall Location : ");
-                                                                                HallLocation = scanner.nextLine();
-                                                                                if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(HallLocation)) {
+                                                                                hallLocation = scanner.nextLine();
+                                                                                if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(hallLocation)) {
                                                                                     utilityLogger.info("Hall Location field is required ! \n");
                                                                                     continue;
                                                                                 } else {
                                                                                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(HALL_PATH, true))) {
-                                                                                        writer.write(HallName + "," + HallCapacity + "," + HallPrice + "," + HallLocation + "," + username);
+                                                                                        writer.write(HallName + "," + hallCapacity + "," + hallPrice + "," + hallLocation + "," + username);
                                                                                         writer.newLine();
                                                                                         utilityLogger.info("Adding Hall successful ! \n");
                                                                                     } catch (IOException e) {
@@ -265,19 +280,19 @@ public class Main {
                                                 case "3":
                                                     utilityLogger.info("Enter The Name Of Hall To Delete It : ");
                                                     searchValueInFile(HALL_PATH, username);
-
+                                                    String fileName1 = "Halls.txt";
                                                     String wordToDelete1 = scanner.nextLine();
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(wordToDelete1)) {
                                                         utilityLogger.info(PACKAGE_NAME_REQ);
                                                         continue;
-                                                    } else if (!userMyApp.checkFile(wordToDelete1, HALL_PATH)) {
+                                                    } else if (!userMyApp.checkFile(wordToDelete1, fileName1)) {
                                                         utilityLogger.info(SPACE_SEPARATOR);
                                                         utilityLogger.info(NAME_NOT_IN_LIST_MSG);
                                                         utilityLogger.info(SPACE_SEPARATOR);
                                                         continue;
                                                     }
 
-                                                    File inputFile1 = new File(HALL_PATH);
+                                                    File inputFile1 = new File(fileName1);
                                                     File tempFile1 = new File("temp.txt");
                                                     boolean deleted = false;
 
@@ -690,13 +705,13 @@ public class Main {
 
                                                 while (true){
                                                     utilityLogger.info(ENTER_CARD_NUMBER_MSG);
-                                                    Paypage = scanner.nextLine();
+                                                    paypage = scanner.nextLine();
 
-                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage) ) {
+                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(paypage) ) {
                                                         utilityLogger.info(CARD_NUMBER_REQUIRED_MSG);
                                                         continue ;
                                                     }
-                                                    else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(Paypage)) {
+                                                    else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(paypage)) {
                                                         utilityLogger.info(VALID_NUMBER_MSG);
                                                         continue ;
                                                     }
@@ -704,21 +719,21 @@ public class Main {
                                                     else {
                                                         while (true) {
                                                             utilityLogger.info(ENTER_CARD_OWNER_NAME_MSG);
-                                                            Paypage = scanner.nextLine();
-                                                            if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Paypage)) {
+                                                            paypage = scanner.nextLine();
+                                                            if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(paypage)) {
                                                                 utilityLogger.info(CARD_OWNER_NAME_REQUIRED_MSG);
                                                                 continue;
-                                                            } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(Paypage)) {
+                                                            } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(paypage)) {
                                                                 utilityLogger.info(ENTER_VALID_NAME_MSG);
                                                                 continue;
                                                             } else {
                                                                 while (true) {
                                                                     utilityLogger.info(ENTER_CVC_MSG);
-                                                                    Paypage = scanner.nextLine();
-                                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage)) {
+                                                                    paypage = scanner.nextLine();
+                                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(paypage)) {
                                                                         utilityLogger.info(CARD_NUMBER_REQUIRED_MSG);
                                                                         continue;
-                                                                    } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(Paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(Paypage)) {
+                                                                    } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(paypage)) {
                                                                         utilityLogger.info(VALID_CVC_MSG);
                                                                         continue;
                                                                     } else {
@@ -742,15 +757,15 @@ public class Main {
 
                                 case "2":
                                     utilityLogger.info("Let's Go to wedding planning !");
-                                    Boolean condition = true;
-                                    while (condition) {
+                                    innerWhile:
+                                    while (true) {
                                         utilityLogger.info("Choose: \n 1. Wedding Halls  \n 2. Hire a DJ  \n 3. Photography Studio \n " +
                                                 "4. Flowers \n 5. Main course \n 6. Dessert \n  7.Save \n 8. Back to the previous page \n ");
                                         option1 = scanner.nextLine();
                                         planningloop:
                                         switch (option1) {
                                             case "1":
-                                                displayFileContents(HALL_PATH);
+                                                displayFileContents("Halls.txt");
                                                 while (true) {
 
                                                     utilityLogger.info("Enter Hall Name:");
@@ -758,7 +773,7 @@ public class Main {
                                                     if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(hallName)) {
                                                         System.out.print(HN_FAIL_MSG);
                                                         continue;
-                                                    } else if (!userMyApp.checkFile(hallName, HALL_PATH)) {
+                                                    } else if (!userMyApp.checkFile(hallName, "Halls.txt")) {
                                                         System.out.println(SPACE_SEPARATOR);
                                                         System.out.print(NAME_NOT_IN_LIST_MSG);
                                                         System.out.println(SPACE_SEPARATOR);
@@ -801,18 +816,18 @@ public class Main {
                                                 while (true) {
 
                                                     utilityLogger.info("Enter Studio Name:");
-                                                    StudioName = scanner.nextLine();
-                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(StudioName)) {
+                                                    studioName  = scanner.nextLine();
+                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(studioName )) {
                                                         utilityLogger.info(" Studio Name field is required ! \n");
                                                         continue;
-                                                    } else if (!userMyApp.checkFile(StudioName, STUDIO_FILE)) {
+                                                    } else if (!userMyApp.checkFile(studioName , STUDIO_FILE)) {
                                                         utilityLogger.info(SPACE_SEPARATOR);
                                                         utilityLogger.info(NAME_NOT_IN_LIST_MSG);
                                                         utilityLogger.info(SPACE_SEPARATOR);
                                                         continue;
                                                     } else {
-                                                        if (StudioName != null && !StudioName.trim().isEmpty()) {
-                                                            String finalStudioName = StudioName;
+                                                        if (studioName  != null && !studioName .trim().isEmpty()) {
+                                                            String finalStudioName = studioName ;
                                                             SwingUtilities.invokeLater(() -> new YearlyBookingCalendarStudio(finalStudioName.trim()));
                                                         }
 
@@ -825,11 +840,11 @@ public class Main {
                                                 while (true) {
 
                                                     utilityLogger.info("Enter Flower Type:");
-                                                    FlowerName = scanner.nextLine();
-                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(FlowerName)) {
+                                                    flowerName  = scanner.nextLine();
+                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(flowerName )) {
                                                         System.out.print(" Flower Name field is required ! \n");
                                                         continue;
-                                                    } else if (!userMyApp.checkFile(FlowerName,FLOWER_FILE)) {
+                                                    } else if (!userMyApp.checkFile(flowerName ,FLOWER_FILE)) {
                                                         utilityLogger.info(SPACE_SEPARATOR);
                                                         utilityLogger.info(NAME_NOT_IN_LIST_MSG);
                                                         utilityLogger.info(SPACE_SEPARATOR);
@@ -843,11 +858,11 @@ public class Main {
                                                 while (true) {
 
                                                     utilityLogger.info("Enter Maincourse Name:");
-                                                    Maincourse = scanner.nextLine();
-                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Maincourse)) {
+                                                    mainCourse  = scanner.nextLine();
+                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(mainCourse )) {
                                                         utilityLogger.info("  Main course Name field is required ! \n");
                                                         continue;
-                                                    } else if (!userMyApp.checkFile(Maincourse, MAIN_COURSE_FILE)) {
+                                                    } else if (!userMyApp.checkFile(mainCourse , MAIN_COURSE_FILE)) {
                                                         utilityLogger.info(SPACE_SEPARATOR);
                                                         utilityLogger.info(NAME_NOT_IN_LIST_MSG);
                                                         utilityLogger.info(SPACE_SEPARATOR);
@@ -860,11 +875,11 @@ public class Main {
                                                 displayFileContents(DESERT_FILE);
                                                 while (true) {
                                                     utilityLogger.info("Enter Desert Name:");
-                                                    Desert = scanner.nextLine();
-                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Desert)) {
+                                                    desert  = scanner.nextLine();
+                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(desert )) {
                                                         utilityLogger.info("  Dessert Name field is required ! \n");
                                                         continue;
-                                                    } else if (!userMyApp.checkFile(Desert, DESERT_FILE)) {
+                                                    } else if (!userMyApp.checkFile(desert , DESERT_FILE)) {
                                                         utilityLogger.info(SPACE_SEPARATOR);
                                                         utilityLogger.info(NAME_NOT_IN_LIST_MSG);
                                                         utilityLogger.info(SPACE_SEPARATOR);
@@ -887,30 +902,30 @@ public class Main {
                                                 }
 
 
-                                                if (!Objects.equals(StudioName, null)) {
-                                                    AddtoEvent("Studio: ", StudioName);
-                                                    UserProfitstudio =  getColumnValueForHall(STUDIO_FILE, StudioName, 1);
+                                                if (!Objects.equals(studioName , null)) {
+                                                    AddtoEvent("Studio: ", studioName );
+                                                    UserProfitstudio =  getColumnValueForHall(STUDIO_FILE, studioName , 1);
                                                 }
 
-                                                if (!Objects.equals(FlowerName, null)) {
-                                                    AddtoEvent("Flower: ", FlowerName);
-                                                    UserProfit +=  getColumnValueForHall(FLOWER_FILE, FlowerName, 1);//
+                                                if (!Objects.equals(flowerName , null)) {
+                                                    AddtoEvent("Flower: ", flowerName );
+                                                    UserProfit +=  getColumnValueForHall(FLOWER_FILE, flowerName , 1);//
                                                 }
 
-                                                if (!Objects.equals(Maincourse, null)) {
-                                                    AddtoEvent("Maincourse: ", Maincourse);
-                                                    UserProfit +=  getColumnValueForHall(MAIN_COURSE_FILE, Maincourse, 1);//
+                                                if (!Objects.equals(mainCourse , null)) {
+                                                    AddtoEvent("Maincourse: ", mainCourse );
+                                                    UserProfit +=  getColumnValueForHall(MAIN_COURSE_FILE, mainCourse , 1);//
                                                 }
-                                                if (!Objects.equals(Desert, null)) {
-                                                    AddtoEvent("Desert: ", Desert);
-                                                    UserProfit +=  getColumnValueForHall(DESERT_FILE, Desert, 1);//
+                                                if (!Objects.equals(desert , null)) {
+                                                    AddtoEvent("Desert: ", desert );
+                                                    UserProfit +=  getColumnValueForHall(DESERT_FILE, desert , 1);//
                                                 }
 
                                                 if (!Objects.equals(djName, null)) {
                                                     utilityLogger.info("\nThe amount you should pay for Dj : " + UserProfitDj);
                                                 }
 
-                                                if (!Objects.equals(StudioName, null)) {
+                                                if (!Objects.equals(studioName , null)) {
                                                     utilityLogger.info("\nThe amount you should pay for studio : " + UserProfitstudio);
                                                 }
 
@@ -919,13 +934,13 @@ public class Main {
 
                                                 while (true){
                                                     utilityLogger.info(ENTER_CARD_NUMBER_MSG);
-                                                    Paypage = scanner.nextLine();
+                                                    paypage = scanner.nextLine();
 
-                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage) ) {
+                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(paypage) ) {
                                                         utilityLogger.info(CARD_NUMBER_REQUIRED_MSG);
                                                         continue ;
                                                     }
-                                                    else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(Paypage)) {
+                                                    else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(paypage)) {
                                                         utilityLogger.info(VALID_NUMBER_MSG);
                                                         continue ;
                                                     }
@@ -933,21 +948,21 @@ public class Main {
                                                     else {
                                                         while (true) {
                                                             utilityLogger.info(ENTER_CARD_OWNER_NAME_MSG);
-                                                            Paypage = scanner.nextLine();
-                                                            if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Paypage)) {
+                                                            paypage = scanner.nextLine();
+                                                            if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(paypage)) {
                                                                 utilityLogger.info(CARD_OWNER_NAME_REQUIRED_MSG);
                                                                 continue;
-                                                            } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(Paypage)) {
+                                                            } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(paypage)) {
                                                                 utilityLogger.info(ENTER_VALID_NAME_MSG);
                                                                 continue;
                                                             } else {
                                                                 while (true) {
                                                                     utilityLogger.info(ENTER_CVC_MSG);
-                                                                    Paypage = scanner.nextLine();
-                                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage)) {
+                                                                    paypage = scanner.nextLine();
+                                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(paypage)) {
                                                                         utilityLogger.info(CARD_NUMBER_REQUIRED_MSG);
                                                                         continue;
-                                                                    } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(Paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(Paypage)) {
+                                                                    } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(paypage)) {
                                                                         utilityLogger.info(VALID_CVC_MSG);
                                                                         continue;
                                                                     } else {
@@ -965,19 +980,17 @@ public class Main {
                                                 }
 
                                                 AddtoEvent(SEPARATOR_LINE,SEPARATOR_LINE);
-                                                condition = false;
-                                                break ;
+                                                break innerWhile;
 
                                             case "8":
                                                 utilityLogger.info("Going back to the main menu \n");
-                                                condition = false;
-                                                break ;
+                                                break innerWhile;
 
                                             default:
                                                 utilityLogger.info(UN_VALID_OPTION_MSG);
                                         }
                                     }
-                                  //  break;
+                                    break;
 
                                 case "3":
                                     caseLabel:
@@ -1011,13 +1024,13 @@ public class Main {
                                                 utilityLogger.info("To complete the order , please pay !");
                                                 while (true){
                                                     utilityLogger.info(ENTER_CARD_NUMBER_MSG);
-                                                    Paypage = scanner11.nextLine();
+                                                    paypage = scanner11.nextLine();
 
-                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage) ) {
+                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(paypage) ) {
                                                         utilityLogger.info(CARD_NUMBER_REQUIRED_MSG);
                                                         continue ;
                                                     }
-                                                    else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(Paypage)) {
+                                                    else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(paypage)) {
                                                         utilityLogger.info(VALID_NUMBER_MSG);
                                                         continue ;
                                                     }
@@ -1025,21 +1038,21 @@ public class Main {
                                                     else {
                                                         while (true) {
                                                             utilityLogger.info(ENTER_CARD_OWNER_NAME_MSG);
-                                                            Paypage = scanner11.nextLine();
-                                                            if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Paypage)) {
+                                                            paypage = scanner11.nextLine();
+                                                            if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(paypage)) {
                                                                 utilityLogger.info(CARD_OWNER_NAME_REQUIRED_MSG);
                                                                 continue;
-                                                            } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(Paypage)) {
+                                                            } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(paypage)) {
                                                                 utilityLogger.info(ENTER_VALID_NAME_MSG);
                                                                 continue;
                                                             } else {
                                                                 while (true) {
                                                                     utilityLogger.info(ENTER_CVC_MSG);
-                                                                    Paypage = scanner11.nextLine();
-                                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage)) {
+                                                                    paypage = scanner11.nextLine();
+                                                                    if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(paypage)) {
                                                                         utilityLogger.info(CARD_NUMBER_REQUIRED_MSG);
                                                                         continue;
-                                                                    } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(Paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(Paypage)) {
+                                                                    } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(paypage)) {
                                                                         utilityLogger.info(VALID_CVC_MSG);
                                                                         continue;
                                                                     } else {
@@ -1108,13 +1121,13 @@ public class Main {
 
                                                     while (true){
                                                         utilityLogger.info(ENTER_CARD_NUMBER_MSG);
-                                                        Paypage = scanner11.nextLine();
+                                                        paypage = scanner11.nextLine();
 
-                                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage) ) {
+                                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(paypage) ) {
                                                             utilityLogger.info(CARD_NUMBER_REQUIRED_MSG);
                                                             continue ;
                                                         }
-                                                        else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(Paypage)) {
+                                                        else   if (payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberStartingWith(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberThatIsNotOrDigitsLong(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACardNumberContainingLetters(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCardNumberField(paypage)) {
                                                             utilityLogger.info(VALID_NUMBER_MSG);
                                                             continue ;
                                                         }
@@ -1122,21 +1135,21 @@ public class Main {
                                                         else {
                                                             while (true) {
                                                                 utilityLogger.info(ENTER_CARD_OWNER_NAME_MSG);
-                                                                Paypage = scanner11.nextLine();
-                                                                if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(Paypage)) {
+                                                                paypage = scanner11.nextLine();
+                                                                if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringTheCardOwnerSName(paypage)) {
                                                                     utilityLogger.info(CARD_OWNER_NAME_REQUIRED_MSG);
                                                                     continue;
-                                                                } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(Paypage)) {
+                                                                } else if (payPageMyApp.theUserSubmitsThePaymentFormWithNonLetterCharactersInTheCardOwnerSNameField(paypage)) {
                                                                     utilityLogger.info(ENTER_VALID_NAME_MSG);
                                                                     continue;
                                                                 } else {
                                                                     while (true) {
                                                                         utilityLogger.info(ENTER_CVC_MSG);
-                                                                        Paypage = scanner11.nextLine();
-                                                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(Paypage)) {
+                                                                        paypage = scanner11.nextLine();
+                                                                        if (payPageMyApp.theUserSubmitsThePaymentFormWithoutEnteringACardNumber(paypage)) {
                                                                             utilityLogger.info(CARD_NUMBER_REQUIRED_MSG);
                                                                             continue;
-                                                                        } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(Paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(Paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(Paypage)) {
+                                                                        } else if (!payPageMyApp.theUserSubmitsThePaymentFormWithACVCContainingLetters(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithANonPositiveNumberInTheCVCField(paypage) || !payPageMyApp.theUserSubmitsThePaymentFormWithACVCThatIsNotDigitsLong(paypage) || payPageMyApp.theUserSubmitsThePaymentFormWithACVCStartingWith(paypage)) {
                                                                             utilityLogger.info(VALID_CVC_MSG);
                                                                             continue;
                                                                         } else {
@@ -1329,44 +1342,5 @@ public class Main {
     public static void handleIOException(String message, IOException e) throws IOException {
         utilityLogger.severe(message + e.getMessage());
         throw new IOException(message + e.getMessage());
-    }
-    public static boolean iEnterValidUsernameAndIncorrectPassword(String username, String password) {
-        String filePath = "user_data.txt";
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 2 && parts[0].equals(username) && !(parts[1].equals(password))) {
-                    return true; // Username and password combination found in the file
-                }
-            }
-        } catch (IOException e) {
-            // Log the error
-            utilityLogger.log(Level.SEVERE, "An IOException occurred while reading user data", e);
-        } catch (Exception ex) {
-            // Log any other exceptions
-            utilityLogger.log(Level.SEVERE, "An unexpected exception occurred", ex);
-        }
-        return false;
-    }
-
-    public static boolean theSystemHasRegisteredUserWithUsernameAndPassword(String username, String password) {
-        String filePath = "user_data.txt";
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 2 && parts[0].equals(username) && (parts[1].equals(password))) {
-                    return true;
-                }
-            }
-        } catch (IOException e) {
-            // Log the error
-            utilityLogger.log(Level.SEVERE, "An IOException occurred while reading user data", e);
-        } catch (Exception ex) {
-            // Log any other exceptions
-            utilityLogger.log(Level.SEVERE, "An unexpected exception occurred", ex);
-        }
-        return false;
     }
 }
