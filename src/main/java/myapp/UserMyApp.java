@@ -94,7 +94,7 @@ public class UserMyApp {
                 writer.write(currentLine);
                 writer.newLine();
             }
-        }  } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, filename);
         } catch (IOException e) {
             logger.error("Error reading/writing file: {}", filename);
