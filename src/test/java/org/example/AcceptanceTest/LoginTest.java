@@ -5,26 +5,26 @@ import myapp.SignUpMyApp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.example.Main;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class LoginTest {
     SignUpMyApp SignUp;
-    LoginMyApp login;
+   Main login;
     private boolean result;
     private String username;
     private String password;
     public LoginTest(){
-        login=new LoginMyApp();
+        login=new Main();
         SignUp=new SignUpMyApp();
     }
     @Given("the system has registered user with username {string} and password {string}")
     public void theSystemHasRegisteredUserWithUsernameAndPassword(String username, String password) {
      this.username=username;
      this.password=password;
-       // username="rema";password="rema123";
-       // assertTrue(login.theSystemHasRegisteredUserWithUsernameAndPassword(username,password));
+
     }
     @When("I enter valid username {string} and password {string} has already registered")
     public void iEnterValidUsernameAndPasswordHasAlreadyRegistered(String username, String password) {
