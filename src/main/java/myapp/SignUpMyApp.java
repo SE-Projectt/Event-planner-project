@@ -80,8 +80,6 @@ public class SignUpMyApp {
                 }
             }
         } catch (IOException e) {
-            logger.severe(e.getMessage());   }    return true; 
-       
-       
+
     }
 }
