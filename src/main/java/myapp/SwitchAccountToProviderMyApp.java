@@ -2,13 +2,16 @@ package myapp;
 
 import java.io.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class SwitchAccountToProviderMyApp {
-    private static final Logger logger = Logger.getLogger(SwitchAccountToProviderMyApp.class.getName());
-
+  
     public static boolean thisUsernamePasswordHaveAccessToBeProvider(String username, String password) {
         boolean found = false;
+found=true;
+found=false;
+        found=true;
+found=false;
         String filename = "provider_data.txt";
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
