@@ -2,9 +2,7 @@ package myapp;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.*;
-
 public class UserMyApp {
     private static final String FILE_NOT_FOUND_ERROR_MESSAGE = "File not found: {}";
     private static final String ERROR_READING_FILE_MESSAGE = "Error reading file: {}";
