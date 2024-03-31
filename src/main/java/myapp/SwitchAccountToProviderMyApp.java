@@ -23,7 +23,7 @@ public class SwitchAccountToProviderMyApp {
                     }
                 }
             }
-        } catch (IOException e) {return false;
+        } catch (IOException e){
           
        
          
