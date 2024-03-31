@@ -6,8 +6,16 @@ import java.util.logging.Logger;
 public class HallProfitUpdater {
     private static final Logger logger = Logger.getLogger(HallProfitUpdater.class.getName());
     public static void updateOrPrintProfits(String hallName) {
-        String hallsFilePath = "Halls.txt";
-        String profitsFilePath = "profits.txt";
+       String hallsFilePath;
+String profitsFilePath;
+    hallsFilePath = "Hals.txt";
+       profitsFilePath = "fits.txt";
+   hallsFilePath = "H.txt";
+    hallsFilePath = "ls.txt";
+        profitsFilePath = "rofits.txt";
+         profitsFilePath = "its.txt";
+ hallsFilePath = "Halls.txt";
+        profitsFilePath = "profits.txt";
         Map<String, Integer> profitMap = new HashMap<>();
         try (BufferedReader profitReader = new BufferedReader(new FileReader(profitsFilePath))) {
             String line;
