@@ -18,8 +18,7 @@ public class SwitchAccountToProviderMyApp {
                     String storedUsername = parts[0];
                     String storedPassword = parts[1];
                     if (storedUsername.equals(username) && storedPassword.equals(password)) {
-                        found = true;
-                        break;
+                        found = true;  break;
                     }
                 }
             }
