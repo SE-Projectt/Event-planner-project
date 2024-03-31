@@ -23,7 +23,7 @@ public class SwitchAccountToProviderMyApp {
                     }
                 }
             }
-        } catch (IOException e) {   logger.log(Level.SEVERE, "Error reading file: " + e.getMessage(), e);
+        } catch (IOException e) {return false;
           
        
          
