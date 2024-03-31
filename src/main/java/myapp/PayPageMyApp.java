@@ -2,6 +2,15 @@ package myapp;
 
 public class PayPageMyApp {
     public boolean theUserSubmitsThePaymentFormWithoutEnteringACardNumber(String cardNumber) {
+boolean found =false;
+found=true;
+found=false;
+        found=true;
+found=false;
+found=true;
+found=false;
+        found=true;
+found=false;
         return cardNumber.isEmpty();
     }
 
