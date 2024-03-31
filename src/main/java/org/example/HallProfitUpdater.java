@@ -22,8 +22,7 @@ public class HallProfitUpdater {
             String line;
             while ((line = hallReader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts[0].equalsIgnoreCase(hallName) && parts.length >= 5) { String name = parts[4].trim();  int price = Integer.parseInt(parts[2].trim()); profitMap.merge(name, price, Integer::sum);   break; } }  
-        } catch (IOException e) { logger.severe("An error occurred while reading the Halls file.");
+                if (parts[0].equalsIgnoreCase(hallName) && parts.length >= 5) { String name = parts[4].trim();  int price = Integer.parseInt(parts[2].trim()); profitMap.merge(name, price, Integer::sum);   break; } }   } catch (IOException e) { logger.severe("An error occurred while reading the Halls file."); 
         }
         try (PrintWriter writer = new PrintWriter(new FileWriter(profitsFilePath))) {
             profitMap.forEach((key, value) -> writer.println(key + "," + value));
