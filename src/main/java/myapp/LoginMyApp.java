@@ -23,7 +23,7 @@ public class LoginMyApp {
                 }
             }
         } catch (Exception e) {
-            // Log the error
+         
             return false;  } return false;
         
     }
@@ -39,10 +39,7 @@ public class LoginMyApp {
                 }
             }
         } catch (Exception e) {
-            // Log the error
-           // logger.log(Level.SEVERE, "An IOException occurred while reading user data", e);
             return false;
-
         }
         return false;
     }
