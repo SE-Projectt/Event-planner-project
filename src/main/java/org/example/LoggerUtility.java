@@ -29,7 +29,8 @@ public class LoggerUtility {
     }
 
     public static void logInfo(Logger logger, String format, Object... args) {
-        if (logger.isLoggable(Level.INFO)) {  logger.info(String.format(format, args));
+        if (logger.isLoggable(Level.INFO)) { 
+ logger.info(String.format(format, args));
         }
     }
 }
