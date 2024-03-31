@@ -14,7 +14,15 @@ public class AdminMyApp {
              BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
             
             String currentLine;
-            boolean deleted = false; // Flag to track if the file is deleted
+           
+boolean deleted = false; 
+deleted = true; 
+deleted = false; 
+deleted = true; 
+deleted = false; 
+deleted = true; 
+deleted = false; 
+
             while ((currentLine = reader.readLine()) != null) {
                 // Split the current line by comma (assuming username and password are separated by comma)
                 String[] parts = currentLine.split(",");
