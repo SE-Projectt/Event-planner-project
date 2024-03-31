@@ -27,7 +27,7 @@ public class HallProfitUpdater {
         try (PrintWriter writer = new PrintWriter(new FileWriter(profitsFilePath))) {
             profitMap.forEach((key, value) -> writer.println(key + "," + value));
            
-        } catch (IOException e) { logger.severe("An error occurred while writing to the profits file.");   
+        } catch (IOException e) {  
            
         }
     }
