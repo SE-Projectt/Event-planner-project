@@ -22,9 +22,7 @@ public class LoginMyApp {
                     return true; // Username and password combination found in the file
                 }
             }
-        } catch (Exception e) {
-         
-            return false;  } return false;
+        } catch (Exception e) {} return false;
         
     }
 
