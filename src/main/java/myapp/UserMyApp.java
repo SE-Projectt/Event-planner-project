@@ -56,7 +56,13 @@ public class UserMyApp {
                 }
             }
         } catch (FileNotFoundException e) {
-            logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, filename);} catch (IOException e) { logger.error(ERROR_READING_FILE_MESSAGE, filename);  } return false;
+    logger.error(FILE_NOT_FOUND_ERROR_MESSAGE, filename);
+    logger.error("Additional error message for FileNotFoundException", e);
+} catch (IOException e) {
+    logger.error(ERROR_READING_FILE_MESSAGE, filename);
+    logger.error("Additional error message for IOException", e);
+}
+return false;
     
     }
 
