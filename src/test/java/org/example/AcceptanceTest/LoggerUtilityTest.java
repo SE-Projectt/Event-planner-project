@@ -1,5 +1,3 @@
-User
-
 package org.example.AcceptanceTest;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -29,4 +27,3 @@ public class LoggerUtilityTest {
         assertEquals("", logMessage);
  }
 }
-
