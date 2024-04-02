@@ -25,7 +25,7 @@ public class LoggerUtilityTest {
 
     @When("I log an info message with format {string}")
     public void iLogAnInfoMessageWithFormat(String format) {
-        LoggerUtility.logInfo(logger, format, "Test");
+        LoggerUtility.logInfo(logger, format, "Test message");
         logMessage = outContent.toString().trim();
     }
 
