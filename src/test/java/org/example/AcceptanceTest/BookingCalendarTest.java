@@ -1,18 +1,16 @@
 package org.example.AcceptanceTest;
-import MyApp.LoginMyApp;
-import MyApp.SignUpMyApp;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.example.YearlyBookingCalendar;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.*;
-
-import io.cucumber.java.en.*;
-import org.example.YearlyBookingCalendar;
-
-import java.util.HashSet;
 
 public class BookingCalendarTest {
 
@@ -25,9 +23,7 @@ public class BookingCalendarTest {
 
     @When("The user selects a date to book")
     public void theUserSelectsADateToBook() {
-        // For the sake of this example, let's assume the user clicks on a date
-        // This action could be simulated by directly invoking the bookDate method of the calendar
-        // You may need to adjust this step based on how the actual UI interaction is implemented
+   
         bookingCalendar.bookDate("2024-03-22");
     }
 
@@ -38,12 +34,12 @@ public class BookingCalendarTest {
 
     @Given("The date is already booked for {string}")
     public void theDateIsAlreadyBookedFor(String hallName) {
-
+        // You may implement logic to set up the initial state where the date is already booked for the given hall
     }
 
     @When("The user tries to book the same date")
     public void theUserTriesToBookTheSameDate() {
-
+        // You may implement logic to simulate the user trying to book the same date
     }
 
     @Then("The system should not allow booking the already booked date")
