@@ -1,5 +1,5 @@
-
 package org.example.AcceptanceTest;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -7,11 +7,12 @@ import org.example.LoggerUtility;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
 import java.util.logging.Logger;
+
 import static org.junit.Assert.assertEquals;
 
 public class LoggerUtilityTest {
+
     private Logger logger;
     private String logMessage;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -30,6 +31,6 @@ public class LoggerUtilityTest {
 
     @Then("The log message should be {string}")
     public void theLogMessageShouldBe(String expectedMessage) {
-        assertEquals("", logMessage);
- }
+        assertEquals(expectedMessage, logMessage);
+    }
 }
