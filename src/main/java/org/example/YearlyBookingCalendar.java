@@ -91,7 +91,7 @@ public class YearlyBookingCalendar extends JFrame {
         monthPanel.repaint();
     }
 
-    private void bookDate(String date) {
+    public void bookDate(String date) {
         Set<String> dates = bookedDatesPerHall.computeIfAbsent(currentHall, k -> new HashSet<>());
         if (dates.add(date)) {
             saveBooking(currentHall + "," + date);
@@ -100,6 +100,11 @@ public class YearlyBookingCalendar extends JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "This date is already booked.");
         }
+    }
+
+    public boolean hasDuplicateDates(String hallName) {
+        Set<String> dates = bookedDatesPerHall.get(hallName);
+        return dates != null && !dates.isEmpty();
     }
 
     private void loadBookings() {
